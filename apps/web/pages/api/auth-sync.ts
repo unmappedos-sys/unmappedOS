@@ -15,7 +15,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     // Get current session from Supabase Auth
     const supabase = createServerSupabaseClient(req, res);
-    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+    const {
+      data: { session },
+      error: sessionError,
+    } = await supabase.auth.getSession();
 
     if (sessionError || !session || !session.user) {
       return res.status(401).json({ error: 'AUTHENTICATION_REQUIRED' });
@@ -53,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           provider: user.app_metadata?.provider || 'email',
           karma: 0,
           created_at: new Date().toISOString(),
-        })
+        } as any)
         .select()
         .single();
 
@@ -75,7 +78,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .update({
           name: user.user_metadata?.name || user.user_metadata?.full_name || existingUser.name,
           last_seen_at: new Date().toISOString(),
-        })
+        } as any)
         .eq('id', userId)
         .select()
         .single();
@@ -92,7 +95,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         user: updatedUser,
       });
     }
-
   } catch (error) {
     console.error('[AUTH-SYNC] Error:', error);
     return res.status(500).json({
