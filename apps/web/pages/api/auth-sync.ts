@@ -32,8 +32,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // Check if user exists in users table
-    const { data: existingUser, error: checkError } = await supabase
-      .from('users')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: existingUser, error: checkError } = await (supabase.from('users') as any)
       .select('*')
       .eq('id', userId)
       .single();
