@@ -1,6 +1,6 @@
 /**
  * Auth Callback Page
- * 
+ *
  * Handles magic link and OAuth callbacks from Supabase Auth.
  * Supports PKCE flow for magic links.
  */
@@ -8,6 +8,9 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { createClient } from '@/lib/supabaseClient';
+
+// Disable static optimization for this page since it handles dynamic OAuth callbacks
+export const dynamic = 'force-dynamic';
 
 export default function AuthCallbackPage() {
   const router = useRouter();
@@ -18,12 +21,14 @@ export default function AuthCallbackPage() {
     const handleCallback = async () => {
       try {
         const supabase = createClient();
-        
+
         // Check for error from query params
         const { error: urlError, error_description, code } = router.query;
         if (urlError) {
           setStatus('error');
-          setErrorMsg(error_description as string || urlError as string || 'Authentication failed');
+          setErrorMsg(
+            (error_description as string) || (urlError as string) || 'Authentication failed'
+          );
           return;
         }
 
@@ -103,12 +108,8 @@ export default function AuthCallbackPage() {
             <div className="mb-6">
               <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto" />
             </div>
-            <h1 className="text-xl font-mono text-cyan-400 mb-2">
-              AUTHENTICATING IDENTITY...
-            </h1>
-            <p className="text-gray-500 font-mono text-sm">
-              Verifying security clearance
-            </p>
+            <h1 className="text-xl font-mono text-cyan-400 mb-2">AUTHENTICATING IDENTITY...</h1>
+            <p className="text-gray-500 font-mono text-sm">Verifying security clearance</p>
           </>
         )}
 
@@ -116,17 +117,23 @@ export default function AuthCallbackPage() {
           <>
             <div className="mb-6">
               <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto">
-                <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                <svg
+                  className="w-8 h-8 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               </div>
             </div>
-            <h1 className="text-xl font-mono text-green-400 mb-2">
-              IDENTITY VERIFIED
-            </h1>
-            <p className="text-gray-500 font-mono text-sm">
-              Redirecting to command center...
-            </p>
+            <h1 className="text-xl font-mono text-green-400 mb-2">IDENTITY VERIFIED</h1>
+            <p className="text-gray-500 font-mono text-sm">Redirecting to command center...</p>
           </>
         )}
 
@@ -134,14 +141,22 @@ export default function AuthCallbackPage() {
           <>
             <div className="mb-6">
               <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto">
-                <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-8 h-8 text-red-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </div>
             </div>
-            <h1 className="text-xl font-mono text-red-400 mb-2">
-              AUTHENTICATION FAILED
-            </h1>
+            <h1 className="text-xl font-mono text-red-400 mb-2">AUTHENTICATION FAILED</h1>
             <p className="text-gray-400 font-mono text-sm mb-4">
               {errorMsg || 'Security clearance denied'}
             </p>
@@ -157,10 +172,23 @@ export default function AuthCallbackPage() {
         {/* Decorative elements */}
         <div className="mt-8 flex justify-center space-x-2">
           <div className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse" />
-          <div className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }} />
-          <div className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }} />
+          <div
+            className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse"
+            style={{ animationDelay: '0.2s' }}
+          />
+          <div
+            className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse"
+            style={{ animationDelay: '0.4s' }}
+          />
         </div>
       </div>
     </div>
   );
+}
+
+// Force server-side rendering for OAuth callback handling
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
 }

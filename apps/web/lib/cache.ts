@@ -9,6 +9,7 @@
  * - User sessions (TTL: 24 hours)
  *
  * Uses Upstash Redis for serverless compatibility.
+ * Redis is optional - if not installed, caching is gracefully disabled.
  */
 
 // Initialize Redis client (optional - falls back to no-cache)
@@ -16,23 +17,32 @@
 let redis: any = null;
 let CACHE_ENABLED = false;
 
-try {
-  // Dynamic import to make @upstash/redis optional
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { Redis } = require('@upstash/redis');
+// Lazy load Redis to avoid build errors when package is not installed
+function getRedis() {
+  if (redis !== null || CACHE_ENABLED) return redis;
 
-  if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
-    redis = new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN,
-    });
-    CACHE_ENABLED = true;
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const RedisModule = require('@upstash/redis');
+
+    if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+      redis = new RedisModule.Redis({
+        url: process.env.UPSTASH_REDIS_REST_URL,
+        token: process.env.UPSTASH_REDIS_REST_TOKEN,
+      });
+      CACHE_ENABLED = true;
+      return redis;
+    }
+  } catch (error) {
+    // @upstash/redis not installed - caching disabled
+    if (typeof window === 'undefined') {
+      // Only log on server to avoid noise
+      console.warn('[CACHE] Redis not available - caching disabled');
+    }
   }
-} catch (error) {
-  // @upstash/redis not installed - caching disabled
-  console.warn('[CACHE] Redis not available - caching disabled');
-}
 
+  return null;
+}
 interface CacheOptions {
   ttl?: number; // seconds
   namespace?: string;
@@ -42,13 +52,14 @@ interface CacheOptions {
  * Get cached value
  */
 export async function getCached<T>(key: string, options: CacheOptions = {}): Promise<T | null> {
-  if (!CACHE_ENABLED) return null;
+  const redisClient = getRedis();
+  if (!redisClient) return null;
 
   try {
     const { namespace = 'unmapped' } = options;
     const fullKey = `${namespace}:${key}`;
 
-    const value = await redis!.get(fullKey);
+    const value = await redisClient.get(fullKey);
     if (!value) return null;
 
     return value as T;
@@ -66,13 +77,14 @@ export async function setCached<T>(
   value: T,
   options: CacheOptions = {}
 ): Promise<void> {
-  if (!CACHE_ENABLED) return;
+  const redisClient = getRedis();
+  if (!redisClient) return;
 
   try {
     const { namespace = 'unmapped', ttl = 300 } = options; // 5 min default
     const fullKey = `${namespace}:${key}`;
 
-    await redis!.set(fullKey, value, { ex: ttl });
+    await redisClient.set(fullKey, value, { ex: ttl });
   } catch (error) {
     console.error('[REDIS] Set error:', error);
   }
@@ -82,13 +94,14 @@ export async function setCached<T>(
  * Delete cached value
  */
 export async function deleteCached(key: string, options: CacheOptions = {}): Promise<void> {
-  if (!CACHE_ENABLED) return;
+  const redisClient = getRedis();
+  if (!redisClient) return;
 
   try {
     const { namespace = 'unmapped' } = options;
     const fullKey = `${namespace}:${key}`;
 
-    await redis!.del(fullKey);
+    await redisClient.del(fullKey);
   } catch (error) {
     console.error('[REDIS] Delete error:', error);
   }
@@ -158,12 +171,12 @@ export async function checkRateLimit(
   limit: number,
   windowSeconds: number
 ): Promise<{ allowed: boolean; remaining: number }> {
-  if (!CACHE_ENABLED) return { allowed: true, remaining: limit };
+  const redisClient = getRedis();
+  if (!redisClient) return { allowed: true, remaining: limit };
 
   try {
     const key = `ratelimit:${identifier}`;
     // Upstash Redis supports incr and expire
-    const redisClient = redis as any;
     const current = (await redisClient.incr(key)) as number;
 
     // Set expiry on first request
@@ -199,7 +212,8 @@ export async function getCachedSession(sessionId: string): Promise<any | null> {
  * Flush cache pattern
  */
 export async function flushPattern(pattern: string): Promise<void> {
-  if (!CACHE_ENABLED) return;
+  const redisClient = getRedis();
+  if (!redisClient) return;
 
   try {
     // Note: Upstash Redis doesn't support SCAN, so we track keys manually
@@ -213,10 +227,10 @@ export async function flushPattern(pattern: string): Promise<void> {
  * Health check
  */
 export async function checkRedisHealth(): Promise<boolean> {
-  if (!CACHE_ENABLED) return false;
+  const redisClient = getRedis();
+  if (!redisClient) return false;
 
   try {
-    const redisClient = redis as any;
     await redisClient.ping();
     return true;
   } catch {
