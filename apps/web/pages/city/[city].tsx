@@ -94,9 +94,7 @@ export default function CityDossier() {
   return (
     <>
       <Head>
-        <title>
-          {cityData.code} MISSION BRIEFING - UNMAPPED OS
-        </title>
+        <title>{cityData.code} MISSION BRIEFING - UNMAPPED OS</title>
       </Head>
 
       {/* HUD Overlay */}
@@ -105,12 +103,12 @@ export default function CityDossier() {
       {/* Diagnostic Panel */}
       <div className="diagnostic-panel top-4 right-4">
         <div className="space-y-1">
-          <div className={`status-indicator ${downloadComplete ? 'active' : downloading ? 'warning' : 'ghost'}`}>
+          <div
+            className={`status-indicator ${downloadComplete ? 'active' : downloading ? 'warning' : 'ghost'}`}
+          >
             BLACK BOX
           </div>
-          <div className="status-indicator active">
-            NETWORK
-          </div>
+          <div className="status-indicator active">NETWORK</div>
           <div className="font-mono text-tactical-xs text-ops-night-muted mt-2">
             {cityData.code} THEATER
           </div>
@@ -141,15 +139,23 @@ export default function CityDossier() {
                     <h2 className="font-tactical text-5xl text-ops-neon-green uppercase tracking-widest">
                       {cityData.name}
                     </h2>
-                    <span className="font-tactical text-tactical-2xl text-ops-neon-cyan">{cityData.code}</span>
+                    <span className="font-tactical text-tactical-2xl text-ops-neon-cyan">
+                      {cityData.code}
+                    </span>
                   </div>
-                  <p className="font-mono text-tactical-base text-ops-night-muted uppercase">{cityData.country}</p>
+                  <p className="font-mono text-tactical-base text-ops-night-muted uppercase">
+                    {cityData.country}
+                  </p>
                 </div>
-                <div className={`px-4 py-2 border ${
-                  cityData.threat === 'LOW' ? 'border-ops-active/50 text-ops-active' :
-                  cityData.threat === 'MODERATE' ? 'border-ops-warning/50 text-ops-warning' :
-                  'border-ops-critical/50 text-ops-critical'
-                } font-tactical text-tactical-xs uppercase tracking-wider`}>
+                <div
+                  className={`px-4 py-2 border ${
+                    cityData.threat === 'LOW'
+                      ? 'border-ops-active/50 text-ops-active'
+                      : cityData.threat === 'MODERATE'
+                        ? 'border-ops-warning/50 text-ops-warning'
+                        : 'border-ops-critical/50 text-ops-critical'
+                  } font-tactical text-tactical-xs uppercase tracking-wider`}
+                >
                   THREAT: {cityData.threat}
                 </div>
               </div>
@@ -166,19 +172,31 @@ export default function CityDossier() {
               {/* Stats Grid */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div className="bg-ops-night-surface/50 border border-ops-neon-green/20 p-4">
-                  <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">Zones</p>
-                  <p className="font-tactical text-3xl text-ops-neon-green mt-1">{cityData.zones}</p>
+                  <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">
+                    Zones
+                  </p>
+                  <p className="font-tactical text-3xl text-ops-neon-green mt-1">
+                    {cityData.zones}
+                  </p>
                 </div>
                 <div className="bg-ops-night-surface/50 border border-ops-neon-cyan/20 p-4">
-                  <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">Status</p>
-                  <p className="font-tactical text-tactical-sm text-ops-neon-cyan mt-2 uppercase">ACTIVE</p>
+                  <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">
+                    Status
+                  </p>
+                  <p className="font-tactical text-tactical-sm text-ops-neon-cyan mt-2 uppercase">
+                    ACTIVE
+                  </p>
                 </div>
                 <div className="bg-ops-night-surface/50 border border-ops-neon-green/20 p-4">
-                  <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">Pack Size</p>
+                  <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">
+                    Pack Size
+                  </p>
                   <p className="font-mono text-tactical-base text-ops-night-text mt-2">2.4 MB</p>
                 </div>
                 <div className="bg-ops-night-surface/50 border border-ops-neon-green/20 p-4">
-                  <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">Updated</p>
+                  <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">
+                    Updated
+                  </p>
                   <p className="font-mono text-tactical-base text-ops-night-text mt-2">Dec 12</p>
                 </div>
               </div>
@@ -190,16 +208,28 @@ export default function CityDossier() {
             <div className="hud-card-header">EMERGENCY PROTOCOLS</div>
             <div className="grid grid-cols-3 gap-6">
               <div>
-                <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">Police</p>
-                <p className="font-mono text-tactical-lg text-ops-neon-cyan mt-2">{cityData.emergency.police}</p>
+                <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">
+                  Police
+                </p>
+                <p className="font-mono text-tactical-lg text-ops-neon-cyan mt-2">
+                  {cityData.emergency.police}
+                </p>
               </div>
               <div>
-                <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">Ambulance</p>
-                <p className="font-mono text-tactical-lg text-ops-neon-cyan mt-2">{cityData.emergency.ambulance}</p>
+                <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">
+                  Ambulance
+                </p>
+                <p className="font-mono text-tactical-lg text-ops-neon-cyan mt-2">
+                  {cityData.emergency.ambulance}
+                </p>
               </div>
               <div>
-                <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">Embassy</p>
-                <p className="font-mono text-tactical-sm text-ops-neon-cyan mt-2">{cityData.emergency.embassy}</p>
+                <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">
+                  Embassy
+                </p>
+                <p className="font-mono text-tactical-sm text-ops-neon-cyan mt-2">
+                  {cityData.emergency.embassy}
+                </p>
               </div>
             </div>
           </div>
@@ -212,8 +242,8 @@ export default function CityDossier() {
                 <div className="space-y-6">
                   <div className="space-y-3">
                     <p className="font-mono text-tactical-base text-ops-night-text/90 leading-relaxed">
-                      Encrypted intelligence bundle contains zone geometries, anchor coordinates, 
-                      price data, and tactical cheat sheets. Enables full ghost-mode operations 
+                      Encrypted intelligence bundle contains zone geometries, anchor coordinates,
+                      price data, and tactical cheat sheets. Enables full ghost-mode operations
                       without network connectivity.
                     </p>
                     <div className="flex items-center gap-4 font-mono text-tactical-xs text-ops-night-muted">
@@ -222,8 +252,8 @@ export default function CityDossier() {
                       <span>• AUTO-SYNC</span>
                     </div>
                   </div>
-                  <button 
-                    onClick={handleDownload} 
+                  <button
+                    onClick={handleDownload}
                     className="btn-tactical-primary w-full py-4 text-tactical-base"
                   >
                     INITIATE BLACK BOX DOWNLOAD
@@ -251,7 +281,9 @@ export default function CityDossier() {
             {downloadComplete && (
               <div className="space-y-4">
                 <div className="font-tactical text-center space-y-3">
-                  <p className="text-4xl text-ops-active animate-pulse-neon">✓ BLACK BOX ACQUIRED</p>
+                  <p className="text-4xl text-ops-active animate-pulse-neon">
+                    ✓ BLACK BOX ACQUIRED
+                  </p>
                   <p className="font-mono text-tactical-sm text-ops-neon-cyan terminal-flicker">
                     &gt; LOADING TACTICAL DISPLAY...
                   </p>
@@ -270,4 +302,9 @@ export default function CityDossier() {
       </main>
     </>
   );
+}
+
+// Force server-side rendering
+export async function getServerSideProps() {
+  return { props: {} };
 }

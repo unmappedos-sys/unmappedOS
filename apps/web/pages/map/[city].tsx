@@ -3,7 +3,14 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { getCityPack } from '@/lib/cityPack';
-import { vibrateDevice, openGoogleMaps, copyToClipboard, VIBRATION_PATTERNS, isOnline, onConnectionChange } from '@/lib/deviceAPI';
+import {
+  vibrateDevice,
+  openGoogleMaps,
+  copyToClipboard,
+  VIBRATION_PATTERNS,
+  isOnline,
+  onConnectionChange,
+} from '@/lib/deviceAPI';
 import { useOps } from '@/contexts/OpsContext';
 import { useTranslation } from '@/lib/i18n/useTranslation';
 import StatusPanel from '@/components/StatusPanel';
@@ -32,14 +39,14 @@ export default function TacticalDisplay() {
   // Helper function to get translated anchor name
   const getAnchorName = (anchor: Zone['selected_anchor']): string => {
     if (!anchor.tags) return anchor.name;
-    
+
     // Try user's selected language first
     const langKey = `name:${language}`;
     if (anchor.tags[langKey]) return anchor.tags[langKey];
-    
+
     // Fall back to English
     if (anchor.tags['name:en']) return anchor.tags['name:en'];
-    
+
     // Fall back to original name
     return anchor.name;
   };
@@ -145,7 +152,9 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
         <div className="hud-overlay" />
         <div className="max-w-2xl w-full px-6">
           <div className="hud-card">
-            <div className="hud-card-header">{t.tacticalDisplay.toUpperCase()} {t.systemBooting.toUpperCase()}</div>
+            <div className="hud-card-header">
+              {t.tacticalDisplay.toUpperCase()} {t.systemBooting.toUpperCase()}
+            </div>
             <TerminalLoader
               stages={[
                 { message: t.initializingMap.toUpperCase() + '...', duration: 600 },
@@ -166,9 +175,16 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
     return (
       <div className="min-h-screen flex items-center justify-center bg-ops-night-bg">
         <div className="hud-card">
-          <div className="hud-card-header">{t.critical.toUpperCase()} {t.error.toUpperCase()}</div>
-          <p className="font-mono text-tactical-base text-ops-critical">{t.blackBoxNotFound.toUpperCase()}</p>
-          <button onClick={() => router.push(`/city/${city}`)} className="btn-tactical-primary mt-4">
+          <div className="hud-card-header">
+            {t.critical.toUpperCase()} {t.error.toUpperCase()}
+          </div>
+          <p className="font-mono text-tactical-base text-ops-critical">
+            {t.blackBoxNotFound.toUpperCase()}
+          </p>
+          <button
+            onClick={() => router.push(`/city/${city}`)}
+            className="btn-tactical-primary mt-4"
+          >
             {t.acquireBlackBox.toUpperCase()}
           </button>
         </div>
@@ -191,13 +207,19 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
       <div className="h-screen flex flex-col relative">
         {/* Top HUD Bar */}
         <div className="bg-ops-night-surface/90 backdrop-blur-tactical border-b border-ops-neon-green/30 p-3 flex items-center justify-between z-20 neon-border-top">
-          <button onClick={() => router.back()} className="btn-tactical-ghost text-tactical-xs px-4 py-2">
+          <button
+            onClick={() => router.back()}
+            className="btn-tactical-ghost text-tactical-xs px-4 py-2"
+          >
             ← {t.abortMission.toUpperCase()}
           </button>
           <h1 className="font-tactical text-tactical-base text-ops-neon-cyan uppercase tracking-widest">
             {pack.city} {t.tacticalDisplay.toUpperCase()}
           </h1>
-          <button onClick={() => router.push('/operative')} className="btn-tactical-ghost text-tactical-xs px-4 py-2">
+          <button
+            onClick={() => router.push('/operative')}
+            className="btn-tactical-ghost text-tactical-xs px-4 py-2"
+          >
             {t.operative.toUpperCase()}
           </button>
         </div>
@@ -219,9 +241,10 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
           <div className="diagnostic-panel top-16 right-4 z-40">
             <div className="space-y-2">
               <div className={`status-indicator ${ghostMode ? 'active' : 'ghost'}`}>
-                {t.ghostMode.toUpperCase()}: {ghostMode ? t.ghostModeActive.toUpperCase() : t.ghostModeDisengaged.toUpperCase()}
+                {t.ghostMode.toUpperCase()}:{' '}
+                {ghostMode ? t.ghostModeActive.toUpperCase() : t.ghostModeDisengaged.toUpperCase()}
               </div>
-              <button 
+              <button
                 onClick={handleGhostModeToggle}
                 className="font-tactical text-tactical-xs text-ops-neon-cyan hover:text-ops-neon-green transition-colors uppercase tracking-wider cursor-pointer w-full text-left"
               >
@@ -234,11 +257,12 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
         {/* HUD Collapsed Indicator - Bottom Right */}
         {hudCollapsed && (
           <div className="diagnostic-panel bottom-4 right-4 z-40">
-            <button 
+            <button
               onClick={handleHudToggle}
               className="font-tactical text-tactical-xs text-ops-neon-green hover:text-ops-neon-cyan transition-colors uppercase tracking-wider"
             >
-              {t.expandHud.toUpperCase()}<br/>
+              {t.expandHud.toUpperCase()}
+              <br />
               <span className="text-tactical-xs text-ops-night-muted">FULL VISUAL FIELD</span>
             </button>
           </div>
@@ -251,9 +275,7 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
               <div className="font-tactical text-tactical-xs text-ops-neon-green uppercase tracking-wider">
                 {t.zonesLoaded.toUpperCase()}
               </div>
-              <div className="font-tactical text-2xl text-ops-neon-green">
-                {pack.zones.length}
-              </div>
+              <div className="font-tactical text-2xl text-ops-neon-green">{pack.zones.length}</div>
               <div className="font-mono text-[10px] text-ops-night-muted">
                 {pack.city.toUpperCase()} THEATER
               </div>
@@ -280,7 +302,7 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
                 <button className="btn-tactical w-full py-2 text-tactical-xs">
                   {t.recalibrateGPS.toUpperCase()}
                 </button>
-                <button 
+                <button
                   onClick={handleHudToggle}
                   className={`btn-tactical w-full py-2 text-tactical-xs ${
                     hudCollapsed ? '' : 'bg-ops-neon-green/20 border-ops-neon-green'
@@ -288,15 +310,16 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
                 >
                   {hudCollapsed ? t.expandHud.toUpperCase() : '✓ ' + t.collapseHud.toUpperCase()}
                 </button>
-                <button 
+                <button
                   onClick={handleGhostModeToggle}
                   className={`btn-tactical w-full py-2 text-tactical-xs ${
                     ghostMode ? 'bg-ops-neon-green/20 border-ops-neon-green' : ''
                   }`}
                 >
-                  {ghostMode ? '✓ ' : ''}{t.ghostMode.toUpperCase()}
+                  {ghostMode ? '✓ ' : ''}
+                  {t.ghostMode.toUpperCase()}
                 </button>
-                <button 
+                <button
                   onClick={() => router.push(`/report?city=${pack.city}`)}
                   className="btn-tactical w-full py-2 text-tactical-xs"
                 >
@@ -326,9 +349,11 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
                   {selectedZone.zone_id}
                 </h2>
                 <div className="flex items-center gap-2">
-                  <div className={`status-indicator ${
-                    selectedZone.status === 'ACTIVE' ? 'active' : 'critical'
-                  }`}>
+                  <div
+                    className={`status-indicator ${
+                      selectedZone.status === 'ACTIVE' ? 'active' : 'critical'
+                    }`}
+                  >
                     {selectedZone.status}
                   </div>
                   <div className="font-mono text-tactical-xs text-ops-night-muted">
@@ -336,8 +361,8 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
                   </div>
                 </div>
               </div>
-              <button 
-                onClick={() => setSelectedZone(null)} 
+              <button
+                onClick={() => setSelectedZone(null)}
                 className="font-tactical text-tactical-lg text-ops-night-muted hover:text-ops-neon-green transition-colors"
               >
                 ✕
@@ -356,19 +381,24 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
                 <p className="font-mono text-tactical-base text-ops-night-text">
                   {getAnchorName(selectedZone.selected_anchor)}
                 </p>
-                {language !== 'en' && selectedZone.selected_anchor.tags?.['name:en'] && 
-                 getAnchorName(selectedZone.selected_anchor) !== selectedZone.selected_anchor.tags['name:en'] && (
-                  <p className="font-mono text-tactical-xs text-ops-neon-cyan/60 mt-1">
-                    {selectedZone.selected_anchor.tags['name:en']}
-                  </p>
-                )}
-                {language === 'en' && selectedZone.selected_anchor.name !== selectedZone.selected_anchor.tags?.['name:en'] && (
-                  <p className="font-mono text-tactical-xs text-ops-night-muted/50 mt-1">
-                    {selectedZone.selected_anchor.name}
-                  </p>
-                )}
+                {language !== 'en' &&
+                  selectedZone.selected_anchor.tags?.['name:en'] &&
+                  getAnchorName(selectedZone.selected_anchor) !==
+                    selectedZone.selected_anchor.tags['name:en'] && (
+                    <p className="font-mono text-tactical-xs text-ops-neon-cyan/60 mt-1">
+                      {selectedZone.selected_anchor.tags['name:en']}
+                    </p>
+                  )}
+                {language === 'en' &&
+                  selectedZone.selected_anchor.name !==
+                    selectedZone.selected_anchor.tags?.['name:en'] && (
+                    <p className="font-mono text-tactical-xs text-ops-night-muted/50 mt-1">
+                      {selectedZone.selected_anchor.name}
+                    </p>
+                  )}
                 <p className="font-mono text-tactical-xs text-ops-night-muted mt-1">
-                  {selectedZone.selected_anchor.lat.toFixed(6)}, {selectedZone.selected_anchor.lon.toFixed(6)}
+                  {selectedZone.selected_anchor.lat.toFixed(6)},{' '}
+                  {selectedZone.selected_anchor.lon.toFixed(6)}
                 </p>
               </div>
 
@@ -378,24 +408,43 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
                   {t.priceIntel.toUpperCase()}
                 </h3>
                 <p className="font-mono text-tactical-xs text-ops-night-muted mb-2">
-                  {language === 'en' ? 'Typical prices in this zone:' : 
-                   language === 'es' ? 'Precios típicos en esta zona:' :
-                   language === 'fr' ? 'Prix typiques dans cette zone:' :
-                   language === 'de' ? 'Typische Preise in dieser Zone:' :
-                   language === 'pt' ? 'Preços típicos nesta zona:' :
-                   language === 'ru' ? 'Типичные цены в этой зоне:' :
-                   language === 'zh' ? '该地区的典型价格:' :
-                   language === 'ja' ? 'このゾーンの一般的な価格:' :
-                   language === 'ko' ? '이 구역의 일반적인 가격:' :
-                   language === 'th' ? 'ราคาโดยทั่วไปในโซนนี้:' :
-                   language === 'ar' ? 'الأسعار النموذجية في هذه المنطقة:' :
-                   language === 'hi' ? 'इस क्षेत्र में सामान्य कीमतें:' :
-                   language === 'it' ? 'Prezzi tipici in questa zona:' :
-                   language === 'nl' ? 'Typische prijzen in deze zone:' :
-                   language === 'tr' ? 'Bu bölgedeki tipik fiyatlar:' :
-                   language === 'vi' ? 'Giá thông thường trong khu vực này:' :
-                   language === 'id' ? 'Harga umum di zona ini:' :
-                   language === 'pl' ? 'Typowe ceny w tej strefie:' : 'Typical prices in this zone:'}
+                  {language === 'en'
+                    ? 'Typical prices in this zone:'
+                    : language === 'es'
+                      ? 'Precios típicos en esta zona:'
+                      : language === 'fr'
+                        ? 'Prix typiques dans cette zone:'
+                        : language === 'de'
+                          ? 'Typische Preise in dieser Zone:'
+                          : language === 'pt'
+                            ? 'Preços típicos nesta zona:'
+                            : language === 'ru'
+                              ? 'Типичные цены в этой зоне:'
+                              : language === 'zh'
+                                ? '该地区的典型价格:'
+                                : language === 'ja'
+                                  ? 'このゾーンの一般的な価格:'
+                                  : language === 'ko'
+                                    ? '이 구역의 일반적인 가격:'
+                                    : language === 'th'
+                                      ? 'ราคาโดยทั่วไปในโซนนี้:'
+                                      : language === 'ar'
+                                        ? 'الأسعار النموذجية في هذه المنطقة:'
+                                        : language === 'hi'
+                                          ? 'इस क्षेत्र में सामान्य कीमतें:'
+                                          : language === 'it'
+                                            ? 'Prezzi tipici in questa zona:'
+                                            : language === 'nl'
+                                              ? 'Typische prijzen in deze zone:'
+                                              : language === 'tr'
+                                                ? 'Bu bölgedeki tipik fiyatlar:'
+                                                : language === 'vi'
+                                                  ? 'Giá thông thường trong khu vực này:'
+                                                  : language === 'id'
+                                                    ? 'Harga umum di zona ini:'
+                                                    : language === 'pl'
+                                                      ? 'Typowe ceny w tej strefie:'
+                                                      : 'Typical prices in this zone:'}
                 </p>
                 <p className="font-mono text-tactical-base text-ops-neon-cyan/90 leading-relaxed">
                   {selectedZone.cheat_sheet.price_estimates}
@@ -408,24 +457,43 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
                   {t.localComms.toUpperCase()}
                 </h3>
                 <p className="font-mono text-tactical-xs text-ops-night-muted mb-2">
-                  {language === 'en' ? 'Show this to taxi drivers:' : 
-                   language === 'es' ? 'Muestra esto a los taxistas:' :
-                   language === 'fr' ? 'Montrez ceci aux chauffeurs de taxi:' :
-                   language === 'de' ? 'Zeigen Sie dies Taxifahrern:' :
-                   language === 'pt' ? 'Mostre isso aos taxistas:' :
-                   language === 'ru' ? 'Покажите это таксистам:' :
-                   language === 'zh' ? '给出租车司机看这个:' :
-                   language === 'ja' ? 'タクシー運転手にこれを見せて:' :
-                   language === 'ko' ? '택시 기사에게 이것을 보여주세요:' :
-                   language === 'th' ? 'แสดงนี้ให้คนขับแท็กซี่:' :
-                   language === 'ar' ? 'أظهر هذا لسائقي التاكسي:' :
-                   language === 'hi' ? 'यह टैक्सी ड्राइवरों को दिखाएं:' :
-                   language === 'it' ? 'Mostra questo ai tassisti:' :
-                   language === 'nl' ? 'Toon dit aan taxichauffeurs:' :
-                   language === 'tr' ? 'Bunu taksi şoförlerine gösterin:' :
-                   language === 'vi' ? 'Cho tài xế taxi xem điều này:' :
-                   language === 'id' ? 'Tunjukkan ini kepada pengemudi taksi:' :
-                   language === 'pl' ? 'Pokaż to taksówkarzom:' : 'Show this to taxi drivers:'}
+                  {language === 'en'
+                    ? 'Show this to taxi drivers:'
+                    : language === 'es'
+                      ? 'Muestra esto a los taxistas:'
+                      : language === 'fr'
+                        ? 'Montrez ceci aux chauffeurs de taxi:'
+                        : language === 'de'
+                          ? 'Zeigen Sie dies Taxifahrern:'
+                          : language === 'pt'
+                            ? 'Mostre isso aos taxistas:'
+                            : language === 'ru'
+                              ? 'Покажите это таксистам:'
+                              : language === 'zh'
+                                ? '给出租车司机看这个:'
+                                : language === 'ja'
+                                  ? 'タクシー運転手にこれを見せて:'
+                                  : language === 'ko'
+                                    ? '택시 기사에게 이것을 보여주세요:'
+                                    : language === 'th'
+                                      ? 'แสดงนี้ให้คนขับแท็กซี่:'
+                                      : language === 'ar'
+                                        ? 'أظهر هذا لسائقي التاكسي:'
+                                        : language === 'hi'
+                                          ? 'यह टैक्सी ड्राइवरों को दिखाएं:'
+                                          : language === 'it'
+                                            ? 'Mostra questo ai tassisti:'
+                                            : language === 'nl'
+                                              ? 'Toon dit aan taxichauffeurs:'
+                                              : language === 'tr'
+                                                ? 'Bunu taksi şoförlerine gösterin:'
+                                                : language === 'vi'
+                                                  ? 'Cho tài xế taxi xem điều này:'
+                                                  : language === 'id'
+                                                    ? 'Tunjukkan ini kepada pengemudi taksi:'
+                                                    : language === 'pl'
+                                                      ? 'Pokaż to taksówkarzom:'
+                                                      : 'Show this to taxi drivers:'}
                 </p>
                 <p className="font-mono text-tactical-base text-ops-neon-green/90 leading-relaxed bg-ops-night-bg/50 p-3 rounded border border-ops-neon-green/30">
                   {selectedZone.cheat_sheet.taxi_phrase}
@@ -434,7 +502,10 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
 
               {/* Actions */}
               <div className="flex gap-3">
-                <button onClick={handleExportToMaps} className="btn-tactical-primary flex-1 py-3 text-tactical-xs">
+                <button
+                  onClick={handleExportToMaps}
+                  className="btn-tactical-primary flex-1 py-3 text-tactical-xs"
+                >
                   {t.exportToMaps.toUpperCase()}
                 </button>
                 <button
@@ -450,4 +521,9 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
       </div>
     </>
   );
+}
+
+// Force server-side rendering
+export async function getServerSideProps() {
+  return { props: {} };
 }

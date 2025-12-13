@@ -1,6 +1,6 @@
 /**
  * Operative Dashboard
- * 
+ *
  * Protected page accessible only to authenticated operatives.
  * Demonstrates auth protection and session handling.
  */
@@ -30,12 +30,12 @@ export default function OperativeDashboard() {
           <title>LOADING OPERATIVE DASHBOARD - UNMAPPED OS</title>
         </Head>
         <div className="min-h-screen flex items-center justify-center p-4">
-          <TerminalLoader 
+          <TerminalLoader
             stages={[
               { message: 'CALIBRATING FIELD POSITION...', duration: 500 },
               { message: 'LOADING OPERATIVE DASHBOARD...', duration: 600 },
               { message: 'SYNCING MISSION DATA...', duration: 500 },
-            ]} 
+            ]}
           />
         </div>
       </>
@@ -60,7 +60,6 @@ export default function OperativeDashboard() {
 
       <main className="min-h-screen p-4 relative">
         <div className="max-w-4xl mx-auto space-y-8 py-12">
-          
           {/* Header */}
           <div className="text-center space-y-4 animate-boot">
             <div className="glitch-text inline-block" data-text="UNMAPPED OS">
@@ -68,11 +67,11 @@ export default function OperativeDashboard() {
                 UNMAPPED OS
               </h1>
             </div>
-            
+
             <h2 className="font-tactical text-tactical-lg text-ops-neon-cyan uppercase tracking-widest">
               OPERATIVE DASHBOARD
             </h2>
-            
+
             <p className="font-mono text-tactical-xs text-ops-night-muted">
               SECURE SESSION ESTABLISHED
             </p>
@@ -81,7 +80,7 @@ export default function OperativeDashboard() {
           {/* User Info Card */}
           <div className="hud-card animate-fade-in">
             <div className="hud-card-header">OPERATIVE PROFILE</div>
-            
+
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -92,32 +91,26 @@ export default function OperativeDashboard() {
                     {user.id.slice(0, 8)}...{user.id.slice(-8)}
                   </p>
                 </div>
-                
+
                 <div>
                   <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase mb-1">
                     Email Address
                   </p>
-                  <p className="font-mono text-tactical-sm text-ops-night-text">
-                    {user.email}
-                  </p>
+                  <p className="font-mono text-tactical-sm text-ops-night-text">{user.email}</p>
                 </div>
 
                 <div>
                   <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase mb-1">
                     Status
                   </p>
-                  <p className="font-tactical text-tactical-sm text-ops-neon-green">
-                    ● ACTIVE
-                  </p>
+                  <p className="font-tactical text-tactical-sm text-ops-neon-green">● ACTIVE</p>
                 </div>
 
                 <div>
                   <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase mb-1">
                     Clearance Level
                   </p>
-                  <p className="font-mono text-tactical-sm text-ops-neon-cyan">
-                    L1 // STANDARD
-                  </p>
+                  <p className="font-mono text-tactical-sm text-ops-neon-cyan">L1 // STANDARD</p>
                 </div>
               </div>
 
@@ -131,8 +124,8 @@ export default function OperativeDashboard() {
 
           {/* Quick Actions */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-fade-in">
-            <Link 
-              href="/cities" 
+            <Link
+              href="/cities"
               className="hud-card hover:border-ops-neon-green transition-all duration-200 group"
             >
               <div className="p-6 space-y-3">
@@ -145,8 +138,8 @@ export default function OperativeDashboard() {
               </div>
             </Link>
 
-            <Link 
-              href="/profile" 
+            <Link
+              href="/profile"
               className="hud-card hover:border-ops-neon-green transition-all duration-200 group"
             >
               <div className="p-6 space-y-3">
@@ -159,8 +152,8 @@ export default function OperativeDashboard() {
               </div>
             </Link>
 
-            <Link 
-              href="/missions" 
+            <Link
+              href="/missions"
               className="hud-card hover:border-ops-neon-green transition-all duration-200 group"
             >
               <div className="p-6 space-y-3">
@@ -173,7 +166,7 @@ export default function OperativeDashboard() {
               </div>
             </Link>
 
-            <button 
+            <button
               onClick={signOut}
               className="hud-card hover:border-ops-critical transition-all duration-200 group text-left"
             >
@@ -191,17 +184,15 @@ export default function OperativeDashboard() {
           {/* System Info */}
           <div className="hud-card animate-fade-in">
             <div className="hud-card-header">SYSTEM STATUS</div>
-            
+
             <div className="space-y-2">
               <div className="flex justify-between items-center">
                 <span className="font-mono text-tactical-xs text-ops-night-muted">
                   Auth Provider
                 </span>
-                <span className="font-mono text-tactical-xs text-ops-night-text">
-                  SUPABASE SSR
-                </span>
+                <span className="font-mono text-tactical-xs text-ops-night-text">SUPABASE SSR</span>
               </div>
-              
+
               <div className="flex justify-between items-center">
                 <span className="font-mono text-tactical-xs text-ops-night-muted">
                   Session Type
@@ -210,7 +201,7 @@ export default function OperativeDashboard() {
                   SECURE COOKIE
                 </span>
               </div>
-              
+
               <div className="flex justify-between items-center">
                 <span className="font-mono text-tactical-xs text-ops-night-muted">
                   Protection Status
@@ -224,8 +215,8 @@ export default function OperativeDashboard() {
 
           {/* Back to home */}
           <div className="text-center animate-fade-in">
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className="inline-flex items-center gap-2 font-tactical text-tactical-xs text-ops-night-muted hover:text-ops-neon-green transition-colors"
             >
               <span>←</span>
@@ -236,4 +227,9 @@ export default function OperativeDashboard() {
       </main>
     </>
   );
+}
+
+// Force server-side rendering
+export async function getServerSideProps() {
+  return { props: {} };
 }

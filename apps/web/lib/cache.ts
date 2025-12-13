@@ -18,12 +18,13 @@ let redis: any = null;
 let CACHE_ENABLED = false;
 
 // Lazy load Redis to avoid build errors when package is not installed
-function getRedis() {
+async function getRedis() {
   if (redis !== null || CACHE_ENABLED) return redis;
 
   try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const RedisModule = require('@upstash/redis');
+    // Use eval to prevent webpack from bundling Redis when not needed
+    // eslint-disable-next-line no-eval
+    const RedisModule = await eval('import("@upstash/redis")');
 
     if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
       redis = new RedisModule.Redis({
@@ -52,7 +53,7 @@ interface CacheOptions {
  * Get cached value
  */
 export async function getCached<T>(key: string, options: CacheOptions = {}): Promise<T | null> {
-  const redisClient = getRedis();
+  const redisClient = await getRedis();
   if (!redisClient) return null;
 
   try {
@@ -77,7 +78,7 @@ export async function setCached<T>(
   value: T,
   options: CacheOptions = {}
 ): Promise<void> {
-  const redisClient = getRedis();
+  const redisClient = await getRedis();
   if (!redisClient) return;
 
   try {
@@ -94,7 +95,7 @@ export async function setCached<T>(
  * Delete cached value
  */
 export async function deleteCached(key: string, options: CacheOptions = {}): Promise<void> {
-  const redisClient = getRedis();
+  const redisClient = await getRedis();
   if (!redisClient) return;
 
   try {
@@ -171,7 +172,7 @@ export async function checkRateLimit(
   limit: number,
   windowSeconds: number
 ): Promise<{ allowed: boolean; remaining: number }> {
-  const redisClient = getRedis();
+  const redisClient = await getRedis();
   if (!redisClient) return { allowed: true, remaining: limit };
 
   try {
@@ -212,7 +213,7 @@ export async function getCachedSession(sessionId: string): Promise<any | null> {
  * Flush cache pattern
  */
 export async function flushPattern(pattern: string): Promise<void> {
-  const redisClient = getRedis();
+  const redisClient = await getRedis();
   if (!redisClient) return;
 
   try {
@@ -227,7 +228,7 @@ export async function flushPattern(pattern: string): Promise<void> {
  * Health check
  */
 export async function checkRedisHealth(): Promise<boolean> {
-  const redisClient = getRedis();
+  const redisClient = await getRedis();
   if (!redisClient) return false;
 
   try {
