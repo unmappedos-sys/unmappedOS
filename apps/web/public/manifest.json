@@ -1,0 +1,43 @@
+{
+  "name": "Unmapped OS",
+  "short_name": "Unmapped",
+  "description": "Field intelligence for urban operatives - Offline city packs, tactical navigation, hazard reporting",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#00FF41",
+  "orientation": "portrait-primary",
+  "categories": ["navigation", "travel", "utilities"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Bangkok Map",
+      "short_name": "Bangkok",
+      "description": "Open Bangkok tactical map",
+      "url": "/map/bangkok",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Tokyo Map",
+      "short_name": "Tokyo",
+      "description": "Open Tokyo tactical map",
+      "url": "/map/tokyo",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "prefer_related_applications": false
+}

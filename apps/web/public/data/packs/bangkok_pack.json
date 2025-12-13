@@ -1,0 +1,1329 @@
+{
+  "city": "bangkok",
+  "generated_at": "2025-12-12T07:36:38.569Z",
+  "version": 1,
+  "zones": [
+    {
+      "zone_id": "BKK_001",
+      "city": "bangkok",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              100.491,
+              13.751
+            ],
+            [
+              100.497,
+              13.751
+            ],
+            [
+              100.497,
+              13.756
+            ],
+            [
+              100.491,
+              13.756
+            ],
+            [
+              100.491,
+              13.751
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 13.7537199,
+        "lon": 100.4939627
+      },
+      "texture_type": "TRANSIT_HUB",
+      "neon_color": "#00FF00",
+      "selected_anchor": {
+        "id": "node/6371902497",
+        "lat": 13.7537199,
+        "lon": 100.4939627,
+        "tags": {
+          "bench": "yes",
+          "bus": "yes",
+          "colour": "blue",
+          "highway": "bus_stop",
+          "name": "ศาลหลักเมือง",
+          "name:en": "City Pillar Shrine",
+          "name:th": "ศาลหลักเมือง",
+          "public_transport": "platform",
+          "ref": "11",
+          "route_ref": "6;9;32;44;47;60;82;203;503",
+          "shelter": "yes"
+        },
+        "score": 185,
+        "name": "ศาลหลักเมือง",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 60,
+        "beer": 80,
+        "taxi_airport": 350
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "ไปสนามบิน (pai sà-năam bin)",
+        "price_estimates": "Coffee ฿60 | Beer ฿80",
+        "emergency_numbers": {
+          "police": "191",
+          "ambulance": "1669",
+          "embassy": "+66-2-205-4000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              100.49296269999999,
+              13.7527199
+            ],
+            [
+              100.4949627,
+              13.7547199
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "OFFLINE",
+          "lat": 0,
+          "lon": 0,
+          "count": 5
+        }
+      ],
+      "mission_whisper": "RECENT REPORTS: AGGRESSIVE TOUTING NEAR ANCHOR",
+      "search_index_tokens": [
+        "bangkok",
+        "bkk_001",
+        "transit hub",
+        "ศาลหลักเมือง",
+        "bench:yes",
+        "bus:yes",
+        "colour:blue",
+        "highway:bus_stop",
+        "name:ศาลหลักเมือง",
+        "name:en:city pillar shrine",
+        "name:th:ศาลหลักเมือง",
+        "public_transport:platform",
+        "ref:11",
+        "route_ref:6;9;32;44;47;60;82;203;503",
+        "shelter:yes"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "BKK_002",
+      "city": "bangkok",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              100.524,
+              13.724
+            ],
+            [
+              100.531,
+              13.724
+            ],
+            [
+              100.531,
+              13.729
+            ],
+            [
+              100.524,
+              13.729
+            ],
+            [
+              100.524,
+              13.724
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 13.7261527,
+        "lon": 100.5276295
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "node/11174935896",
+        "lat": 13.7261527,
+        "lon": 100.5276295,
+        "tags": {
+          "artwork_type": "sculpture",
+          "material": "metal",
+          "name": "รูปปั้นช้าง",
+          "name:en": "Elephant Statue",
+          "name:th": "รูปปั้นช้าง",
+          "tourism": "artwork"
+        },
+        "score": 167,
+        "name": "รูปปั้นช้าง",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 60,
+        "beer": 80,
+        "taxi_airport": 350
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "ไปสนามบิน (pai sà-năam bin)",
+        "price_estimates": "Coffee ฿60 | Beer ฿80",
+        "emergency_numbers": {
+          "police": "191",
+          "ambulance": "1669",
+          "embassy": "+66-2-205-4000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              100.5266295,
+              13.7251527
+            ],
+            [
+              100.52862950000001,
+              13.7271527
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "CLEAN",
+          "lat": 0,
+          "lon": 0,
+          "count": 3
+        }
+      ],
+      "mission_whisper": "COFFEE PRICES STABLE 42-48฿ // AVOID TOURIST-FACING CAFES",
+      "search_index_tokens": [
+        "bangkok",
+        "bkk_002",
+        "mixed",
+        "รูปปั้นช้าง",
+        "artwork_type:sculpture",
+        "material:metal",
+        "name:รูปปั้นช้าง",
+        "name:en:elephant statue",
+        "name:th:รูปปั้นช้าง",
+        "tourism:artwork"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "BKK_003",
+      "city": "bangkok",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              100.56,
+              13.735
+            ],
+            [
+              100.567,
+              13.735
+            ],
+            [
+              100.567,
+              13.74
+            ],
+            [
+              100.56,
+              13.74
+            ],
+            [
+              100.56,
+              13.735
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 13.7370085,
+        "lon": 100.5621377
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "way/156261355",
+        "lat": 13.7370085,
+        "lon": 100.5621377,
+        "tags": {
+          "bicycle": "yes",
+          "highway": "pedestrian",
+          "lit": "yes",
+          "min_age": "18",
+          "motor_vehicle": "yes",
+          "name": "ซอยคาวบอย",
+          "name:en": "Soi Cowboy",
+          "name:ja": "ソイ カウボーイ",
+          "name:th": "ซอยคาวบอย",
+          "surface": "asphalt",
+          "wikidata": "Q1343629",
+          "wikipedia": "en:Soi Cowboy"
+        },
+        "score": 140,
+        "name": "ซอยคาวบอย",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 60,
+        "beer": 80,
+        "taxi_airport": 350
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "ไปสนามบิน (pai sà-năam bin)",
+        "price_estimates": "Coffee ฿60 | Beer ฿80",
+        "emergency_numbers": {
+          "police": "191",
+          "ambulance": "1669",
+          "embassy": "+66-2-205-4000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              100.56113769999999,
+              13.7360085
+            ],
+            [
+              100.5631377,
+              13.7380085
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "CLEAN",
+          "lat": 0,
+          "lon": 0,
+          "count": 3
+        }
+      ],
+      "mission_whisper": "LOCAL MARKET HOURS 06:00-14:00 // BEST VALUE",
+      "search_index_tokens": [
+        "bangkok",
+        "bkk_003",
+        "mixed",
+        "ซอยคาวบอย",
+        "bicycle:yes",
+        "highway:pedestrian",
+        "lit:yes",
+        "min_age:18",
+        "motor_vehicle:yes",
+        "name:ซอยคาวบอย",
+        "name:en:soi cowboy",
+        "name:ja:ソイ カウボーイ",
+        "name:th:ซอยคาวบอย",
+        "surface:asphalt",
+        "wikidata:q1343629",
+        "wikipedia:en:soi cowboy"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "BKK_004",
+      "city": "bangkok",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              100.548,
+              13.798
+            ],
+            [
+              100.555,
+              13.798
+            ],
+            [
+              100.555,
+              13.803
+            ],
+            [
+              100.548,
+              13.803
+            ],
+            [
+              100.548,
+              13.798
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 13.80035,
+        "lon": 100.5510773
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "way/469083605",
+        "lat": 13.80035,
+        "lon": 100.5510773,
+        "tags": {
+          "highway": "pedestrian",
+          "name": "ลานหอนาฬิกา",
+          "name:en": "Clock Tower Corridor",
+          "name:th": "ลานหอนาฬิกา"
+        },
+        "score": 161,
+        "name": "ลานหอนาฬิกา",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 60,
+        "beer": 80,
+        "taxi_airport": 350
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "ไปสนามบิน (pai sà-năam bin)",
+        "price_estimates": "Coffee ฿60 | Beer ฿80",
+        "emergency_numbers": {
+          "police": "191",
+          "ambulance": "1669",
+          "embassy": "+66-2-205-4000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              100.5500773,
+              13.79935
+            ],
+            [
+              100.55207730000001,
+              13.80135
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "HASSLE",
+          "lat": 0,
+          "lon": 0,
+          "count": 3
+        }
+      ],
+      "mission_whisper": "COFFEE PRICES STABLE 42-48฿ // AVOID TOURIST-FACING CAFES",
+      "search_index_tokens": [
+        "bangkok",
+        "bkk_004",
+        "mixed",
+        "ลานหอนาฬิกา",
+        "highway:pedestrian",
+        "name:ลานหอนาฬิกา",
+        "name:en:clock tower corridor",
+        "name:th:ลานหอนาฬิกา"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "BKK_005",
+      "city": "bangkok",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              100.507,
+              13.739
+            ],
+            [
+              100.514,
+              13.739
+            ],
+            [
+              100.514,
+              13.744
+            ],
+            [
+              100.507,
+              13.744
+            ],
+            [
+              100.507,
+              13.739
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 13.7419103,
+        "lon": 100.510092
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "way/1372975398",
+        "lat": 13.7419103,
+        "lon": 100.510092,
+        "tags": {
+          "area": "yes",
+          "highway": "pedestrian"
+        },
+        "score": 147,
+        "name": "Intersection at 13.7415, 100.5105",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 60,
+        "beer": 80,
+        "taxi_airport": 350
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "ไปสนามบิน (pai sà-năam bin)",
+        "price_estimates": "Coffee ฿60 | Beer ฿80",
+        "emergency_numbers": {
+          "police": "191",
+          "ambulance": "1669",
+          "embassy": "+66-2-205-4000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              100.509092,
+              13.740910300000001
+            ],
+            [
+              100.511092,
+              13.7429103
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "OFFLINE",
+          "lat": 0,
+          "lon": 0,
+          "count": 2
+        }
+      ],
+      "mission_whisper": "CLEAN ZONE // LOW HASSLE // VERIFIED BY 8 OPERATIVES",
+      "search_index_tokens": [
+        "bangkok",
+        "bkk_005",
+        "mixed",
+        "intersection at 13.7415, 100.5105",
+        "area:yes",
+        "highway:pedestrian"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "BKK_006",
+      "city": "bangkok",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              100.583,
+              13.732
+            ],
+            [
+              100.59,
+              13.732
+            ],
+            [
+              100.59,
+              13.737
+            ],
+            [
+              100.583,
+              13.737
+            ],
+            [
+              100.583,
+              13.732
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 13.7344768,
+        "lon": 100.5867059
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "node/9763497659",
+        "lat": 13.7344768,
+        "lon": 100.5867059,
+        "tags": {
+          "addr:city": "วัฒนา กรุงเทพมหานคร ประเทศไทย",
+          "addr:housenumber": "267/16",
+          "addr:postcode": "10110",
+          "addr:street": "สุขุมวิท 63",
+          "amenity": "restaurant",
+          "cuisine": "焼き鳥",
+          "name": "Torisawa22",
+          "opening_hours": "Th-Tu 17:30-0:00",
+          "website": "https://www.instagram.com/torisawa22_bkk/"
+        },
+        "score": 73,
+        "name": "Torisawa22",
+        "selection_reason": "Best available candidate"
+      },
+      "price_medians": {
+        "coffee": 60,
+        "beer": 80,
+        "taxi_airport": 350
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "ไปสนามบิน (pai sà-năam bin)",
+        "price_estimates": "Coffee ฿60 | Beer ฿80",
+        "emergency_numbers": {
+          "police": "191",
+          "ambulance": "1669",
+          "embassy": "+66-2-205-4000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              100.5857059,
+              13.7334768
+            ],
+            [
+              100.5877059,
+              13.735476799999999
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "OFFLINE",
+          "lat": 0,
+          "lon": 0,
+          "count": 4
+        }
+      ],
+      "mission_whisper": "TRANSIT HUB CROWDED 17:00-19:00 // PLAN AHEAD",
+      "search_index_tokens": [
+        "bangkok",
+        "bkk_006",
+        "mixed",
+        "torisawa22",
+        "addr:city:วัฒนา กรุงเทพมหานคร ประเทศไทย",
+        "addr:housenumber:267/16",
+        "addr:postcode:10110",
+        "addr:street:สุขุมวิท 63",
+        "amenity:restaurant",
+        "cuisine:焼き鳥",
+        "name:torisawa22",
+        "opening_hours:th-tu 17:30-0:00",
+        "website:https://www.instagram.com/torisawa22_bkk/"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "BKK_007",
+      "city": "bangkok",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              100.533,
+              13.745
+            ],
+            [
+              100.54,
+              13.745
+            ],
+            [
+              100.54,
+              13.75
+            ],
+            [
+              100.533,
+              13.75
+            ],
+            [
+              100.533,
+              13.745
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 13.7473944,
+        "lon": 100.5358803
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "node/1697233625",
+        "lat": 13.7473944,
+        "lon": 100.5358803,
+        "tags": {
+          "amenity": "parking_entrance"
+        },
+        "score": 44,
+        "name": "parking_entrance at 13.7475, 100.5365",
+        "selection_reason": "Best available candidate"
+      },
+      "price_medians": {
+        "coffee": 60,
+        "beer": 80,
+        "taxi_airport": 350
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "ไปสนามบิน (pai sà-năam bin)",
+        "price_estimates": "Coffee ฿60 | Beer ฿80",
+        "emergency_numbers": {
+          "police": "191",
+          "ambulance": "1669",
+          "embassy": "+66-2-205-4000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              100.5348803,
+              13.7463944
+            ],
+            [
+              100.5368803,
+              13.748394399999999
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "CLEAN",
+          "lat": 0,
+          "lon": 0,
+          "count": 2
+        }
+      ],
+      "mission_whisper": "RECENT REPORTS: AGGRESSIVE TOUTING NEAR ANCHOR",
+      "search_index_tokens": [
+        "bangkok",
+        "bkk_007",
+        "mixed",
+        "parking_entrance at 13.7475, 100.5365",
+        "amenity:parking_entrance"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "BKK_008",
+      "city": "bangkok",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              100.543,
+              13.778
+            ],
+            [
+              100.55,
+              13.778
+            ],
+            [
+              100.55,
+              13.783
+            ],
+            [
+              100.543,
+              13.783
+            ],
+            [
+              100.543,
+              13.778
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 13.7800462,
+        "lon": 100.5451965
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "node/2075727702",
+        "lat": 13.7800462,
+        "lon": 100.5451965,
+        "tags": {
+          "amenity": "restaurant",
+          "cuisine": "japanese",
+          "level": "1",
+          "name": "CoCo ICHIBANYA",
+          "name:en": "CoCo ICHIBANYA",
+          "name:th": "โคโค่ อิฉิบันยะ",
+          "opening_hours": "Mo-Fr 10:30-22:00; Sa,Su 10:00-22:00",
+          "payment:credit_cards": "yes",
+          "price": "101 - 250 THB",
+          "website": "https://www.cocothailand.com/"
+        },
+        "score": 42,
+        "name": "CoCo ICHIBANYA",
+        "selection_reason": "Best available candidate"
+      },
+      "price_medians": {
+        "coffee": 60,
+        "beer": 80,
+        "taxi_airport": 350
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "ไปสนามบิน (pai sà-năam bin)",
+        "price_estimates": "Coffee ฿60 | Beer ฿80",
+        "emergency_numbers": {
+          "police": "191",
+          "ambulance": "1669",
+          "embassy": "+66-2-205-4000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              100.5441965,
+              13.7790462
+            ],
+            [
+              100.54619650000001,
+              13.781046199999999
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "CLEAN",
+          "lat": 0,
+          "lon": 0,
+          "count": 1
+        }
+      ],
+      "mission_whisper": "CONSTRUCTION EAST EDGE — AVOID AFTER 21:00",
+      "search_index_tokens": [
+        "bangkok",
+        "bkk_008",
+        "mixed",
+        "coco ichibanya",
+        "amenity:restaurant",
+        "cuisine:japanese",
+        "level:1",
+        "name:coco ichibanya",
+        "name:en:coco ichibanya",
+        "name:th:โคโค่ อิฉิบันยะ",
+        "opening_hours:mo-fr 10:30-22:00; sa,su 10:00-22:00",
+        "payment:credit_cards:yes",
+        "price:101 - 250 thb",
+        "website:https://www.cocothailand.com/"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "BKK_009",
+      "city": "bangkok",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              100.497,
+              13.758
+            ],
+            [
+              100.502,
+              13.758
+            ],
+            [
+              100.502,
+              13.762
+            ],
+            [
+              100.497,
+              13.762
+            ],
+            [
+              100.497,
+              13.758
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 13.7603943,
+        "lon": 100.4994863
+      },
+      "texture_type": "TRANSIT_HUB",
+      "neon_color": "#00FF00",
+      "selected_anchor": {
+        "id": "node/5134608408",
+        "lat": 13.7603943,
+        "lon": 100.4994863,
+        "tags": {
+          "bench": "yes",
+          "bin": "no",
+          "bus": "yes",
+          "description": "สาย 56, 68, 127, และ 516",
+          "description:en": "Bus number 56, 68, 127, and 516",
+          "highway": "bus_stop",
+          "name": "วัดบวรนิเวศ (ฝั่งบวรนิเวศน์)",
+          "name:en": "Bowonniwet (Wat Bowonniwet)",
+          "name:th": "วัดบวรนิเวศ (ฝั่งบวรนิเวศน์)",
+          "not:network:wikidata": "Q4855217",
+          "note": "\"บวรนิเวศน์\" ในชื่อป้ายจะมี 'น' การันต์, แต่ \"วัดบวรนิเวศ\" ในวงเล็บจะไม่มี",
+          "operator": "องค์การขนส่งมวลชนกรุงเทพ",
+          "operator:wikidata": "Q4855217",
+          "public_transport": "platform",
+          "shelter": "yes"
+        },
+        "score": 180,
+        "name": "วัดบวรนิเวศ (ฝั่งบวรนิเวศน์)",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 60,
+        "beer": 80,
+        "taxi_airport": 350
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "ไปสนามบิน (pai sà-năam bin)",
+        "price_estimates": "Coffee ฿60 | Beer ฿80",
+        "emergency_numbers": {
+          "police": "191",
+          "ambulance": "1669",
+          "embassy": "+66-2-205-4000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              100.4984863,
+              13.7593943
+            ],
+            [
+              100.5004863,
+              13.7613943
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "OFFLINE",
+          "lat": 0,
+          "lon": 0,
+          "count": 3
+        }
+      ],
+      "mission_whisper": "RECENT REPORTS: AGGRESSIVE TOUTING NEAR ANCHOR",
+      "search_index_tokens": [
+        "bangkok",
+        "bkk_009",
+        "transit hub",
+        "วัดบวรนิเวศ (ฝั่งบวรนิเวศน์)",
+        "bench:yes",
+        "bin:no",
+        "bus:yes",
+        "description:สาย 56, 68, 127, และ 516",
+        "description:en:bus number 56, 68, 127, and 516",
+        "highway:bus_stop",
+        "name:วัดบวรนิเวศ (ฝั่งบวรนิเวศน์)",
+        "name:en:bowonniwet (wat bowonniwet)",
+        "name:th:วัดบวรนิเวศ (ฝั่งบวรนิเวศน์)",
+        "not:network:wikidata:q4855217",
+        "note:\"บวรนิเวศน์\" ในชื่อป้ายจะมี 'น' การันต์, แต่ \"วัดบวรนิเวศ\" ในวงเล็บจะไม่มี",
+        "operator:องค์การขนส่งมวลชนกรุงเทพ",
+        "operator:wikidata:q4855217",
+        "public_transport:platform",
+        "shelter:yes"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "BKK_010",
+      "city": "bangkok",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              100.529,
+              13.719
+            ],
+            [
+              100.536,
+              13.719
+            ],
+            [
+              100.536,
+              13.724
+            ],
+            [
+              100.529,
+              13.724
+            ],
+            [
+              100.529,
+              13.719
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 13.7198439,
+        "lon": 100.533692
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "way/241865727",
+        "lat": 13.7198439,
+        "lon": 100.533692,
+        "tags": {
+          "alt_name": "บ้านซอยสวนพลู",
+          "alt_name:en": "M.R. Kukrit's House",
+          "leisure": "garden",
+          "name": "บ้าน ม.ร.ว.คึกฤทธิ์ ปราโมช",
+          "name:en": "M.R. Kukrit's Heritage Home",
+          "phone": "+6622868185",
+          "tourism": "museum",
+          "wikidata": "Q6579813",
+          "wikimedia_commons": "Category:M.R. Kukrit's Heritage Home",
+          "wikipedia": "en:M.R. Kukrit's House"
+        },
+        "score": 129,
+        "name": "บ้าน ม.ร.ว.คึกฤทธิ์ ปราโมช",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 60,
+        "beer": 80,
+        "taxi_airport": 350
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "ไปสนามบิน (pai sà-năam bin)",
+        "price_estimates": "Coffee ฿60 | Beer ฿80",
+        "emergency_numbers": {
+          "police": "191",
+          "ambulance": "1669",
+          "embassy": "+66-2-205-4000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              100.532692,
+              13.718843900000001
+            ],
+            [
+              100.534692,
+              13.7208439
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "OFFLINE",
+          "lat": 0,
+          "lon": 0,
+          "count": 2
+        }
+      ],
+      "mission_whisper": "TRANSIT HUB CROWDED 17:00-19:00 // PLAN AHEAD",
+      "search_index_tokens": [
+        "bangkok",
+        "bkk_010",
+        "mixed",
+        "บ้าน ม.ร.ว.คึกฤทธิ์ ปราโมช",
+        "alt_name:บ้านซอยสวนพลู",
+        "alt_name:en:m.r. kukrit's house",
+        "leisure:garden",
+        "name:บ้าน ม.ร.ว.คึกฤทธิ์ ปราโมช",
+        "name:en:m.r. kukrit's heritage home",
+        "phone:+6622868185",
+        "tourism:museum",
+        "wikidata:q6579813",
+        "wikimedia_commons:category:m.r. kukrit's heritage home",
+        "wikipedia:en:m.r. kukrit's house"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "BKK_011",
+      "city": "bangkok",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              100.56,
+              13.737
+            ],
+            [
+              100.565,
+              13.737
+            ],
+            [
+              100.565,
+              13.742
+            ],
+            [
+              100.56,
+              13.742
+            ],
+            [
+              100.56,
+              13.737
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 13.7396653,
+        "lon": 100.5618987
+      },
+      "texture_type": "TRANSIT_HUB",
+      "neon_color": "#00FF00",
+      "selected_anchor": {
+        "id": "node/4460800328",
+        "lat": 13.7396653,
+        "lon": 100.5618987,
+        "tags": {
+          "bench": "yes",
+          "bin": "yes",
+          "bus": "yes",
+          "highway": "bus_stop",
+          "name": "Sino-Thai Tower",
+          "public_transport": "platform",
+          "shelter": "yes"
+        },
+        "score": 172,
+        "name": "Sino-Thai Tower",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 60,
+        "beer": 80,
+        "taxi_airport": 350
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "ไปสนามบิน (pai sà-năam bin)",
+        "price_estimates": "Coffee ฿60 | Beer ฿80",
+        "emergency_numbers": {
+          "police": "191",
+          "ambulance": "1669",
+          "embassy": "+66-2-205-4000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              100.5608987,
+              13.738665300000001
+            ],
+            [
+              100.5628987,
+              13.7406653
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "OVERPRICING",
+          "lat": 0,
+          "lon": 0,
+          "count": 1
+        }
+      ],
+      "mission_whisper": "COFFEE PRICES STABLE 42-48฿ // AVOID TOURIST-FACING CAFES",
+      "search_index_tokens": [
+        "bangkok",
+        "bkk_011",
+        "transit hub",
+        "sino-thai tower",
+        "bench:yes",
+        "bin:yes",
+        "bus:yes",
+        "highway:bus_stop",
+        "name:sino-thai tower",
+        "public_transport:platform",
+        "shelter:yes"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "BKK_012",
+      "city": "bangkok",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              100.569,
+              13.73
+            ],
+            [
+              100.576,
+              13.73
+            ],
+            [
+              100.576,
+              13.735
+            ],
+            [
+              100.569,
+              13.735
+            ],
+            [
+              100.569,
+              13.73
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 13.7323306,
+        "lon": 100.572025
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "node/6300429086",
+        "lat": 13.7323306,
+        "lon": 100.572025,
+        "tags": {
+          "addr:housenumber": "11",
+          "addr:postcode": "10110",
+          "addr:street": "สุขุมวิท ซอย 41",
+          "name": "พี่โรงก็เล่น",
+          "name:en": "Phirom Garden",
+          "tourism": "apartment",
+          "website": "http://www.phiromgarden.com"
+        },
+        "score": 65,
+        "name": "พี่โรงก็เล่น",
+        "selection_reason": "Best available candidate"
+      },
+      "price_medians": {
+        "coffee": 60,
+        "beer": 80,
+        "taxi_airport": 350
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "ไปสนามบิน (pai sà-năam bin)",
+        "price_estimates": "Coffee ฿60 | Beer ฿80",
+        "emergency_numbers": {
+          "police": "191",
+          "ambulance": "1669",
+          "embassy": "+66-2-205-4000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              100.57102499999999,
+              13.7313306
+            ],
+            [
+              100.573025,
+              13.733330599999999
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "HASSLE",
+          "lat": 0,
+          "lon": 0,
+          "count": 3
+        }
+      ],
+      "mission_whisper": "RECENT REPORTS: AGGRESSIVE TOUTING NEAR ANCHOR",
+      "search_index_tokens": [
+        "bangkok",
+        "bkk_012",
+        "mixed",
+        "พี่โรงก็เล่น",
+        "addr:housenumber:11",
+        "addr:postcode:10110",
+        "addr:street:สุขุมวิท ซอย 41",
+        "name:พี่โรงก็เล่น",
+        "name:en:phirom garden",
+        "tourism:apartment",
+        "website:http://www.phiromgarden.com"
+      ],
+      "top_comments": []
+    }
+  ],
+  "meta": {
+    "source": "packgen v1",
+    "seed_count": 12
+  },
+  "pack_token": "bangkok-1765524998570",
+  "pack_size_bytes": 33800
+}

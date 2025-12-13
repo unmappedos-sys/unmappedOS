@@ -1,0 +1,209 @@
+{
+  "quests": [
+    {
+      "id": "first_pack",
+      "name": "First Download",
+      "description": "Download your first city pack",
+      "type": "one_time",
+      "karma_reward": 50,
+      "badge": "downloader",
+      "criteria": {
+        "action": "pack_download",
+        "count": 1
+      }
+    },
+    {
+      "id": "first_comment",
+      "name": "First Intel",
+      "description": "Submit your first local intel comment",
+      "type": "one_time",
+      "karma_reward": 25,
+      "badge": "intel_agent",
+      "criteria": {
+        "action": "comment_create",
+        "count": 1
+      }
+    },
+    {
+      "id": "first_verified_comment",
+      "name": "Verified Operative",
+      "description": "Get your first comment verified",
+      "type": "one_time",
+      "karma_reward": 100,
+      "badge": "verified_operative",
+      "criteria": {
+        "action": "comment_verified",
+        "count": 1
+      }
+    },
+    {
+      "id": "local_verifier",
+      "name": "Local Verifier",
+      "description": "Verify 10 pieces of intel from other operatives",
+      "type": "progressive",
+      "karma_reward": 150,
+      "badge": "verifier",
+      "criteria": {
+        "action": "verify_comment",
+        "count": 10
+      }
+    },
+    {
+      "id": "price_patrol_week",
+      "name": "Price Patrol",
+      "description": "Report prices for 7 consecutive days",
+      "type": "streak",
+      "karma_reward": 200,
+      "badge": "price_patrol",
+      "criteria": {
+        "action": "price_report",
+        "streak_days": 7
+      }
+    },
+    {
+      "id": "hazard_hunter",
+      "name": "Hazard Hunter",
+      "description": "Report 5 hazards or offline zones",
+      "type": "progressive",
+      "karma_reward": 100,
+      "badge": "hazard_hunter",
+      "criteria": {
+        "action": "hazard_report",
+        "count": 5
+      }
+    },
+    {
+      "id": "anchor_master",
+      "name": "Anchor Master",
+      "description": "Lock 20 anchor locations",
+      "type": "progressive",
+      "karma_reward": 250,
+      "badge": "anchor_master",
+      "criteria": {
+        "action": "anchor_lock",
+        "count": 20
+      }
+    },
+    {
+      "id": "global_operative",
+      "name": "Global Operative",
+      "description": "Download packs from 5 different cities",
+      "type": "progressive",
+      "karma_reward": 300,
+      "badge": "global_operative",
+      "criteria": {
+        "action": "pack_download",
+        "unique_cities": 5
+      }
+    },
+    {
+      "id": "data_exporter",
+      "name": "Data Exporter",
+      "description": "Export your operative record to external format",
+      "type": "one_time",
+      "karma_reward": 50,
+      "badge": "exporter",
+      "criteria": {
+        "action": "data_export",
+        "count": 1
+      }
+    },
+    {
+      "id": "streak_warrior",
+      "name": "Streak Warrior",
+      "description": "Maintain a 30-day activity streak",
+      "type": "streak",
+      "karma_reward": 500,
+      "badge": "streak_warrior",
+      "criteria": {
+        "streak": 30
+      }
+    }
+  ],
+  "badges": [
+    {
+      "id": "downloader",
+      "name": "Downloader",
+      "description": "Downloaded first city pack",
+      "icon": "📦",
+      "rarity": "common"
+    },
+    {
+      "id": "intel_agent",
+      "name": "Intel Agent",
+      "description": "Submitted first intel",
+      "icon": "🔍",
+      "rarity": "common"
+    },
+    {
+      "id": "verified_operative",
+      "name": "Verified Operative",
+      "description": "First verified intel",
+      "icon": "✓",
+      "rarity": "uncommon"
+    },
+    {
+      "id": "verifier",
+      "name": "Verifier",
+      "description": "Verified 10+ pieces of intel",
+      "icon": "🔐",
+      "rarity": "rare"
+    },
+    {
+      "id": "price_patrol",
+      "name": "Price Patrol",
+      "description": "7-day price reporting streak",
+      "icon": "💰",
+      "rarity": "rare"
+    },
+    {
+      "id": "hazard_hunter",
+      "name": "Hazard Hunter",
+      "description": "Reported 5+ hazards",
+      "icon": "⚠️",
+      "rarity": "uncommon"
+    },
+    {
+      "id": "anchor_master",
+      "name": "Anchor Master",
+      "description": "Locked 20+ anchors",
+      "icon": "⚓",
+      "rarity": "epic"
+    },
+    {
+      "id": "global_operative",
+      "name": "Global Operative",
+      "description": "Active in 5+ cities",
+      "icon": "🌍",
+      "rarity": "epic"
+    },
+    {
+      "id": "exporter",
+      "name": "Exporter",
+      "description": "Exported operative data",
+      "icon": "📤",
+      "rarity": "common"
+    },
+    {
+      "id": "streak_warrior",
+      "name": "Streak Warrior",
+      "description": "30-day activity streak",
+      "icon": "🔥",
+      "rarity": "legendary"
+    }
+  ],
+  "karma_actions": {
+    "comment_create": 10,
+    "comment_verified": 25,
+    "price_report": 5,
+    "hazard_report": 15,
+    "anchor_lock": 8,
+    "pack_download": 3,
+    "verify_comment": 5,
+    "data_export": 5
+  },
+  "level_thresholds": {
+    "description": "Level = floor(sqrt(karma / 100)) + 1",
+    "formula": "level = Math.floor(Math.sqrt(karma / 100)) + 1"
+  }
+}

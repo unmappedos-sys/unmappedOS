@@ -1,0 +1,89 @@
+name: Weekly Pack Generation
+
+on:
+  schedule:
+    # Run every Monday at 02:00 UTC
+    - cron: '0 2 * * 1'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  generate-packs:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate Bangkok pack
+        run: pnpm run packgen:bangkok
+        env:
+          OVERPASS_ENDPOINT: ${{ secrets.OVERPASS_ENDPOINT || 'https://overpass-api.de/api/interpreter' }}
+
+      - name: Generate Tokyo pack
+        run: pnpm run packgen:tokyo
+        env:
+          OVERPASS_ENDPOINT: ${{ secrets.OVERPASS_ENDPOINT || 'https://overpass-api.de/api/interpreter' }}
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --quiet data/packs/ || echo "::set-output name=changes::true"
+
+      - name: Commit and push if changed
+        if: steps.git-check.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/packs/
+          git commit -m "chore: auto-generate city packs [skip ci]"
+          git push
+
+      - name: Create release notes
+        if: steps.git-check.outputs.changes == 'true'
+        run: |
+          echo "## City Pack Updates" > pack-notes.md
+          echo "" >> pack-notes.md
+          echo "Weekly automated city pack generation completed:" >> pack-notes.md
+          echo "" >> pack-notes.md
+          ls -lh data/packs/*.json | awk '{print "- " $9 " (" $5 ")"}' >> pack-notes.md
+          cat pack-notes.md
+
+      - name: Trigger Vercel deployment
+        if: steps.git-check.outputs.changes == 'true'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.repos.createDispatchEvent({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              event_type: 'deploy-packs'
+            })
+
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '⚠️ Weekly pack generation failed',
+              body: 'The weekly city pack generation workflow failed. Check the Actions logs for details.',
+              labels: ['automation', 'bug']
+            })

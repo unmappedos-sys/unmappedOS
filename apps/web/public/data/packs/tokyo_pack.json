@@ -1,0 +1,1791 @@
+{
+  "city": "tokyo",
+  "generated_at": "2025-12-12T07:37:30.951Z",
+  "version": 1,
+  "zones": [
+    {
+      "zone_id": "TYO_001",
+      "city": "tokyo",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              139.699,
+              35.658
+            ],
+            [
+              139.703,
+              35.658
+            ],
+            [
+              139.703,
+              35.662
+            ],
+            [
+              139.699,
+              35.662
+            ],
+            [
+              139.699,
+              35.658
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 35.6599877,
+        "lon": 139.7008261
+      },
+      "texture_type": "TRANSIT_HUB",
+      "neon_color": "#00FF00",
+      "selected_anchor": {
+        "id": "node/2232061779",
+        "lat": 35.6599877,
+        "lon": 139.7008261,
+        "tags": {
+          "bus": "yes",
+          "highway": "bus_stop",
+          "lit": "yes",
+          "name": "渋谷駅西口",
+          "name:en": "Shibuya Sta. West Exit",
+          "name:ja": "渋谷駅西口",
+          "name:ja_kana": "しぶやえきにしぐち",
+          "operator": "東京都交通局",
+          "public_transport": "platform",
+          "route_ref": "早81;池86",
+          "shelter": "yes",
+          "wheelchair": "no"
+        },
+        "score": 187,
+        "name": "渋谷駅西口",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 400,
+        "beer": 500,
+        "taxi_airport": 3000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "空港まで (kūkō made)",
+        "price_estimates": "Coffee ¥400 | Beer ¥500",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": "+81-3-3224-5000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.6998261,
+              35.658987700000004
+            ],
+            [
+              139.7018261,
+              35.6609877
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "CLEAN",
+          "lat": 0,
+          "lon": 0,
+          "count": 2
+        }
+      ],
+      "mission_whisper": "LOCAL MARKET HOURS 06:00-14:00 // BEST VALUE",
+      "search_index_tokens": [
+        "tokyo",
+        "tyo_001",
+        "transit hub",
+        "渋谷駅西口",
+        "bus:yes",
+        "highway:bus_stop",
+        "lit:yes",
+        "name:渋谷駅西口",
+        "name:en:shibuya sta. west exit",
+        "name:ja:渋谷駅西口",
+        "name:ja_kana:しぶやえきにしぐち",
+        "operator:東京都交通局",
+        "public_transport:platform",
+        "route_ref:早81;池86",
+        "shelter:yes",
+        "wheelchair:no"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "TYO_002",
+      "city": "tokyo",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              139.697,
+              35.689
+            ],
+            [
+              139.703,
+              35.689
+            ],
+            [
+              139.703,
+              35.695
+            ],
+            [
+              139.697,
+              35.695
+            ],
+            [
+              139.697,
+              35.689
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 35.6922009,
+        "lon": 139.7003082
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "way/670992443",
+        "lat": 35.6922009,
+        "lon": 139.7003082,
+        "tags": {
+          "highway": "pedestrian",
+          "indoor": "footway",
+          "layer": "-1",
+          "level": "-1",
+          "lit": "yes",
+          "name": "メトロプロムナード",
+          "name:en": "Metro Promenade",
+          "name:ko": "메트로 통로",
+          "name:zh": "东京 Metro 地铁通道",
+          "note": "壁一面の大きな広告スペースは主にこの部分",
+          "surface": "asphalt",
+          "tunnel": "yes"
+        },
+        "score": 170,
+        "name": "メトロプロムナード",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 400,
+        "beer": 500,
+        "taxi_airport": 3000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "空港まで (kūkō made)",
+        "price_estimates": "Coffee ¥400 | Beer ¥500",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": "+81-3-3224-5000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.6993082,
+              35.691200900000005
+            ],
+            [
+              139.7013082,
+              35.6932009
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "CLEAN",
+          "lat": 0,
+          "lon": 0,
+          "count": 4
+        }
+      ],
+      "mission_whisper": "LOCAL MARKET HOURS 06:00-14:00 // BEST VALUE",
+      "search_index_tokens": [
+        "tokyo",
+        "tyo_002",
+        "mixed",
+        "メトロプロムナード",
+        "highway:pedestrian",
+        "indoor:footway",
+        "layer:-1",
+        "level:-1",
+        "lit:yes",
+        "name:メトロプロムナード",
+        "name:en:metro promenade",
+        "name:ko:메트로 통로",
+        "name:zh:东京 metro 地铁通道",
+        "note:壁一面の大きな広告スペースは主にこの部分",
+        "surface:asphalt",
+        "tunnel:yes"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "TYO_003",
+      "city": "tokyo",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              139.701,
+              35.668
+            ],
+            [
+              139.707,
+              35.668
+            ],
+            [
+              139.707,
+              35.673
+            ],
+            [
+              139.701,
+              35.673
+            ],
+            [
+              139.701,
+              35.668
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 35.670814,
+        "lon": 139.7039771
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "node/2442701439",
+        "lat": 35.670814,
+        "lon": 139.7039771,
+        "tags": {
+          "artist_name": "Hofstetter Kurt",
+          "artwork_type": "sculpture;media",
+          "name": "fACING tIME",
+          "start_date": "2012",
+          "tourism": "artwork",
+          "website": "https://www.sunpendulum.at/fACINGtIME.html"
+        },
+        "score": 166,
+        "name": "fACING tIME",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 400,
+        "beer": 500,
+        "taxi_airport": 3000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "空港まで (kūkō made)",
+        "price_estimates": "Coffee ¥400 | Beer ¥500",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": "+81-3-3224-5000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.7029771,
+              35.669814
+            ],
+            [
+              139.7049771,
+              35.671814
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "OFFLINE",
+          "lat": 0,
+          "lon": 0,
+          "count": 3
+        }
+      ],
+      "mission_whisper": "CLEAN ZONE // LOW HASSLE // VERIFIED BY 8 OPERATIVES",
+      "search_index_tokens": [
+        "tokyo",
+        "tyo_003",
+        "mixed",
+        "facing time",
+        "artist_name:hofstetter kurt",
+        "artwork_type:sculpture;media",
+        "name:facing time",
+        "start_date:2012",
+        "tourism:artwork",
+        "website:https://www.sunpendulum.at/facingtime.html"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "TYO_004",
+      "city": "tokyo",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              139.771,
+              35.697
+            ],
+            [
+              139.777,
+              35.697
+            ],
+            [
+              139.777,
+              35.701
+            ],
+            [
+              139.771,
+              35.701
+            ],
+            [
+              139.771,
+              35.697
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 35.6988944,
+        "lon": 139.7740416
+      },
+      "texture_type": "TRANSIT_HUB",
+      "neon_color": "#00FF00",
+      "selected_anchor": {
+        "id": "node/4362392122",
+        "lat": 35.6988944,
+        "lon": 139.7740416,
+        "tags": {
+          "bench": "yes",
+          "bus": "yes",
+          "covered": "yes",
+          "highway": "bus_stop",
+          "name": "秋葉原駅",
+          "name:en": "Akihabara Station",
+          "name:ja": "秋葉原駅",
+          "name:ko": "아키하바라역",
+          "network": "Airport Limousine",
+          "operator": "東京空港交通株式会社",
+          "public_transport": "platform"
+        },
+        "score": 188,
+        "name": "秋葉原駅",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 400,
+        "beer": 500,
+        "taxi_airport": 3000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "空港まで (kūkō made)",
+        "price_estimates": "Coffee ¥400 | Beer ¥500",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": "+81-3-3224-5000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.7730416,
+              35.6978944
+            ],
+            [
+              139.7750416,
+              35.6998944
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "OFFLINE",
+          "lat": 0,
+          "lon": 0,
+          "count": 1
+        }
+      ],
+      "mission_whisper": "LOCAL MARKET HOURS 06:00-14:00 // BEST VALUE",
+      "search_index_tokens": [
+        "tokyo",
+        "tyo_004",
+        "transit hub",
+        "秋葉原駅",
+        "bench:yes",
+        "bus:yes",
+        "covered:yes",
+        "highway:bus_stop",
+        "name:秋葉原駅",
+        "name:en:akihabara station",
+        "name:ja:秋葉原駅",
+        "name:ko:아키하바라역",
+        "network:airport limousine",
+        "operator:東京空港交通株式会社",
+        "public_transport:platform"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "TYO_005",
+      "city": "tokyo",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              139.763,
+              35.669
+            ],
+            [
+              139.769,
+              35.669
+            ],
+            [
+              139.769,
+              35.674
+            ],
+            [
+              139.763,
+              35.674
+            ],
+            [
+              139.763,
+              35.669
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 35.67138,
+        "lon": 139.7657079
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "node/10271111779",
+        "lat": 35.67138,
+        "lon": 139.7657079,
+        "tags": {
+          "addr:block_number": "6-16",
+          "addr:city": "中央区",
+          "addr:housenumber": "銀座三越 新館8階",
+          "addr:neighbourhood": "4丁目",
+          "addr:postcode": "104-8212",
+          "addr:province": "東京都",
+          "addr:quarter": "銀座",
+          "addr:street": "ginza",
+          "addr:suburb": "中央区",
+          "alt_name:fr": "Musée d'art en aquarium de Ginza",
+          "charge:adult": "2700 JPY",
+          "charge:child": "0 JPY",
+          "contact:facebook": "artaquariumofficial",
+          "contact:instagram": "artaquarium_tm_official",
+          "contact:phone": "+81-3-3528-6721",
+          "contact:tiktok": "@artaquarium_tm_official",
+          "contact:twitter": "artaquarium_tm",
+          "contact:website": "https://artaquarium.jp/",
+          "fee": "yes",
+          "level": "7",
+          "level_ref": "8F",
+          "name": "Art Aquarium Museum GINZA",
+          "name:en": "Art Aquarium Museum GINZA",
+          "name:fr": "Art Aquarium Museum GINZA",
+          "name:ja": "アートアクアリウム美術館 GINZA",
+          "name:ja-Hira": "あーとあくありうむびじゅつかん ぎんざ",
+          "name:ja-Latn": "Āto Akuariumu Bijutsukan Ginza",
+          "opening_hours": "Mo-Su,PH 10:00-19:00; Dec 31 10:00-17:30; Jan 01 off",
+          "operator": "株式会社Amuseum Parks",
+          "operator:type": "business",
+          "payment:cash": "yes",
+          "payment:credit_cards": "yes",
+          "pets": "no",
+          "reservation": "only",
+          "stroller": "no",
+          "subject": "金魚",
+          "subject:wikidata": "Q123141",
+          "tourism": "museum",
+          "wheelchair": "yes",
+          "wikidata": "Q116921556",
+          "wikimedia_commons": "Category:Art Aquarium Museum",
+          "wikipedia": "ja:アートアクアリウム"
+        },
+        "score": 172,
+        "name": "Art Aquarium Museum GINZA",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 400,
+        "beer": 500,
+        "taxi_airport": 3000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "空港まで (kūkō made)",
+        "price_estimates": "Coffee ¥400 | Beer ¥500",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": "+81-3-3224-5000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.7647079,
+              35.67038
+            ],
+            [
+              139.7667079,
+              35.67238
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "HASSLE",
+          "lat": 0,
+          "lon": 0,
+          "count": 3
+        }
+      ],
+      "mission_whisper": "COFFEE PRICES STABLE 42-48฿ // AVOID TOURIST-FACING CAFES",
+      "search_index_tokens": [
+        "tokyo",
+        "tyo_005",
+        "mixed",
+        "art aquarium museum ginza",
+        "addr:block_number:6-16",
+        "addr:city:中央区",
+        "addr:housenumber:銀座三越 新館8階",
+        "addr:neighbourhood:4丁目",
+        "addr:postcode:104-8212",
+        "addr:province:東京都",
+        "addr:quarter:銀座",
+        "addr:street:ginza",
+        "addr:suburb:中央区",
+        "alt_name:fr:musée d'art en aquarium de ginza",
+        "charge:adult:2700 jpy",
+        "charge:child:0 jpy",
+        "contact:facebook:artaquariumofficial",
+        "contact:instagram:artaquarium_tm_official",
+        "contact:phone:+81-3-3528-6721",
+        "contact:tiktok:@artaquarium_tm_official",
+        "contact:twitter:artaquarium_tm",
+        "contact:website:https://artaquarium.jp/",
+        "fee:yes",
+        "level:7",
+        "level_ref:8f",
+        "name:art aquarium museum ginza",
+        "name:en:art aquarium museum ginza",
+        "name:fr:art aquarium museum ginza",
+        "name:ja:アートアクアリウム美術館 ginza",
+        "name:ja-hira:あーとあくありうむびじゅつかん ぎんざ",
+        "name:ja-latn:āto akuariumu bijutsukan ginza",
+        "opening_hours:mo-su,ph 10:00-19:00; dec 31 10:00-17:30; jan 01 off",
+        "operator:株式会社amuseum parks",
+        "operator:type:business",
+        "payment:cash:yes",
+        "payment:credit_cards:yes",
+        "pets:no",
+        "reservation:only",
+        "stroller:no",
+        "subject:金魚",
+        "subject:wikidata:q123141",
+        "tourism:museum",
+        "wheelchair:yes",
+        "wikidata:q116921556",
+        "wikimedia_commons:category:art aquarium museum",
+        "wikipedia:ja:アートアクアリウム"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "TYO_006",
+      "city": "tokyo",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              139.727,
+              35.66
+            ],
+            [
+              139.733,
+              35.66
+            ],
+            [
+              139.733,
+              35.665
+            ],
+            [
+              139.727,
+              35.665
+            ],
+            [
+              139.727,
+              35.66
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 35.6602162,
+        "lon": 139.7300479
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "way/568436245",
+        "lat": 35.6602162,
+        "lon": 139.7300479,
+        "tags": {
+          "alt_name:zh": "六本木之丘",
+          "landuse": "commercial",
+          "name": "六本木ヒルズ",
+          "name:de": "Roppongi Hills",
+          "name:en": "Roppongi Hills",
+          "name:es": "Roppongi Hills",
+          "name:fr": "Roppongi Hills",
+          "name:it": "Roppongi Hills",
+          "name:ja": "六本木ヒルズ",
+          "name:ja-Latn": "Roppongi Hiruzu",
+          "name:ko": "롯폰기 힐스",
+          "name:zh": "六本木新城",
+          "operator": "森ビル株式会社",
+          "tourism": "attraction",
+          "website": "http://www.roppongihills.com/",
+          "wheelchair": "yes",
+          "wikidata": "Q1071084",
+          "wikimedia_commons": "Category:Roppongi Hills",
+          "wikipedia": "ja:六本木ヒルズ"
+        },
+        "score": 129,
+        "name": "六本木ヒルズ",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 400,
+        "beer": 500,
+        "taxi_airport": 3000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "空港まで (kūkō made)",
+        "price_estimates": "Coffee ¥400 | Beer ¥500",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": "+81-3-3224-5000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.72904789999998,
+              35.6592162
+            ],
+            [
+              139.7310479,
+              35.6612162
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "CLEAN",
+          "lat": 0,
+          "lon": 0,
+          "count": 2
+        }
+      ],
+      "mission_whisper": "RECENT REPORTS: AGGRESSIVE TOUTING NEAR ANCHOR",
+      "search_index_tokens": [
+        "tokyo",
+        "tyo_006",
+        "mixed",
+        "六本木ヒルズ",
+        "alt_name:zh:六本木之丘",
+        "landuse:commercial",
+        "name:六本木ヒルズ",
+        "name:de:roppongi hills",
+        "name:en:roppongi hills",
+        "name:es:roppongi hills",
+        "name:fr:roppongi hills",
+        "name:it:roppongi hills",
+        "name:ja:六本木ヒルズ",
+        "name:ja-latn:roppongi hiruzu",
+        "name:ko:롯폰기 힐스",
+        "name:zh:六本木新城",
+        "operator:森ビル株式会社",
+        "tourism:attraction",
+        "website:http://www.roppongihills.com/",
+        "wheelchair:yes",
+        "wikidata:q1071084",
+        "wikimedia_commons:category:roppongi hills",
+        "wikipedia:ja:六本木ヒルズ"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "TYO_007",
+      "city": "tokyo",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              139.795,
+              35.712
+            ],
+            [
+              139.8,
+              35.712
+            ],
+            [
+              139.8,
+              35.716
+            ],
+            [
+              139.795,
+              35.716
+            ],
+            [
+              139.795,
+              35.712
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 35.7143752,
+        "lon": 139.7975535
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "node/10542804807",
+        "lat": 35.7143752,
+        "lon": 139.7975535,
+        "tags": {
+          "artwork_type": "statue",
+          "name": "増長天",
+          "name:en": "Zocho-ten",
+          "tourism": "artwork"
+        },
+        "score": 163,
+        "name": "増長天",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 400,
+        "beer": 500,
+        "taxi_airport": 3000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "空港まで (kūkō made)",
+        "price_estimates": "Coffee ¥400 | Beer ¥500",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": "+81-3-3224-5000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.7965535,
+              35.7133752
+            ],
+            [
+              139.7985535,
+              35.7153752
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "OFFLINE",
+          "lat": 0,
+          "lon": 0,
+          "count": 5
+        }
+      ],
+      "mission_whisper": "TRANSIT HUB CROWDED 17:00-19:00 // PLAN AHEAD",
+      "search_index_tokens": [
+        "tokyo",
+        "tyo_007",
+        "mixed",
+        "増長天",
+        "artwork_type:statue",
+        "name:増長天",
+        "name:en:zocho-ten",
+        "tourism:artwork"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "TYO_008",
+      "city": "tokyo",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              139.773,
+              35.71
+            ],
+            [
+              139.779,
+              35.71
+            ],
+            [
+              139.779,
+              35.715
+            ],
+            [
+              139.773,
+              35.715
+            ],
+            [
+              139.773,
+              35.71
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 35.7117081,
+        "lon": 139.7761542
+      },
+      "texture_type": "TRANSIT_HUB",
+      "neon_color": "#00FF00",
+      "selected_anchor": {
+        "id": "node/7786715957",
+        "lat": 35.7117081,
+        "lon": 139.7761542,
+        "tags": {
+          "colour": "orange",
+          "name": "上野",
+          "name:en": "Ueno",
+          "name:es": "Ueno",
+          "name:fr": "Ueno",
+          "name:it": "Ueno",
+          "name:ja": "上野",
+          "name:ja-Hira": "うえの",
+          "name:ja-Latn": "Ueno",
+          "name:ko": "우에노",
+          "name:ru": "Уэно",
+          "name:zh": "上野",
+          "operator": "東京地下鉄",
+          "public_transport": "station",
+          "railway": "station",
+          "ref": "G16 H18",
+          "station": "subway",
+          "subway": "yes",
+          "wikidata": "Q801551",
+          "wikipedia": "ja:上野駅"
+        },
+        "score": 169,
+        "name": "上野",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 400,
+        "beer": 500,
+        "taxi_airport": 3000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "空港まで (kūkō made)",
+        "price_estimates": "Coffee ¥400 | Beer ¥500",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": "+81-3-3224-5000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.7751542,
+              35.710708100000005
+            ],
+            [
+              139.7771542,
+              35.7127081
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "CLEAN",
+          "lat": 0,
+          "lon": 0,
+          "count": 2
+        }
+      ],
+      "mission_whisper": "CONSTRUCTION EAST EDGE — AVOID AFTER 21:00",
+      "search_index_tokens": [
+        "tokyo",
+        "tyo_008",
+        "transit hub",
+        "上野",
+        "colour:orange",
+        "name:上野",
+        "name:en:ueno",
+        "name:es:ueno",
+        "name:fr:ueno",
+        "name:it:ueno",
+        "name:ja:上野",
+        "name:ja-hira:うえの",
+        "name:ja-latn:ueno",
+        "name:ko:우에노",
+        "name:ru:уэно",
+        "name:zh:上野",
+        "operator:東京地下鉄",
+        "public_transport:station",
+        "railway:station",
+        "ref:g16 h18",
+        "station:subway",
+        "subway:yes",
+        "wikidata:q801551",
+        "wikipedia:ja:上野駅"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "TYO_009",
+      "city": "tokyo",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              139.775,
+              35.625
+            ],
+            [
+              139.782,
+              35.625
+            ],
+            [
+              139.782,
+              35.63
+            ],
+            [
+              139.775,
+              35.63
+            ],
+            [
+              139.775,
+              35.625
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 35.6271239,
+        "lon": 139.7788558
+      },
+      "texture_type": "TRANSIT_HUB",
+      "neon_color": "#00FF00",
+      "selected_anchor": {
+        "id": "node/3597316000",
+        "lat": 35.6271239,
+        "lon": 139.7788558,
+        "tags": {
+          "bus": "yes",
+          "highway": "bus_stop",
+          "local_ref": "1",
+          "name": "東京テレポート駅",
+          "name:en": "Tokyo Teleport Eki",
+          "name:ja": "東京テレポート駅",
+          "not:network:wikidata": "Q11374532",
+          "operator": "京浜急行バス",
+          "public_transport": "platform",
+          "wheelchair": "yes",
+          "wikidata": "Q906738",
+          "wikipedia": "ja:東京テレポート駅"
+        },
+        "score": 178,
+        "name": "東京テレポート駅",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 400,
+        "beer": 500,
+        "taxi_airport": 3000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "空港まで (kūkō made)",
+        "price_estimates": "Coffee ¥400 | Beer ¥500",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": "+81-3-3224-5000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.7778558,
+              35.6261239
+            ],
+            [
+              139.7798558,
+              35.6281239
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "OVERPRICING",
+          "lat": 0,
+          "lon": 0,
+          "count": 4
+        }
+      ],
+      "mission_whisper": "CONSTRUCTION EAST EDGE — AVOID AFTER 21:00",
+      "search_index_tokens": [
+        "tokyo",
+        "tyo_009",
+        "transit hub",
+        "東京テレポート駅",
+        "bus:yes",
+        "highway:bus_stop",
+        "local_ref:1",
+        "name:東京テレポート駅",
+        "name:en:tokyo teleport eki",
+        "name:ja:東京テレポート駅",
+        "not:network:wikidata:q11374532",
+        "operator:京浜急行バス",
+        "public_transport:platform",
+        "wheelchair:yes",
+        "wikidata:q906738",
+        "wikipedia:ja:東京テレポート駅"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "TYO_010",
+      "city": "tokyo",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              139.707,
+              35.728
+            ],
+            [
+              139.713,
+              35.728
+            ],
+            [
+              139.713,
+              35.733
+            ],
+            [
+              139.707,
+              35.733
+            ],
+            [
+              139.707,
+              35.728
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 35.7309735,
+        "lon": 139.7100648
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "way/665150769",
+        "lat": 35.7309735,
+        "lon": 139.7100648,
+        "tags": {
+          "area": "yes",
+          "highway": "pedestrian"
+        },
+        "score": 150,
+        "name": "Intersection at 35.7305, 139.7100",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 400,
+        "beer": 500,
+        "taxi_airport": 3000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "空港まで (kūkō made)",
+        "price_estimates": "Coffee ¥400 | Beer ¥500",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": "+81-3-3224-5000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.7090648,
+              35.7299735
+            ],
+            [
+              139.7110648,
+              35.731973499999995
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "HASSLE",
+          "lat": 0,
+          "lon": 0,
+          "count": 1
+        }
+      ],
+      "mission_whisper": "CONSTRUCTION EAST EDGE — AVOID AFTER 21:00",
+      "search_index_tokens": [
+        "tokyo",
+        "tyo_010",
+        "mixed",
+        "intersection at 35.7305, 139.7100",
+        "area:yes",
+        "highway:pedestrian"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "TYO_011",
+      "city": "tokyo",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              139.708,
+              35.646
+            ],
+            [
+              139.713,
+              35.646
+            ],
+            [
+              139.713,
+              35.651
+            ],
+            [
+              139.708,
+              35.651
+            ],
+            [
+              139.708,
+              35.646
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 35.6483479,
+        "lon": 139.7104425
+      },
+      "texture_type": "TRANSIT_HUB",
+      "neon_color": "#00FF00",
+      "selected_anchor": {
+        "id": "node/1378231193",
+        "lat": 35.6483479,
+        "lon": 139.7104425,
+        "tags": {
+          "bus": "yes",
+          "highway": "bus_stop",
+          "name": "恵比寿駅前",
+          "name:en": "Ebisu-eki-mae",
+          "name:ja": "恵比寿駅前",
+          "name:ja-Hira": "えびすえきまえ",
+          "name:ja-Latn": "Ebisu eki mae",
+          "operator": "東京都交通局",
+          "public_transport": "platform",
+          "source": "survey 2014"
+        },
+        "score": 187,
+        "name": "恵比寿駅前",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 400,
+        "beer": 500,
+        "taxi_airport": 3000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "空港まで (kūkō made)",
+        "price_estimates": "Coffee ¥400 | Beer ¥500",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": "+81-3-3224-5000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.7094425,
+              35.6473479
+            ],
+            [
+              139.7114425,
+              35.649347899999995
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "HASSLE",
+          "lat": 0,
+          "lon": 0,
+          "count": 2
+        }
+      ],
+      "mission_whisper": "CLEAN ZONE // LOW HASSLE // VERIFIED BY 8 OPERATIVES",
+      "search_index_tokens": [
+        "tokyo",
+        "tyo_011",
+        "transit hub",
+        "恵比寿駅前",
+        "bus:yes",
+        "highway:bus_stop",
+        "name:恵比寿駅前",
+        "name:en:ebisu-eki-mae",
+        "name:ja:恵比寿駅前",
+        "name:ja-hira:えびすえきまえ",
+        "name:ja-latn:ebisu eki mae",
+        "operator:東京都交通局",
+        "public_transport:platform",
+        "source:survey 2014"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "TYO_012",
+      "city": "tokyo",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              139.664,
+              35.661
+            ],
+            [
+              139.669,
+              35.661
+            ],
+            [
+              139.669,
+              35.665
+            ],
+            [
+              139.664,
+              35.665
+            ],
+            [
+              139.664,
+              35.661
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 35.6629106,
+        "lon": 139.6674055
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "node/6163717799",
+        "lat": 35.6629106,
+        "lon": 139.6674055,
+        "tags": {
+          "name:en": "Pig Design",
+          "tourism": "attraction"
+        },
+        "score": 144,
+        "name": "Pig Design",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 400,
+        "beer": 500,
+        "taxi_airport": 3000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "空港まで (kūkō made)",
+        "price_estimates": "Coffee ¥400 | Beer ¥500",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": "+81-3-3224-5000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.6664055,
+              35.6619106
+            ],
+            [
+              139.6684055,
+              35.663910599999994
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "OFFLINE",
+          "lat": 0,
+          "lon": 0,
+          "count": 4
+        }
+      ],
+      "mission_whisper": "COFFEE PRICES STABLE 42-48฿ // AVOID TOURIST-FACING CAFES",
+      "search_index_tokens": [
+        "tokyo",
+        "tyo_012",
+        "mixed",
+        "pig design",
+        "name:en:pig design",
+        "tourism:attraction"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "TYO_013",
+      "city": "tokyo",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              139.765,
+              35.679
+            ],
+            [
+              139.77,
+              35.679
+            ],
+            [
+              139.77,
+              35.683
+            ],
+            [
+              139.765,
+              35.683
+            ],
+            [
+              139.765,
+              35.679
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 35.6810367,
+        "lon": 139.7674402
+      },
+      "texture_type": "TRANSIT_HUB",
+      "neon_color": "#00FF00",
+      "selected_anchor": {
+        "id": "node/3589537644",
+        "lat": 35.6810367,
+        "lon": 139.7674402,
+        "tags": {
+          "local_ref": "22",
+          "name": "東京",
+          "name:de": "Tokio Gleis 22",
+          "name:en": "Tokyo",
+          "name:es": "Tokyo",
+          "name:fr": "Tokyo",
+          "name:it": "Tokyo",
+          "name:ja": "東京",
+          "name:ja-Hira": "とうきょう",
+          "name:ja-Latn": "Tōkyō",
+          "name:ko": "도쿄",
+          "name:ru": "Токио",
+          "name:th": "โตเกียว",
+          "public_transport": "stop_position",
+          "railway": "stop",
+          "railway:position": "0.0",
+          "train": "yes"
+        },
+        "score": 189,
+        "name": "東京",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 400,
+        "beer": 500,
+        "taxi_airport": 3000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "空港まで (kūkō made)",
+        "price_estimates": "Coffee ¥400 | Beer ¥500",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": "+81-3-3224-5000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.7664402,
+              35.6800367
+            ],
+            [
+              139.76844020000001,
+              35.6820367
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "HASSLE",
+          "lat": 0,
+          "lon": 0,
+          "count": 4
+        }
+      ],
+      "mission_whisper": "COFFEE PRICES STABLE 42-48฿ // AVOID TOURIST-FACING CAFES",
+      "search_index_tokens": [
+        "tokyo",
+        "tyo_013",
+        "transit hub",
+        "東京",
+        "local_ref:22",
+        "name:東京",
+        "name:de:tokio gleis 22",
+        "name:en:tokyo",
+        "name:es:tokyo",
+        "name:fr:tokyo",
+        "name:it:tokyo",
+        "name:ja:東京",
+        "name:ja-hira:とうきょう",
+        "name:ja-latn:tōkyō",
+        "name:ko:도쿄",
+        "name:ru:токио",
+        "name:th:โตเกียว",
+        "public_transport:stop_position",
+        "railway:stop",
+        "railway:position:0.0",
+        "train:yes"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "TYO_014",
+      "city": "tokyo",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              139.768,
+              35.665
+            ],
+            [
+              139.773,
+              35.665
+            ],
+            [
+              139.773,
+              35.669
+            ],
+            [
+              139.768,
+              35.669
+            ],
+            [
+              139.768,
+              35.665
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 35.6669925,
+        "lon": 139.7703221
+      },
+      "texture_type": "TRANSIT_HUB",
+      "neon_color": "#00FF00",
+      "selected_anchor": {
+        "id": "node/2901080328",
+        "lat": 35.6669925,
+        "lon": 139.7703221,
+        "tags": {
+          "bench": "yes",
+          "bus": "yes",
+          "departures_board": "yes",
+          "highway": "bus_stop",
+          "lit": "yes",
+          "local_ref": "12",
+          "name": "築地三丁目",
+          "name:en": "Tsukiji-sanchome",
+          "name:ja": "築地三丁目",
+          "public_transport": "platform",
+          "shelter": "yes",
+          "wheelchair": "yes"
+        },
+        "score": 187,
+        "name": "築地三丁目",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 400,
+        "beer": 500,
+        "taxi_airport": 3000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "空港まで (kūkō made)",
+        "price_estimates": "Coffee ¥400 | Beer ¥500",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": "+81-3-3224-5000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.76932209999998,
+              35.6659925
+            ],
+            [
+              139.7713221,
+              35.6679925
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "HASSLE",
+          "lat": 0,
+          "lon": 0,
+          "count": 4
+        }
+      ],
+      "mission_whisper": "COFFEE PRICES STABLE 42-48฿ // AVOID TOURIST-FACING CAFES",
+      "search_index_tokens": [
+        "tokyo",
+        "tyo_014",
+        "transit hub",
+        "築地三丁目",
+        "bench:yes",
+        "bus:yes",
+        "departures_board:yes",
+        "highway:bus_stop",
+        "lit:yes",
+        "local_ref:12",
+        "name:築地三丁目",
+        "name:en:tsukiji-sanchome",
+        "name:ja:築地三丁目",
+        "public_transport:platform",
+        "shelter:yes",
+        "wheelchair:yes"
+      ],
+      "top_comments": []
+    },
+    {
+      "zone_id": "TYO_015",
+      "city": "tokyo",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              139.699,
+              35.644
+            ],
+            [
+              139.704,
+              35.644
+            ],
+            [
+              139.704,
+              35.648
+            ],
+            [
+              139.699,
+              35.648
+            ],
+            [
+              139.699,
+              35.644
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 35.6456325,
+        "lon": 139.7007297
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "node/12533488458",
+        "lat": 35.6456325,
+        "lon": 139.7007297,
+        "tags": {
+          "historic": "memorial",
+          "memorial": "memorial",
+          "name": "日比谷線脱線衝突事故 慰霊碑"
+        },
+        "score": 149,
+        "name": "日比谷線脱線衝突事故 慰霊碑",
+        "selection_reason": "Priority POI with high score"
+      },
+      "price_medians": {
+        "coffee": 400,
+        "beer": 500,
+        "taxi_airport": 3000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "空港まで (kūkō made)",
+        "price_estimates": "Coffee ¥400 | Beer ¥500",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": "+81-3-3224-5000"
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.6997297,
+              35.6446325
+            ],
+            [
+              139.70172970000002,
+              35.646632499999996
+            ]
+          ],
+          "vitality_score": 0.8
+        }
+      ],
+      "intel_markers": [
+        {
+          "type": "CLEAN",
+          "lat": 0,
+          "lon": 0,
+          "count": 1
+        }
+      ],
+      "mission_whisper": "LOCAL MARKET HOURS 06:00-14:00 // BEST VALUE",
+      "search_index_tokens": [
+        "tokyo",
+        "tyo_015",
+        "mixed",
+        "日比谷線脱線衝突事故 慰霊碑",
+        "historic:memorial",
+        "memorial:memorial",
+        "name:日比谷線脱線衝突事故 慰霊碑"
+      ],
+      "top_comments": []
+    }
+  ],
+  "meta": {
+    "source": "packgen v1",
+    "seed_count": 15
+  },
+  "pack_token": "tokyo-1765525050951",
+  "pack_size_bytes": 44505
+}

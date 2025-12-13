@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@unmapped/lib": ["../../packages/lib/src"]
+    }
+  }
+}

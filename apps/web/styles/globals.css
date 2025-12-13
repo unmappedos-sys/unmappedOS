@@ -1,0 +1,755 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@layer base {
+  * {
+    @apply border-ops-night-border;
+  }
+
+  body {
+    @apply bg-ops-night-bg text-ops-night-text font-sans antialiased;
+    font-size: 17px; /* Improved base font size for better readability */
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image: linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  ::selection {
+    @apply bg-ops-neon-green/30 text-ops-neon-green;
+  }
+}
+
+@layer components {
+
+  /* Tactical Button System */
+  .btn-tactical {
+    @apply px-6 py-3 font-tactical text-lg uppercase tracking-wider;
+    @apply bg-ops-night-surface border border-ops-neon-green/50;
+    @apply transition-all duration-200;
+    @apply relative overflow-hidden;
+    font-weight: 600;
+  }
+
+  .btn-tactical:hover {
+    @apply bg-ops-neon-green/10;
+    border-color: theme('colors.ops.neon-green');
+    box-shadow: 0 0 20px currentColor;
+  }
+
+  .btn-tactical::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 255, 65, 0.05);
+    transform: translateX(-100%);
+    transition: transform 300ms;
+  }
+
+  .btn-tactical:hover::before {
+    transform: translateX(0);
+  }
+
+  .btn-tactical-primary {
+    @apply btn-tactical bg-ops-neon-green/10 text-ops-neon-green;
+    border-color: theme('colors.ops.neon-green');
+    box-shadow: 0 0 10px currentColor;
+  }
+
+  .btn-tactical-primary:hover {
+    @apply bg-ops-neon-green text-ops-night-bg;
+    box-shadow: 0 0 20px currentColor;
+  }
+
+  .btn-tactical-ghost {
+    @apply btn-tactical border-ops-ghost/30 text-ops-ghost;
+    @apply hover:border-ops-ghost hover:text-ops-night-text;
+  }
+
+  /* HUD Card System */
+  .hud-card {
+    @apply bg-ops-night-surface/80 backdrop-blur-tactical;
+    @apply border border-ops-neon-green/30;
+    @apply rounded-none p-6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+  }
+
+  .hud-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(0, 255, 65, 0.5);
+  }
+
+  .hud-card-header {
+    @apply font-tactical text-tactical-sm text-ops-neon-green uppercase tracking-widest;
+    @apply mb-4 pb-2 border-b border-ops-neon-green/20;
+  }
+
+  /* Tactical Input System */
+  .input-tactical {
+    @apply w-full px-4 py-3 font-mono text-tactical-base;
+    @apply bg-ops-night-surface border border-ops-neon-green/30;
+    @apply text-ops-night-text placeholder-ops-night-muted;
+    @apply transition-all duration-200;
+  }
+
+  .input-tactical:focus {
+    @apply outline-none;
+    border-color: theme('colors.ops.neon-green');
+    @apply bg-ops-night-surface/60;
+    box-shadow: 0 0 10px currentColor;
+  }
+
+  /* Scan Line Effect */
+  .scan-line {
+    @apply absolute inset-0 pointer-events-none overflow-hidden;
+  }
+
+  .scan-line::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, rgba(0, 255, 65, 0.1), transparent);
+    animation: scan 8s linear infinite;
+  }
+
+  /* Terminal Flicker Effect */
+  .terminal-flicker {
+    animation: flicker 0.15s infinite;
+  }
+
+  /* Breathing Zone Effect */
+  .zone-breathing {
+    animation: breathing 4s ease-in-out infinite;
+  }
+
+  /* Anchor Lock Animation */
+  .anchor-lock {
+    @apply relative;
+  }
+
+  .anchor-lock::before,
+  .anchor-lock::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid;
+    border-radius: 9999px;
+    border-color: #00FF41;
+    animation: lock 0.5s ease-out;
+  }
+
+  .anchor-lock::after {
+    animation-delay: 0.3s;
+  }
+
+  /* HUD Status Indicator */
+  .status-indicator {
+    @apply inline-flex items-center gap-2 font-tactical text-sm uppercase tracking-wider;
+  }
+
+  .status-indicator::before {
+    content: '';
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 9999px;
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .status-indicator.active::before {
+    background-color: #00FF41;
+    box-shadow: 0 0 10px currentColor;
+  }
+
+  .status-indicator.warning::before {
+    background-color: #FFD000;
+    box-shadow: 0 0 10px currentColor;
+  }
+
+  .status-indicator.critical::before {
+    background-color: #FF0040;
+    box-shadow: 0 0 10px currentColor;
+  }
+
+  .status-indicator.ghost::before {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* Diagnostic Panel */
+  .diagnostic-panel {
+    @apply fixed font-tactical text-base;
+    @apply bg-ops-night-surface/90 backdrop-blur-tactical;
+    @apply border border-ops-neon-green/30;
+    @apply p-4;
+    box-shadow: 0 0 40px rgba(0, 255, 65, 0.2), 0 4px 12px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Boot Sequence Typography */
+  .boot-text {
+    @apply font-tactical text-ops-neon-green;
+    animation: boot 0.3s ease-out;
+  }
+
+  /* Glitch Text Effect */
+  .glitch-text {
+    @apply relative inline-block;
+  }
+
+  .glitch-text::before,
+  .glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .glitch-text::before {
+    color: #00F5FF;
+    animation: glitch 0.3s infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  }
+
+  .glitch-text::after {
+    color: #FF10F0;
+    animation: glitch 0.3s infinite reverse;
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  }
+
+  /* Mission Brief Typography */
+  .mission-brief {
+    @apply space-y-4;
+  }
+
+  .mission-brief h1 {
+    @apply font-tactical text-tactical-3xl text-ops-neon-green uppercase tracking-widest;
+    @apply mb-2;
+  }
+
+  .mission-brief h2 {
+    @apply font-tactical text-tactical-xl text-ops-neon-cyan uppercase tracking-wider;
+    @apply mb-3;
+  }
+
+  .mission-brief p {
+    @apply font-sans text-tactical-base text-ops-night-text/90 leading-relaxed;
+  }
+
+  .mission-brief code {
+    @apply font-mono text-tactical-sm text-ops-neon-green bg-ops-night-surface px-2 py-1;
+  }
+
+  /* Neon Border System */
+  .neon-border-top {
+    @apply relative;
+  }
+
+  .neon-border-top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #00FF41;
+    box-shadow: 0 0 20px currentColor;
+  }
+
+  .neon-border-left {
+    @apply relative;
+  }
+
+  .neon-border-left::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background-color: #00FF41;
+    box-shadow: 0 0 20px currentColor;
+  }
+
+  /* Grid Background Utilities */
+  .tactical-grid {
+    background-image: linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .blueprint-grid {
+    background-image: linear-gradient(rgba(44, 36, 22, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(44, 36, 22, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Chromatic Aberration Effect */
+  .chromatic-aberration {
+    position: relative;
+  }
+
+  .chromatic-aberration::before,
+  .chromatic-aberration::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    mix-blend-mode: screen;
+  }
+
+  .chromatic-aberration::before {
+    color: #00F5FF;
+    transform: translate(-2px, 0);
+  }
+
+  .chromatic-aberration::after {
+    color: #FF10F0;
+    transform: translate(2px, 0);
+  }
+
+  /* Tactical Loading State */
+  .loading-tactical {
+    @apply relative overflow-hidden;
+  }
+
+  .loading-tactical::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent, rgba(0, 255, 65, 0.2), transparent);
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Zone Pulse Effect */
+  .zone-pulse {
+    animation: pulse-neon 1s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px currentColor);
+  }
+}
+
+@layer utilities {
+
+  /* Text Utilities */
+  .text-tactical {
+    @apply font-tactical tracking-wider uppercase;
+  }
+
+  /* Neon Text Colors */
+  .text-neon-green {
+    @apply text-ops-neon-green;
+    text-shadow: 0 0 10px currentColor;
+  }
+
+  .text-neon-cyan {
+    @apply text-ops-neon-cyan;
+    text-shadow: 0 0 10px currentColor;
+  }
+
+  .text-neon-magenta {
+    @apply text-ops-neon-magenta;
+    text-shadow: 0 0 10px currentColor;
+  }
+
+  /* Tactical Spacing */
+  .tactical-spacing {
+    @apply space-y-6;
+  }
+
+  /* HUD Overlay */
+  .hud-overlay {
+    @apply fixed inset-0 pointer-events-none z-50;
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, transparent 10%, transparent 90%, rgba(0, 0, 0, 0.4) 100%),
+      linear-gradient(90deg, rgba(0, 255, 65, 0.02) 1px, transparent 1px),
+      linear-gradient(rgba(0, 255, 65, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 50px 50px, 50px 50px;
+  }
+
+  /* Tactical Container */
+  .container-tactical {
+    @apply max-w-7xl mx-auto px-6 py-8;
+  }
+}
+
+/* Day Ops Theme (High Contrast Blueprint) */
+@media (prefers-color-scheme: light) {
+  body.day-ops {
+    @apply bg-ops-day-bg text-ops-day-text;
+    @apply bg-blueprint bg-blueprint;
+  }
+
+  .day-ops .hud-card {
+    @apply bg-ops-day-surface/90 border-ops-day-border/30;
+  }
+
+  .day-ops .btn-tactical {
+    @apply bg-ops-day-surface border-ops-day-border/50 text-ops-day-text;
+    @apply hover:border-ops-day-border;
+  }
+
+  .day-ops .input-tactical {
+    @apply bg-ops-day-surface border-ops-day-border/30 text-ops-day-text placeholder-ops-day-muted;
+  }
+
+  .day-ops ::selection {
+    @apply bg-ops-day-border/20 text-ops-day-border;
+  }
+}
+
+/* Ghost Mode Theme - Reduces screen glow and simplifies palette */
+.ghost-mode {
+  /* Dim overall brightness */
+  filter: brightness(0.7) contrast(0.9);
+  
+  /* Override background */
+  background-image: none !important;
+}
+
+.ghost-mode body {
+  /* Remove grid background pattern */
+  background-image: none !important;
+  background-color: #0a0e0a !important;
+}
+
+/* Disable pulsing animations */
+.ghost-mode .animate-pulse-neon,
+.ghost-mode .animate-pulse-slow,
+.ghost-mode .animate-breathing,
+.ghost-mode .terminal-flicker {
+  animation: none !important;
+}
+
+/* Reduce neon glow effects */
+.ghost-mode .shadow-neon,
+.ghost-mode .shadow-neon-sm,
+.ghost-mode .shadow-neon-lg {
+  box-shadow: none !important;
+}
+
+/* Simplify colors - remove cyan/magenta, keep muted green */
+.ghost-mode .text-ops-neon-cyan,
+.ghost-mode .text-ops-neon-magenta {
+  color: rgba(200, 200, 200, 0.8) !important;
+}
+
+.ghost-mode .text-ops-neon-green {
+  color: rgba(180, 220, 180, 0.95) !important;
+}
+
+/* Reduce border glow - use direct color values to avoid conflicts */
+.ghost-mode .border-ops-neon-green,
+.ghost-mode .border-ops-neon-cyan {
+  border-color: rgba(100, 120, 100, 0.5) !important;
+  box-shadow: none !important;
+}
+
+/* Mute HUD cards */
+.ghost-mode .hud-card,
+.ghost-mode .diagnostic-panel {
+  background-color: rgba(20, 25, 20, 0.85) !important;
+  border-color: rgba(100, 120, 100, 0.3) !important;
+  box-shadow: none !important;
+}
+
+.ghost-mode .hud-card::before {
+  background-color: rgba(100, 120, 100, 0.3) !important;
+}
+
+/* Dim buttons */
+.ghost-mode .btn-tactical {
+  border-color: rgba(100, 120, 100, 0.4) !important;
+  box-shadow: none !important;
+}
+
+.ghost-mode .btn-tactical:hover {
+  box-shadow: none !important;
+}
+
+/* Dim background grid */
+.ghost-mode .bg-grid-pattern,
+.ghost-mode .tactical-grid {
+  opacity: 0.15 !important;
+}
+
+/* Remove scan line effect */
+.ghost-mode .scan-line {
+  display: none !important;
+}
+
+/* Subtle HUD overlay */
+.ghost-mode .hud-overlay {
+  opacity: 0.1 !important;
+}
+
+/* Reduce map overlay brightness */
+.ghost-mode .mapboxgl-canvas,
+.ghost-mode .maplibregl-canvas {
+  filter: brightness(0.6) saturate(0.7) !important;
+}
+
+/* Print Styles */
+@media print {
+  body {
+    @apply bg-white text-black;
+  }
+
+  .scan-line,
+  .hud-overlay,
+  .diagnostic-panel {
+    display: none !important;
+  }
+}
+
+/* Enhanced Visual Effects */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 5px currentColor, 0 0 10px currentColor; }
+  50% { box-shadow: 0 0 20px currentColor, 0 0 40px currentColor; }
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slide-in-left {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slide-in-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes shimmer-border {
+  0% { border-color: rgba(0, 255, 65, 0.3); }
+  50% { border-color: rgba(0, 255, 65, 0.8); }
+  100% { border-color: rgba(0, 255, 65, 0.3); }
+}
+
+@keyframes text-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Particle Background Effect */
+.particle-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(0, 255, 65, 0.3);
+  border-radius: 50%;
+  animation: particle-float 20s infinite;
+}
+
+@keyframes particle-float {
+  0% { transform: translate(0, 0); opacity: 0; }
+  10% { opacity: 0.5; }
+  90% { opacity: 0.5; }
+  100% { transform: translate(100px, -100vh); opacity: 0; }
+}
+
+/* Enhanced Shadow Utilities */
+.shadow-neon-xl {
+  box-shadow: 0 0 30px currentColor, 0 0 60px currentColor, 0 0 90px currentColor;
+}
+
+.shadow-tactical-lg {
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(0, 255, 65, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Holographic Border Effect */
+.holo-border {
+  position: relative;
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  background: linear-gradient(135deg, 
+    rgba(0, 255, 65, 0.05) 0%, 
+    transparent 50%, 
+    rgba(0, 245, 255, 0.05) 100%);
+}
+
+.holo-border::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  background: linear-gradient(45deg, 
+    transparent 30%, 
+    rgba(0, 255, 65, 0.5) 50%, 
+    transparent 70%);
+  background-size: 200% 200%;
+  animation: holo-sweep 3s linear infinite;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.holo-border:hover::before {
+  opacity: 1;
+}
+
+@keyframes holo-sweep {
+  0% { background-position: 200% 200%; }
+  100% { background-position: -200% -200%; }
+}
+
+/* Cyberpunk Data Stream Effect */
+.data-stream {
+  position: relative;
+  overflow: hidden;
+}
+
+.data-stream::after {
+  content: '01010011 01011001 01010011 01010100 01000101 01001101';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  color: rgba(0, 255, 65, 0.1);
+  white-space: nowrap;
+  animation: data-scroll 10s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes data-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Improved Fade In Animation */
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Improved Slide In Animation */
+.animate-slide-in {
+  animation: slide-in-up 0.4s ease-out forwards;
+}
+
+/* Pulsing Glow Effect */
+.glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Interactive Card Hover */
+.interactive-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+}
+
+.interactive-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+}
+
+/* Neon Text Glow */
+.neon-text {
+  text-shadow: 
+    0 0 5px currentColor,
+    0 0 10px currentColor,
+    0 0 20px currentColor,
+    0 0 40px currentColor;
+}
+
+/* Progress Bar with Glow */
+.progress-bar-glow {
+  position: relative;
+  height: 4px;
+  background: rgba(0, 255, 65, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    rgba(0, 255, 65, 0.5),
+    rgba(0, 255, 65, 1),
+    rgba(0, 255, 65, 0.5));
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+  animation: progress-glow 1.5s ease-in-out infinite;
+}
+
+@keyframes progress-glow {
+  0%, 100% { opacity: 0.6; transform: scaleX(0.95); }
+  50% { opacity: 1; transform: scaleX(1); }
+}
+
+/* Status LED Effect */
+.status-led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.status-led::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.3;
+  filter: blur(4px);
+  animation: led-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes led-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.5); opacity: 0.6; }
+}
