@@ -297,3 +297,10 @@ export default function SignInPage() {
     </>
   );
 }
+
+// Force server-side rendering for auth pages
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
+}

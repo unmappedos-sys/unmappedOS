@@ -74,8 +74,7 @@ const cities: CityInfo[] = [
 ];
 
 export default function Cities() {
-  const router = useRouter();
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [bootStage, setBootStage] = useState(0);
@@ -322,3 +321,9 @@ export default function Cities() {
     </>
   );
 }
+
+// Force server-side rendering
+export async function getServerSideProps() {
+  return { props: {} };
+}
+

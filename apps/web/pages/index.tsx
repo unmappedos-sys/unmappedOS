@@ -197,3 +197,9 @@ export default function Home() {
     </>
   );
 }
+
+// Force server-side rendering
+export async function getServerSideProps() {
+  return { props: {} };
+}
+

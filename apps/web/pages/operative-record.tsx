@@ -280,3 +280,9 @@ export default function OperativeRecord() {
     </div>
   );
 }
+
+// Force server-side rendering
+export async function getServerSideProps() {
+  return { props: {} };
+}
+
