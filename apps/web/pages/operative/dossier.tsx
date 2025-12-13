@@ -1,6 +1,6 @@
 /**
  * Operative Dossier Page
- * 
+ *
  * Personal profile showing quests, badges, fingerprint, and activity.
  */
 
@@ -48,7 +48,9 @@ export default function DossierPage() {
   const [badges, setBadges] = useState<Badge[]>([]);
   const [activities, setActivities] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'quests' | 'badges' | 'fingerprint' | 'activity'>('quests');
+  const [activeTab, setActiveTab] = useState<'quests' | 'badges' | 'fingerprint' | 'activity'>(
+    'quests'
+  );
 
   const supabase = createClient();
 
@@ -75,10 +77,7 @@ export default function DossierPage() {
       }
 
       // Load active quests
-      const { data: questData } = await supabase
-        .from('quests')
-        .select('*')
-        .eq('active', true);
+      const { data: questData } = await supabase.from('quests').select('*').eq('active', true);
 
       // Load user quest progress
       const { data: userQuests } = await supabase
@@ -88,7 +87,11 @@ export default function DossierPage() {
 
       if (questData) {
         const quests = questData as Array<{ id: string; [key: string]: any }>;
-        const userQuestData = userQuests as Array<{ quest_id: string; status: string; progress: any }> | null;
+        const userQuestData = userQuests as Array<{
+          quest_id: string;
+          status: string;
+          progress: any;
+        }> | null;
         const questsWithProgress = quests.map((q) => {
           const userQuest = userQuestData?.find((uq) => uq.quest_id === q.id);
           return {
@@ -136,9 +139,7 @@ export default function DossierPage() {
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-ops-night flex items-center justify-center">
-        <div className="text-ops-neon-green font-mono animate-pulse">
-          LOADING DOSSIER...
-        </div>
+        <div className="text-ops-neon-green font-mono animate-pulse">LOADING DOSSIER...</div>
       </div>
     );
   }
@@ -147,9 +148,7 @@ export default function DossierPage() {
     return (
       <div className="min-h-screen bg-ops-night flex items-center justify-center">
         <div className="text-center">
-          <p className="text-ops-night-text font-mono mb-4">
-            AUTHENTICATION REQUIRED
-          </p>
+          <p className="text-ops-night-text font-mono mb-4">AUTHENTICATION REQUIRED</p>
           <Link href="/login" className="text-ops-neon-green hover:underline">
             LOGIN
           </Link>
@@ -212,9 +211,10 @@ export default function DossierPage() {
                 onClick={() => setActiveTab(tab)}
                 className={`
                   px-6 py-3 text-sm uppercase tracking-wider transition-colors
-                  ${activeTab === tab
-                    ? 'text-ops-neon-green border-b-2 border-ops-neon-green'
-                    : 'text-ops-night-text-dim hover:text-ops-night-text'
+                  ${
+                    activeTab === tab
+                      ? 'text-ops-neon-green border-b-2 border-ops-neon-green'
+                      : 'text-ops-night-text-dim hover:text-ops-night-text'
                   }
                 `}
               >
@@ -226,18 +226,12 @@ export default function DossierPage() {
 
         {/* Tab Content */}
         <main className="p-6">
-          {activeTab === 'quests' && (
-            <QuestsTab quests={quests} />
-          )}
-          {activeTab === 'badges' && (
-            <BadgesTab badges={badges} />
-          )}
+          {activeTab === 'quests' && <QuestsTab quests={quests} />}
+          {activeTab === 'badges' && <BadgesTab badges={badges} />}
           {activeTab === 'fingerprint' && profile && (
             <FingerprintTab fingerprint={profile.fingerprint} />
           )}
-          {activeTab === 'activity' && (
-            <ActivityTab activities={activities} />
-          )}
+          {activeTab === 'activity' && <ActivityTab activities={activities} />}
         </main>
       </div>
     </>
@@ -253,10 +247,10 @@ function QuestsTab({ quests }: { quests: Quest[] }) {
     <div className="space-y-6">
       {/* Daily */}
       <QuestSection title="DAILY MISSIONS" quests={dailyQuests} />
-      
+
       {/* Weekly */}
       <QuestSection title="WEEKLY OBJECTIVES" quests={weeklyQuests} />
-      
+
       {/* Achievements */}
       <QuestSection title="ACHIEVEMENTS" quests={achievements} />
     </div>
@@ -268,18 +262,17 @@ function QuestSection({ title, quests }: { title: string; quests: Quest[] }) {
 
   return (
     <div>
-      <h3 className="text-sm text-ops-night-text-dim uppercase tracking-wider mb-3">
-        {title}
-      </h3>
+      <h3 className="text-sm text-ops-night-text-dim uppercase tracking-wider mb-3">{title}</h3>
       <div className="space-y-2">
         {quests.map((quest) => (
           <div
             key={quest.id}
             className={`
               p-4 border
-              ${quest.status === 'completed'
-                ? 'border-ops-neon-green/50 bg-ops-neon-green/5'
-                : 'border-ops-neon-green/30'
+              ${
+                quest.status === 'completed'
+                  ? 'border-ops-neon-green/50 bg-ops-neon-green/5'
+                  : 'border-ops-neon-green/30'
               }
             `}
           >
@@ -318,9 +311,7 @@ function BadgesTab({ badges }: { badges: Badge[] }) {
 
   return (
     <div>
-      <p className="text-sm text-ops-night-text-dim mb-4">
-        {badges.length} BADGES UNLOCKED
-      </p>
+      <p className="text-sm text-ops-night-text-dim mb-4">{badges.length} BADGES UNLOCKED</p>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {sortedBadges.map((badge) => (
           <div
@@ -333,9 +324,7 @@ function BadgesTab({ badges }: { badges: Badge[] }) {
             <span className="text-4xl">{badge.icon}</span>
             <p className="font-bold mt-2">{badge.name}</p>
             <p className="text-xs text-ops-night-text-dim">{badge.description}</p>
-            <p className="text-xs text-ops-night-text-dim mt-2 uppercase">
-              {badge.rarity}
-            </p>
+            <p className="text-xs text-ops-night-text-dim mt-2 uppercase">{badge.rarity}</p>
           </div>
         ))}
       </div>
@@ -417,9 +406,7 @@ function FingerprintTab({ fingerprint }: { fingerprint: UserProfile['fingerprint
 function ActivityTab({ activities }: { activities: any[] }) {
   return (
     <div>
-      <p className="text-sm text-ops-night-text-dim mb-4">
-        LAST 20 ACTIVITIES
-      </p>
+      <p className="text-sm text-ops-night-text-dim mb-4">LAST 20 ACTIVITIES</p>
       <div className="space-y-1">
         {activities.map((activity, idx) => (
           <div
@@ -429,9 +416,7 @@ function ActivityTab({ activities }: { activities: any[] }) {
             <div>
               <p className="text-sm uppercase">{activity.action_type.replace('_', ' ')}</p>
               {activity.payload?.zone_id && (
-                <p className="text-xs text-ops-night-text-dim">
-                  Zone: {activity.payload.zone_id}
-                </p>
+                <p className="text-xs text-ops-night-text-dim">Zone: {activity.payload.zone_id}</p>
               )}
             </div>
             <span className="text-xs text-ops-night-text-dim">
@@ -442,4 +427,9 @@ function ActivityTab({ activities }: { activities: any[] }) {
       </div>
     </div>
   );
+}
+
+// Force server-side rendering
+export async function getServerSideProps() {
+  return { props: {} };
 }
