@@ -1,27 +1,37 @@
 /**
  * Redis Cache Integration (Phase 7.1)
- * 
+ *
  * Caching layer for:
  * - Zone data (TTL: 5 minutes)
  * - Whisper engine output (TTL: 30 minutes)
  * - Ghost beacons (TTL: 1 hour)
  * - Texture calculations (TTL: 10 minutes)
  * - User sessions (TTL: 24 hours)
- * 
+ *
  * Uses Upstash Redis for serverless compatibility.
  */
 
-import { Redis } from '@upstash/redis';
+// Initialize Redis client (optional - falls back to no-cache)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let redis: any = null;
+let CACHE_ENABLED = false;
 
-// Initialize Redis client
-const redis = process.env.UPSTASH_REDIS_REST_URL
-  ? new Redis({
+try {
+  // Dynamic import to make @upstash/redis optional
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { Redis } = require('@upstash/redis');
+
+  if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+    redis = new Redis({
       url: process.env.UPSTASH_REDIS_REST_URL,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN || '',
-    })
-  : null;
-
-const CACHE_ENABLED = !!redis;
+      token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    });
+    CACHE_ENABLED = true;
+  }
+} catch (error) {
+  // @upstash/redis not installed - caching disabled
+  console.warn('[CACHE] Redis not available - caching disabled');
+}
 
 interface CacheOptions {
   ttl?: number; // seconds
@@ -31,10 +41,7 @@ interface CacheOptions {
 /**
  * Get cached value
  */
-export async function getCached<T>(
-  key: string,
-  options: CacheOptions = {}
-): Promise<T | null> {
+export async function getCached<T>(key: string, options: CacheOptions = {}): Promise<T | null> {
   if (!CACHE_ENABLED) return null;
 
   try {
@@ -74,10 +81,7 @@ export async function setCached<T>(
 /**
  * Delete cached value
  */
-export async function deleteCached(
-  key: string,
-  options: CacheOptions = {}
-): Promise<void> {
+export async function deleteCached(key: string, options: CacheOptions = {}): Promise<void> {
   if (!CACHE_ENABLED) return;
 
   try {
@@ -107,57 +111,42 @@ export async function getCachedZone(zoneId: string): Promise<any | null> {
 /**
  * Cache whispers
  */
-export async function cacheWhispers(
-  zoneId: string,
-  whispers: any[]
-): Promise<void> {
+export async function cacheWhispers(zoneId: string, whispers: any[]): Promise<void> {
   await setCached(`whispers:${zoneId}`, whispers, {
     namespace: 'unmapped',
     ttl: 1800, // 30 minutes
   });
 }
 
-export async function getCachedWhispers(
-  zoneId: string
-): Promise<any[] | null> {
+export async function getCachedWhispers(zoneId: string): Promise<any[] | null> {
   return getCached(`whispers:${zoneId}`, { namespace: 'unmapped' });
 }
 
 /**
  * Cache ghost beacons
  */
-export async function cacheGhostBeacons(
-  zoneId: string,
-  beacons: any[]
-): Promise<void> {
+export async function cacheGhostBeacons(zoneId: string, beacons: any[]): Promise<void> {
   await setCached(`beacons:${zoneId}`, beacons, {
     namespace: 'unmapped',
     ttl: 3600, // 1 hour
   });
 }
 
-export async function getCachedGhostBeacons(
-  zoneId: string
-): Promise<any[] | null> {
+export async function getCachedGhostBeacons(zoneId: string): Promise<any[] | null> {
   return getCached(`beacons:${zoneId}`, { namespace: 'unmapped' });
 }
 
 /**
  * Cache texture calculation
  */
-export async function cacheTextureCalculation(
-  zoneId: string,
-  texture: any
-): Promise<void> {
+export async function cacheTextureCalculation(zoneId: string, texture: any): Promise<void> {
   await setCached(`texture:${zoneId}`, texture, {
     namespace: 'unmapped',
     ttl: 600, // 10 minutes
   });
 }
 
-export async function getCachedTextureCalculation(
-  zoneId: string
-): Promise<any | null> {
+export async function getCachedTextureCalculation(zoneId: string): Promise<any | null> {
   return getCached(`texture:${zoneId}`, { namespace: 'unmapped' });
 }
 
@@ -175,7 +164,7 @@ export async function checkRateLimit(
     const key = `ratelimit:${identifier}`;
     // Upstash Redis supports incr and expire
     const redisClient = redis as any;
-    const current = await redisClient.incr(key) as number;
+    const current = (await redisClient.incr(key)) as number;
 
     // Set expiry on first request
     if (current === 1) {
@@ -195,19 +184,14 @@ export async function checkRateLimit(
 /**
  * Session storage
  */
-export async function cacheSession(
-  sessionId: string,
-  data: any
-): Promise<void> {
+export async function cacheSession(sessionId: string, data: any): Promise<void> {
   await setCached(`session:${sessionId}`, data, {
     namespace: 'unmapped',
     ttl: 86400, // 24 hours
   });
 }
 
-export async function getCachedSession(
-  sessionId: string
-): Promise<any | null> {
+export async function getCachedSession(sessionId: string): Promise<any | null> {
   return getCached(`session:${sessionId}`, { namespace: 'unmapped' });
 }
 
