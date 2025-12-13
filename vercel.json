@@ -6,10 +6,10 @@
       "use": "@vercel/next"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/data/packs/(.*)",
-      "dest": "/api/packs/$1"
+      "source": "/data/packs/:path*",
+      "destination": "/api/packs/:path*"
     }
   ],
   "headers": [
