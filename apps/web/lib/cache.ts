@@ -12,36 +12,13 @@
  * Redis is optional - if not installed, caching is gracefully disabled.
  */
 
-// Initialize Redis client (optional - falls back to no-cache)
+// Redis is not installed - all caching operations are no-ops
+// This file provides the cache interface but doesn't actually cache anything
+// To enable caching, install @upstash/redis and configure UPSTASH_REDIS_REST_URL/TOKEN
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-let redis: any = null;
-let CACHE_ENABLED = false;
-
-// Lazy load Redis to avoid build errors when package is not installed
-async function getRedis() {
-  if (redis !== null || CACHE_ENABLED) return redis;
-
-  try {
-    // Use eval to prevent webpack from bundling Redis when not needed
-    // eslint-disable-next-line no-eval
-    const RedisModule = await eval('import("@upstash/redis")');
-
-    if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
-      redis = new RedisModule.Redis({
-        url: process.env.UPSTASH_REDIS_REST_URL,
-        token: process.env.UPSTASH_REDIS_REST_TOKEN,
-      });
-      CACHE_ENABLED = true;
-      return redis;
-    }
-  } catch (error) {
-    // @upstash/redis not installed - caching disabled
-    if (typeof window === 'undefined') {
-      // Only log on server to avoid noise
-      console.warn('[CACHE] Redis not available - caching disabled');
-    }
-  }
-
+async function getRedis(): Promise<any> {
+  // Redis not available - return null to disable caching
   return null;
 }
 interface CacheOptions {
