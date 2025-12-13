@@ -7,7 +7,7 @@
 
 import React, { useState } from 'react';
 import { useDigitalCairns } from '../hooks/useDigitalCairns';
-import { StoneShape, StoneColor, STONE_SHAPES, STONE_COLORS } from '../lib/digitalCairns';
+import { StoneShape, StoneColor, StoneColorName, STONE_SHAPES, STONE_COLORS, STONE_COLORS_HEX, COLOR_NAME_TO_HEX } from '../lib/digitalCairns';
 
 interface DigitalCairnsProps {
   anchorId: string;
@@ -32,13 +32,15 @@ export function DigitalCairns({
   } = useDigitalCairns(anchorId, userId);
 
   const [selectedShape, setSelectedShape] = useState<StoneShape>('circle');
-  const [selectedColor, setSelectedColor] = useState<StoneColor>('#ffffff');
+  const [selectedColor, setSelectedColor] = useState<StoneColorName>('white');
   const [placing, setPlacing] = useState(false);
 
   const handlePlace = async () => {
     setPlacing(true);
     try {
-      await placeStone(selectedShape, selectedColor);
+      // Convert color name to hex for API
+      const hexColor = COLOR_NAME_TO_HEX[selectedColor];
+      await placeStone(selectedShape, hexColor);
     } catch (err) {
       console.error('Failed to place stone:', err);
     } finally {
@@ -46,14 +48,14 @@ export function DigitalCairns({
     }
   };
 
-  const colorClasses: Record<StoneColor, string> = {
-    '#00ff88': 'bg-emerald-400',
-    '#ff6b6b': 'bg-red-400',
-    '#4ecdc4': 'bg-teal-400',
-    '#ffe66d': 'bg-yellow-300',
-    '#c792ea': 'bg-purple-400',
-    '#82aaff': 'bg-blue-400',
-    '#ffffff': 'bg-white',
+  const colorClasses: Record<StoneColorName, string> = {
+    white: 'bg-white',
+    gray: 'bg-blue-400',
+    red: 'bg-red-500',
+    orange: 'bg-amber-500',
+    yellow: 'bg-yellow-300',
+    green: 'bg-emerald-400',
+    blue: 'bg-blue-500',
   };
 
   return (
@@ -168,7 +170,7 @@ export function DigitalCairns({
               <div className="flex items-center gap-4 mb-4">
                 <div className="text-gray-500 text-xs">PREVIEW:</div>
                 <div
-                  dangerouslySetInnerHTML={{ __html: getSVG(selectedShape, selectedColor) }}
+                  dangerouslySetInnerHTML={{ __html: getSVG(selectedShape, COLOR_NAME_TO_HEX[selectedColor]) }}
                 />
               </div>
 

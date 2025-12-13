@@ -56,9 +56,13 @@ export function useAuth(): UseAuthReturn {
         setLoading(false);
 
         if (event === 'SIGNED_IN') {
-          // Redirect to intended page or default operative dashboard
-          const redirectTo = (router.query.redirect as string) || '/operative';
-          router.push(redirectTo);
+          // Only redirect from auth pages to avoid double navigation
+          // The API callback handles redirects from OAuth flows
+          const isAuthPage = router.pathname.startsWith('/auth') || router.pathname === '/login';
+          if (isAuthPage) {
+            const redirectTo = (router.query.redirect as string) || '/operative';
+            router.push(redirectTo);
+          }
         }
 
         if (event === 'SIGNED_OUT') {

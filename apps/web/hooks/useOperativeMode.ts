@@ -58,9 +58,10 @@ export function useOperativeMode(
     }
 
     let battery: any = null;
+    let isMounted = true;
 
     const updateBattery = () => {
-      if (battery) {
+      if (battery && isMounted) {
         setConditions((prev) => ({
           ...prev,
           batteryLevel: Math.round(battery.level * 100),
@@ -69,6 +70,7 @@ export function useOperativeMode(
     };
 
     (navigator as any).getBattery().then((b: any) => {
+      if (!isMounted) return;
       battery = b;
       updateBattery();
 
@@ -76,6 +78,7 @@ export function useOperativeMode(
     });
 
     return () => {
+      isMounted = false;
       if (battery) {
         battery.removeEventListener('levelchange', updateBattery);
       }

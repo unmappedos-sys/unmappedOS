@@ -40,6 +40,9 @@ export function useTheme() {
   useEffect(() => {
     if (!autoTheme || typeof window === 'undefined') return;
 
+    let cleanupFn: (() => void) | undefined;
+    let usingSensor = false;
+
     // Try to use AmbientLightSensor API (Chrome only, limited support)
     if ('AmbientLightSensor' in window) {
       try {
@@ -54,23 +57,27 @@ export function useTheme() {
           }
         });
         sensor.start();
-        return () => sensor.stop();
+        usingSensor = true;
+        cleanupFn = () => sensor.stop();
       } catch (error) {
         console.warn('[Theme] AmbientLightSensor not available:', error);
       }
     }
 
-    // Fallback: use time of day (06:00-18:00 = day, else night)
-    const checkTimeOfDay = () => {
-      const hour = new Date().getHours();
-      const shouldBeDay = hour >= 6 && hour < 18;
-      setTheme(shouldBeDay ? 'day' : 'night');
-    };
+    // Fallback: use time of day (06:00-18:00 = day, else night) - only if sensor not available
+    if (!usingSensor) {
+      const checkTimeOfDay = () => {
+        const hour = new Date().getHours();
+        const shouldBeDay = hour >= 6 && hour < 18;
+        setTheme(shouldBeDay ? 'day' : 'night');
+      };
 
-    checkTimeOfDay();
-    const interval = setInterval(checkTimeOfDay, 60000); // Check every minute
+      checkTimeOfDay();
+      const interval = setInterval(checkTimeOfDay, 60000); // Check every minute
+      cleanupFn = () => clearInterval(interval);
+    }
 
-    return () => clearInterval(interval);
+    return () => cleanupFn?.();
   }, [autoTheme, theme]);
 
   // Toggle theme manually
