@@ -47,8 +47,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Create or update user
     if (!existingUser) {
       // Create new user
-      const { data: newUser, error: insertError } = await supabase
-        .from('users')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: newUser, error: insertError } = await (supabase.from('users') as any)
         .insert({
           id: userId,
           email: user.email,
@@ -56,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           provider: user.app_metadata?.provider || 'email',
           karma: 0,
           created_at: new Date().toISOString(),
-        } as any)
+        })
         .select()
         .single();
 
@@ -73,12 +73,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     } else {
       // Update existing user (name, last_seen, etc.)
-      const { data: updatedUser, error: updateError } = await supabase
-        .from('users')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: updatedUser, error: updateError } = await (supabase.from('users') as any)
         .update({
           name: user.user_metadata?.name || user.user_metadata?.full_name || existingUser.name,
           last_seen_at: new Date().toISOString(),
-        } as any)
+        })
         .eq('id', userId)
         .select()
         .single();
