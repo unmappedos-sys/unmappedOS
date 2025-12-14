@@ -271,8 +271,7 @@ export function ZoneCardMini({
 
         {/* Freshness */}
         <IntelFreshnessIndicator 
-          lastIntel={confidence.last_intel} 
-          dataAgeDays={confidence.data_age_days}
+          lastIntelAt={confidence.last_intel} 
         />
       </div>
     </button>
