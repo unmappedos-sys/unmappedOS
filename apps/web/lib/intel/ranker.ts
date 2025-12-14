@@ -11,7 +11,7 @@
  * All recommendations are explainable.
  */
 
-import type { Zone, ZoneTexture, TextureType } from '../../scripts/packgen/city_pack_schema';
+import type { Zone, ZoneTexture, TextureType } from '../../../../scripts/packgen/city_pack_schema';
 import type { ZoneConfidenceState, ConfidenceLevel } from './confidenceEngine';
 import type { CurrentWeather, WeatherModifiers, TextureWeatherWeight } from './weatherService';
 import { calculateWeatherModifiers, getWeatherIcon } from './weatherService';

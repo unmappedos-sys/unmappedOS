@@ -348,7 +348,6 @@ export function ZoneCard({
           <ConfidenceBar 
             score={confidence.score}
             level={confidence.level}
-            dataAgeDays={confidence.data_age_days}
           />
         </div>
       </div>
