@@ -1,6 +1,6 @@
 /**
  * Recommendation Ranker Tests
- * 
+ *
  * Tests for:
  * - Texture matching
  * - Time-of-day scoring
@@ -16,7 +16,7 @@ import {
   calculateWeatherImpact,
   applyDistancePenalty,
   RANKING_WEIGHTS,
-} from '../../lib/intel/ranker';
+} from '../lib/intel/ranker';
 
 // Mock zone data
 const mockZones = [
@@ -73,7 +73,7 @@ const mockZones = [
       meal_restaurant: 300,
       currency: 'THB',
     },
-    center: { lat: 13.7510, lng: 100.4927 },
+    center: { lat: 13.751, lng: 100.4927 },
   },
   {
     id: 'zone-3',
@@ -98,7 +98,7 @@ const mockZones = [
     pricing: {
       currency: 'THB',
     },
-    center: { lat: 13.7600, lng: 100.5100 },
+    center: { lat: 13.76, lng: 100.51 },
   },
 ];
 
@@ -108,11 +108,10 @@ describe('Recommendation Ranker', () => {
   // ==========================================================================
   describe('calculateTextureScore', () => {
     it('should give high score for matching primary texture', () => {
-      const score = calculateTextureScore(
-        mockZones[0].texture,
-        { preferred_textures: ['night-market', 'street-food'] }
-      );
-      
+      const score = calculateTextureScore(mockZones[0].texture, {
+        preferred_textures: ['night-market', 'street-food'],
+      });
+
       expect(score).toBeGreaterThan(0.7);
     });
 
@@ -121,17 +120,16 @@ describe('Recommendation Ranker', () => {
         mockZones[0].texture,
         { preferred_textures: ['local-market'] } // matches secondary
       );
-      
+
       expect(score).toBeGreaterThan(0.3);
       expect(score).toBeLessThan(0.8);
     });
 
     it('should give low score for non-matching textures', () => {
-      const score = calculateTextureScore(
-        mockZones[0].texture,
-        { preferred_textures: ['cultural', 'temple-area'] }
-      );
-      
+      const score = calculateTextureScore(mockZones[0].texture, {
+        preferred_textures: ['cultural', 'temple-area'],
+      });
+
       expect(score).toBeLessThan(0.5);
     });
 
@@ -140,12 +138,12 @@ describe('Recommendation Ranker', () => {
         { ...mockZones[0].texture, hassle_factor: 2 },
         { preferred_textures: [], hassle_tolerance: 'LOW' }
       );
-      
+
       const highHassleScore = calculateTextureScore(
         { ...mockZones[0].texture, hassle_factor: 8 },
         { preferred_textures: [], hassle_tolerance: 'LOW' }
       );
-      
+
       expect(lowHassleScore).toBeGreaterThan(highHassleScore);
     });
 
@@ -154,12 +152,12 @@ describe('Recommendation Ranker', () => {
         { ...mockZones[0].texture, walkability: 9 },
         { preferred_textures: [], min_walkability: 8 }
       );
-      
+
       const lowWalkScore = calculateTextureScore(
         { ...mockZones[0].texture, walkability: 4 },
         { preferred_textures: [], min_walkability: 8 }
       );
-      
+
       expect(highWalkScore).toBeGreaterThan(lowWalkScore);
     });
   });
@@ -172,12 +170,9 @@ describe('Recommendation Ranker', () => {
       // Test evening zone at 8 PM
       const eveningDate = new Date();
       eveningDate.setHours(20, 0, 0, 0);
-      
-      const score = calculateTimeScore(
-        mockZones[0].texture.time_tags,
-        eveningDate
-      );
-      
+
+      const score = calculateTimeScore(mockZones[0].texture.time_tags, eveningDate);
+
       expect(score).toBeGreaterThan(0.7);
     });
 
@@ -185,30 +180,27 @@ describe('Recommendation Ranker', () => {
       // Test evening zone at 9 AM
       const morningDate = new Date();
       morningDate.setHours(9, 0, 0, 0);
-      
+
       const score = calculateTimeScore(
         mockZones[0].texture.time_tags, // evening, night
         morningDate
       );
-      
+
       expect(score).toBeLessThan(0.5);
     });
 
     it('should give neutral score for zones without time tags', () => {
       const score = calculateTimeScore([], new Date());
-      
+
       expect(score).toBe(0.5);
     });
 
     it('should handle morning zones correctly', () => {
       const morningDate = new Date();
       morningDate.setHours(9, 0, 0, 0);
-      
-      const score = calculateTimeScore(
-        ['morning', 'afternoon'],
-        morningDate
-      );
-      
+
+      const score = calculateTimeScore(['morning', 'afternoon'], morningDate);
+
       expect(score).toBeGreaterThan(0.7);
     });
   });
@@ -223,12 +215,12 @@ describe('Recommendation Ranker', () => {
         temperature: 28,
         conditions: 'rain' as const,
       };
-      
+
       const outdoorImpact = calculateWeatherImpact(
         { ...mockZones[0].texture, primary: 'park' },
         weather
       );
-      
+
       expect(outdoorImpact).toBeLessThan(1);
     });
 
@@ -238,12 +230,12 @@ describe('Recommendation Ranker', () => {
         temperature: 28,
         conditions: 'rain' as const,
       };
-      
+
       const indoorImpact = calculateWeatherImpact(
         { ...mockZones[0].texture, primary: 'modern-mall' },
         weather
       );
-      
+
       expect(indoorImpact).toBeGreaterThanOrEqual(0.9);
     });
 
@@ -253,12 +245,9 @@ describe('Recommendation Ranker', () => {
         temperature: 38,
         conditions: 'clear' as const,
       };
-      
-      const impact = calculateWeatherImpact(
-        mockZones[0].texture,
-        hotWeather
-      );
-      
+
+      const impact = calculateWeatherImpact(mockZones[0].texture, hotWeather);
+
       // High temp should reduce score somewhat
       expect(impact).toBeLessThan(1);
     });
@@ -269,12 +258,9 @@ describe('Recommendation Ranker', () => {
         temperature: 25,
         conditions: 'clear' as const,
       };
-      
-      const impact = calculateWeatherImpact(
-        mockZones[0].texture,
-        goodWeather
-      );
-      
+
+      const impact = calculateWeatherImpact(mockZones[0].texture, goodWeather);
+
       expect(impact).toBeGreaterThanOrEqual(1);
     });
   });
@@ -314,7 +300,7 @@ describe('Recommendation Ranker', () => {
         user_location: { lat: 13.7563, lng: 100.5018 },
         preferences: {},
       });
-      
+
       // Zone 1 has highest confidence (85)
       expect(results[0].zone.id).toBe('zone-1');
     });
@@ -328,13 +314,13 @@ describe('Recommendation Ranker', () => {
           confidence: { ...mockZones[0].confidence, is_offline: true },
         },
       ];
-      
+
       const results = rankZones(zonesWithOffline, {
         user_location: { lat: 13.7563, lng: 100.5018 },
         preferences: {},
       });
-      
-      expect(results.find(r => r.zone.id === 'offline-zone')).toBeUndefined();
+
+      expect(results.find((r) => r.zone.id === 'offline-zone')).toBeUndefined();
     });
 
     it('should include warnings for degraded zones', () => {
@@ -342,8 +328,8 @@ describe('Recommendation Ranker', () => {
         user_location: { lat: 13.7563, lng: 100.5018 },
         preferences: {},
       });
-      
-      const degradedResult = results.find(r => r.zone.id === 'zone-3');
+
+      const degradedResult = results.find((r) => r.zone.id === 'zone-3');
       expect(degradedResult?.warnings.length).toBeGreaterThan(0);
     });
 
@@ -354,11 +340,11 @@ describe('Recommendation Ranker', () => {
           preferred_textures: ['cultural', 'temple-area'],
         },
       });
-      
+
       // Temple district should rank higher with cultural preference
-      const nightMarketRank = results.findIndex(r => r.zone.id === 'zone-1');
-      const templeRank = results.findIndex(r => r.zone.id === 'zone-2');
-      
+      const nightMarketRank = results.findIndex((r) => r.zone.id === 'zone-1');
+      const templeRank = results.findIndex((r) => r.zone.id === 'zone-2');
+
       expect(templeRank).toBeLessThan(nightMarketRank);
     });
 
@@ -367,10 +353,12 @@ describe('Recommendation Ranker', () => {
         user_location: { lat: 13.7563, lng: 100.5018 },
         preferences: { preferred_textures: ['night-market'] },
       });
-      
+
       const topResult = results[0];
       expect(topResult.reasons.length).toBeGreaterThan(0);
-      expect(topResult.reasons.some(r => r.includes('texture') || r.includes('confidence'))).toBe(true);
+      expect(topResult.reasons.some((r) => r.includes('texture') || r.includes('confidence'))).toBe(
+        true
+      );
     });
 
     it('should handle empty zones array', () => {
@@ -378,7 +366,7 @@ describe('Recommendation Ranker', () => {
         user_location: { lat: 13.7563, lng: 100.5018 },
         preferences: {},
       });
-      
+
       expect(results).toEqual([]);
     });
 
@@ -387,12 +375,12 @@ describe('Recommendation Ranker', () => {
         user_location: { lat: 13.7563, lng: 100.5018 },
         preferences: {},
       });
-      
+
       const results2 = rankZones(mockZones, {
         user_location: { lat: 13.7563, lng: 100.5018 },
         preferences: {},
       });
-      
+
       expect(results1[0].score).toBe(results2[0].score);
     });
   });

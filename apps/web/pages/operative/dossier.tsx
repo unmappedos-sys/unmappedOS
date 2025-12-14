@@ -4,7 +4,7 @@
  * Personal profile showing quests, badges, fingerprint, and activity.
  */
 
-import { useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/useAuth';
@@ -52,16 +52,16 @@ export default function DossierPage() {
     'quests'
   );
 
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
   useEffect(() => {
-    if (user) {
+    if (user && supabase) {
       loadDossier();
     }
-  }, [user]);
+  }, [user, supabase]);
 
   const loadDossier = async () => {
-    if (!user) return;
+    if (!user || !supabase) return;
     setLoading(true);
 
     try {
@@ -152,6 +152,35 @@ export default function DossierPage() {
           <Link href="/login" className="text-ops-neon-green hover:underline">
             LOGIN
           </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (!supabase) {
+    return (
+      <div className="min-h-screen bg-ops-night text-ops-night-text font-mono">
+        <header className="border-b border-ops-neon-green/30 p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Link href="/operative" className="text-ops-neon-green hover:underline">
+                ← BACK
+              </Link>
+              <h1 className="font-tactical text-tactical-lg text-ops-neon-green tracking-wider">
+                OPERATIVE DOSSIER
+              </h1>
+            </div>
+          </div>
+        </header>
+
+        <div className="p-6">
+          <div className="border border-ops-neon-amber/40 bg-ops-night-surface/60 p-4">
+            <p className="text-ops-neon-amber mb-2">BACKEND NOT CONFIGURED</p>
+            <p className="text-ops-night-text-dim text-sm leading-relaxed">
+              Operative features (quests, badges, activity, reports) require Supabase. Configure
+              NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to enable this.
+            </p>
+          </div>
         </div>
       </div>
     );

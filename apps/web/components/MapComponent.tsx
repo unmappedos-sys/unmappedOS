@@ -76,8 +76,7 @@ export default function MapComponent({
     } else {
       // Use MapLibre (free fallback)
       const styleUrl =
-        process.env.NEXT_PUBLIC_MAPLIBRE_STYLE_URL ||
-        'https://api.maptiler.com/maps/streets-v2-dark/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL';
+        process.env.NEXT_PUBLIC_MAPLIBRE_STYLE_URL || 'https://demotiles.maplibre.org/style.json';
 
       mapInstance = new maplibregl.Map({
         container: mapContainer.current,

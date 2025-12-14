@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest -c ../../jest.config.js --testPathPattern=apps/web/__tests__"
   },
   "dependencies": {
     "@supabase/ssr": "^0.8.0",

@@ -22,6 +22,12 @@ export default function AuthCallbackPage() {
       try {
         const supabase = createClient();
 
+        if (!supabase) {
+          setStatus('error');
+          setErrorMsg('Authentication is unavailable: Supabase is not configured.');
+          return;
+        }
+
         // Check for error from query params
         const { error: urlError, error_description, code } = router.query;
         if (urlError) {

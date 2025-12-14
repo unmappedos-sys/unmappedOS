@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-import { getCityPack } from '@/lib/cityPack';
+import { downloadCityPack, getCityPack } from '@/lib/cityPack';
 import {
   vibrateDevice,
   openGoogleMaps,
@@ -90,11 +90,25 @@ export default function TacticalDisplay() {
 
   const loadPack = async (cityName: string) => {
     setLoading(true);
-    const cityPack = await getCityPack(cityName);
+    let cityPack = await getCityPack(cityName);
+
+    if (!cityPack && isOnline()) {
+      try {
+        await downloadCityPack(cityName);
+        cityPack = await getCityPack(cityName);
+      } catch (error) {
+        console.error('Failed to auto-download city pack:', error);
+      }
+    }
+
     if (cityPack) {
       setPack(cityPack);
     } else {
-      alert('City pack not found. Download it first from the mission dossier.');
+      alert(
+        isOnline()
+          ? 'City pack not found. Download it first from the mission dossier.'
+          : 'Offline and no cached city pack found. Connect once to download the pack.'
+      );
       router.push(`/city/${cityName}`);
     }
     setLoading(false);

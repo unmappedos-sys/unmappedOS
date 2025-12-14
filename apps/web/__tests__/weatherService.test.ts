@@ -1,6 +1,6 @@
 /**
  * Weather Integration Tests
- * 
+ *
  * Tests for:
  * - Weather API fetching
  * - Weather modifier calculations
@@ -13,7 +13,7 @@ import {
   applyWeatherToZone,
   getWeatherConditions,
   WEATHER_THRESHOLDS,
-} from '../../lib/intel/weatherService';
+} from '../lib/intel/weatherService';
 
 // Mock fetch
 global.fetch = jest.fn();
@@ -40,17 +40,15 @@ describe('Weather Service', () => {
           precipitation_probability: [10, 15, 20, 25],
         },
       };
-      
+
       (global.fetch as jest.Mock).mockResolvedValue({
         ok: true,
         json: () => Promise.resolve(mockResponse),
       });
-      
+
       const weather = await fetchWeather({ lat: 13.7563, lng: 100.5018 });
-      
-      expect(global.fetch).toHaveBeenCalledWith(
-        expect.stringContaining('api.open-meteo.com')
-      );
+
+      expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining('api.open-meteo.com'));
       expect(weather.temperature).toBe(28);
       expect(weather.conditions).toBe('clear');
     });
@@ -60,9 +58,9 @@ describe('Weather Service', () => {
         ok: false,
         status: 500,
       });
-      
+
       const weather = await fetchWeather({ lat: 13.7563, lng: 100.5018 });
-      
+
       // Should return default/fallback weather
       expect(weather).toBeDefined();
       expect(weather.conditions).toBe('unknown');
@@ -71,17 +69,18 @@ describe('Weather Service', () => {
     it('should cache weather data for same location', async () => {
       (global.fetch as jest.Mock).mockResolvedValue({
         ok: true,
-        json: () => Promise.resolve({
-          current: { temperature_2m: 30, weather_code: 0 },
-          hourly: { precipitation_probability: [0] },
-        }),
+        json: () =>
+          Promise.resolve({
+            current: { temperature_2m: 30, weather_code: 0 },
+            hourly: { precipitation_probability: [0] },
+          }),
       });
-      
+
       // First call
       await fetchWeather({ lat: 13.7563, lng: 100.5018 });
       // Second call (should use cache)
       await fetchWeather({ lat: 13.7563, lng: 100.5018 });
-      
+
       // Should only fetch once due to caching
       expect(global.fetch).toHaveBeenCalledTimes(1);
     });
@@ -89,16 +88,17 @@ describe('Weather Service', () => {
     it('should round coordinates for cache key', async () => {
       (global.fetch as jest.Mock).mockResolvedValue({
         ok: true,
-        json: () => Promise.resolve({
-          current: { temperature_2m: 30, weather_code: 0 },
-          hourly: { precipitation_probability: [0] },
-        }),
+        json: () =>
+          Promise.resolve({
+            current: { temperature_2m: 30, weather_code: 0 },
+            hourly: { precipitation_probability: [0] },
+          }),
       });
-      
+
       // Slightly different coordinates (same area)
       await fetchWeather({ lat: 13.7563, lng: 100.5018 });
-      await fetchWeather({ lat: 13.7565, lng: 100.5020 });
-      
+      await fetchWeather({ lat: 13.7565, lng: 100.502 });
+
       // Should use same cache entry
       expect(global.fetch).toHaveBeenCalledTimes(1);
     });
@@ -116,9 +116,9 @@ describe('Weather Service', () => {
         conditions: 'clear' as const,
         wind_speed: 5,
       };
-      
+
       const modifiers = calculateWeatherModifiers(weather);
-      
+
       expect(modifiers.walkability_modifier).toBeGreaterThanOrEqual(0);
       expect(modifiers.safety_modifier).toBeGreaterThanOrEqual(0);
     });
@@ -131,9 +131,9 @@ describe('Weather Service', () => {
         conditions: 'rain' as const,
         wind_speed: 15,
       };
-      
+
       const modifiers = calculateWeatherModifiers(weather);
-      
+
       expect(modifiers.walkability_modifier).toBeLessThan(0);
     });
 
@@ -145,9 +145,9 @@ describe('Weather Service', () => {
         conditions: 'clear' as const,
         wind_speed: 5,
       };
-      
+
       const modifiers = calculateWeatherModifiers(weather);
-      
+
       expect(modifiers.walkability_modifier).toBeLessThan(0);
     });
 
@@ -159,9 +159,9 @@ describe('Weather Service', () => {
         conditions: 'thunderstorm' as const,
         wind_speed: 25,
       };
-      
+
       const modifiers = calculateWeatherModifiers(weather);
-      
+
       expect(modifiers.texture_weights['modern-mall']).toBeGreaterThan(1);
       expect(modifiers.texture_weights['park']).toBeLessThan(1);
     });
@@ -174,9 +174,9 @@ describe('Weather Service', () => {
         conditions: 'thunderstorm' as const,
         wind_speed: 30,
       };
-      
+
       const modifiers = calculateWeatherModifiers(weather);
-      
+
       expect(modifiers.safety_modifier).toBeLessThan(0);
     });
   });
@@ -202,9 +202,9 @@ describe('Weather Service', () => {
         safety_modifier: 0,
         texture_weights: {},
       };
-      
+
       const adjusted = applyWeatherToZone(baseZone, badWeather);
-      
+
       expect(adjusted.texture.walkability).toBe(5); // 8 - 3
     });
 
@@ -214,9 +214,9 @@ describe('Weather Service', () => {
         safety_modifier: 0,
         texture_weights: {},
       };
-      
+
       const adjusted = applyWeatherToZone(baseZone, terribleWeather);
-      
+
       expect(adjusted.texture.walkability).toBeGreaterThanOrEqual(1);
     });
 
@@ -227,9 +227,9 @@ describe('Weather Service', () => {
         texture_weights: {},
         warnings: ['Heavy rain expected'],
       };
-      
+
       const adjusted = applyWeatherToZone(baseZone, severeWeather);
-      
+
       expect(adjusted.weather_warnings).toContain('Heavy rain expected');
     });
 
@@ -239,9 +239,9 @@ describe('Weather Service', () => {
         safety_modifier: 0,
         texture_weights: {},
       };
-      
+
       const adjusted = applyWeatherToZone(baseZone, weather);
-      
+
       expect(baseZone.texture.walkability).toBe(8); // Original unchanged
       expect(adjusted.texture.walkability).toBe(5);
     });

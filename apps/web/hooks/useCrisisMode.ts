@@ -1,10 +1,10 @@
 /**
  * useCrisisMode Hook
- * 
+ *
  * Manages crisis mode state, shake detection, and emergency protocols.
  */
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import {
   CrisisConfig,
   CrisisTrigger,
@@ -49,7 +49,7 @@ export function useCrisisMode(options: UseCrisisModeOptions): UseCrisisModeRetur
   const [config, setConfig] = useState<CrisisConfig>(() => getCrisisConfig(city));
 
   const cleanupShakeRef = useRef<(() => void) | null>(null);
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
   // Update config when city changes
   useEffect(() => {
@@ -116,7 +116,7 @@ export function useCrisisMode(options: UseCrisisModeOptions): UseCrisisModeRetur
       setActivatedAt(new Date());
 
       // Log crisis event
-      if (userId) {
+      if (userId && supabase) {
         try {
           await supabase.from('crisis_events').insert({
             user_id: userId,
@@ -144,10 +144,9 @@ export function useCrisisMode(options: UseCrisisModeOptions): UseCrisisModeRetur
     setTrigger(null);
 
     // Update crisis event as resolved
-    if (userId && activatedAt) {
+    if (userId && activatedAt && supabase) {
       try {
-        await (supabase
-          .from('crisis_events') as any)
+        await (supabase.from('crisis_events') as any)
           .update({
             resolved: true,
             resolved_at: new Date().toISOString(),

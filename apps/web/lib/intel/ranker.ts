@@ -1,19 +1,19 @@
 /**
  * Recommendation Ranker
- * 
+ *
  * Honest, adaptive recommendation engine that considers:
  * - Texture match (user preference fingerprint)
  * - Confidence score (intel freshness)
  * - Time of day (operational hours, safety)
  * - Weather impact (outdoor vs indoor)
  * - Hazard state (exclusion from recommendations)
- * 
+ *
  * All recommendations are explainable.
  */
 
 import type { Zone, ZoneTexture, TextureType } from '../../../../scripts/packgen/city_pack_schema';
 import type { ZoneConfidenceState, ConfidenceLevel } from './confidenceEngine';
-import type { CurrentWeather, WeatherModifiers, TextureWeatherWeight } from './weatherService';
+import type { CurrentWeather, WeatherModifiers } from './weatherService';
 import { calculateWeatherModifiers, getWeatherIcon } from './weatherService';
 
 // ============================================================================
@@ -41,7 +41,7 @@ export interface RecommendationContext {
 export interface ZoneRecommendation {
   zone: Zone;
   confidence: ZoneConfidenceState;
-  
+
   // Scores (0-100)
   total_score: number;
   texture_score: number;
@@ -49,11 +49,11 @@ export interface ZoneRecommendation {
   time_score: number;
   weather_score: number;
   distance_score: number;
-  
+
   // Explanation
   reasons: string[];
   warnings: string[];
-  
+
   // Weather-adjusted metrics
   adjusted_walkability: number;
   adjusted_safety: number;
@@ -80,12 +80,166 @@ export interface RankerResult {
 // ============================================================================
 
 const WEIGHTS = {
-  TEXTURE: 0.30,      // How well zone matches user preference
-  CONFIDENCE: 0.25,   // How fresh/reliable the intel is
-  TIME: 0.15,         // How appropriate for current time
-  WEATHER: 0.15,      // How weather affects the zone
-  DISTANCE: 0.15,     // Proximity bonus (if location available)
+  TEXTURE: 0.3, // How well zone matches user preference
+  CONFIDENCE: 0.25, // How fresh/reliable the intel is
+  TIME: 0.15, // How appropriate for current time
+  WEATHER: 0.15, // How weather affects the zone
+  DISTANCE: 0.15, // Proximity bonus (if location available)
 };
+
+// Legacy/test-facing export (weights must sum to 1)
+export const RANKING_WEIGHTS = WEIGHTS;
+
+// --------------------------------------------------------------------------
+// Legacy/test-facing helpers
+// --------------------------------------------------------------------------
+
+type LegacyTexture = {
+  primary: string;
+  secondary?: string[];
+  hassle_factor?: number;
+  walkability?: number;
+  time_tags?: string[];
+};
+
+type LegacyPreferences = {
+  preferred_textures?: string[];
+  hassle_tolerance?: 'LOW' | 'MEDIUM' | 'HIGH';
+  min_walkability?: number;
+};
+
+type LegacyWeather = {
+  precipitation_probability: number;
+  temperature: number;
+  conditions: 'clear' | 'cloudy' | 'rain' | 'thunderstorm' | 'unknown';
+};
+
+type LegacyRankContext = {
+  user_location?: { lat: number; lng: number };
+  preferences?: LegacyPreferences;
+  weather?: LegacyWeather;
+  current_time?: Date;
+};
+
+type LegacyZone = {
+  id: string;
+  name: string;
+  texture: LegacyTexture;
+  confidence: { score: number; level?: string; is_offline?: boolean; has_conflicts?: boolean };
+  center?: { lat: number; lng: number };
+};
+
+type LegacyRecommendation = {
+  zone: LegacyZone;
+  score: number;
+  reasons: string[];
+  warnings: string[];
+};
+
+function clamp01(value: number): number {
+  if (!Number.isFinite(value)) return 0;
+  return Math.max(0, Math.min(1, value));
+}
+
+export function calculateTextureScore(
+  texture: LegacyTexture,
+  preferences: LegacyPreferences = {}
+): number {
+  const preferred = preferences.preferred_textures || [];
+
+  let score = 0.5;
+
+  if (preferred.includes(texture.primary)) {
+    score += 0.35;
+  } else if ((texture.secondary || []).some((t) => preferred.includes(t))) {
+    score += 0.2;
+  } else if (preferred.length > 0) {
+    score -= 0.15;
+  }
+
+  const hassle = typeof texture.hassle_factor === 'number' ? texture.hassle_factor : 5;
+  const hassleTolerance = preferences.hassle_tolerance || 'MEDIUM';
+  if (hassleTolerance === 'LOW') {
+    score -= (hassle / 10) * 0.25;
+  } else if (hassleTolerance === 'HIGH') {
+    score += (1 - hassle / 10) * 0.05;
+  }
+
+  const walkability = typeof texture.walkability === 'number' ? texture.walkability : 5;
+  const minWalk =
+    typeof preferences.min_walkability === 'number' ? preferences.min_walkability : undefined;
+  if (typeof minWalk === 'number') {
+    if (walkability >= minWalk) score += 0.1;
+    else score -= 0.2;
+  }
+
+  return clamp01(score);
+}
+
+export function calculateTimeScore(timeTags: string[] = [], currentTime: Date): number {
+  if (!timeTags.length) return 0.5;
+  const hour = currentTime.getHours();
+  const period =
+    hour >= 5 && hour < 12
+      ? 'morning'
+      : hour >= 12 && hour < 17
+        ? 'afternoon'
+        : hour >= 17 && hour < 22
+          ? 'evening'
+          : 'night';
+  return timeTags.includes(period) ? 0.9 : 0.3;
+}
+
+export function calculateWeatherImpact(texture: LegacyTexture, weather: LegacyWeather): number {
+  const isOutdoor = [
+    'park',
+    'night-market',
+    'local-market',
+    'street-food',
+    'temple-area',
+    'cultural',
+  ].includes(texture.primary);
+  const isIndoor = ['modern-mall', 'cafe', 'museum'].includes(texture.primary);
+
+  let impact = 1;
+  if (
+    weather.conditions === 'rain' ||
+    weather.conditions === 'thunderstorm' ||
+    weather.precipitation_probability >= 70
+  ) {
+    if (isOutdoor) impact *= 0.75;
+    if (isIndoor) impact *= 0.95;
+  }
+
+  if (weather.temperature >= 35 && isOutdoor) {
+    impact *= 0.85;
+  }
+
+  if (weather.conditions === 'clear' && weather.precipitation_probability < 20) {
+    impact *= 1.05;
+  }
+
+  return clamp01(impact);
+}
+
+export function applyDistancePenalty(distanceKm: number): number {
+  if (!Number.isFinite(distanceKm) || distanceKm <= 0) return 1;
+  if (distanceKm <= 1) return 1;
+  if (distanceKm <= 3) return 0.8;
+  if (distanceKm <= 10) return 0.45;
+  return Math.max(0.1, 0.45 * Math.exp(-(distanceKm - 10) / 10));
+}
+
+function haversineKm(a: { lat: number; lng: number }, b: { lat: number; lng: number }): number {
+  const toRad = (d: number) => (d * Math.PI) / 180;
+  const R = 6371;
+  const dLat = toRad(b.lat - a.lat);
+  const dLon = toRad(b.lng - a.lng);
+  const lat1 = toRad(a.lat);
+  const lat2 = toRad(b.lat);
+  const x = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+  return 2 * R * Math.asin(Math.min(1, Math.sqrt(x)));
+}
 
 // ============================================================================
 // TIME ANALYSIS
@@ -148,7 +302,8 @@ function getTextureScore(
   // Check avoided textures
   if (fingerprint.avoided_textures.includes(texture.primary)) {
     score -= 30;
-    reason = reason || `Not typically your style (${texture.primary.toLowerCase().replace('_', ' ')})`;
+    reason =
+      reason || `Not typically your style (${texture.primary.toLowerCase().replace('_', ' ')})`;
   }
 
   // Activity level matching
@@ -157,7 +312,10 @@ function getTextureScore(
 
   if (fingerprint.activity_level === 'ACTIVE' && activeTextures.includes(texture.primary)) {
     score += 10;
-  } else if (fingerprint.activity_level === 'RELAXED' && relaxedTextures.includes(texture.primary)) {
+  } else if (
+    fingerprint.activity_level === 'RELAXED' &&
+    relaxedTextures.includes(texture.primary)
+  ) {
     score += 10;
   }
 
@@ -231,13 +389,15 @@ function getDistanceScore(
 
   // Haversine distance
   const R = 6371; // Earth's radius in km
-  const dLat = (zoneCenter.lat - userLocation.lat) * Math.PI / 180;
-  const dLon = (zoneCenter.lon - userLocation.lon) * Math.PI / 180;
-  const a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(userLocation.lat * Math.PI / 180) * Math.cos(zoneCenter.lat * Math.PI / 180) *
-    Math.sin(dLon/2) * Math.sin(dLon/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  const dLat = ((zoneCenter.lat - userLocation.lat) * Math.PI) / 180;
+  const dLon = ((zoneCenter.lon - userLocation.lon) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((userLocation.lat * Math.PI) / 180) *
+      Math.cos((zoneCenter.lat * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const distance = R * c;
 
   // Score based on distance (closer = higher score)
@@ -293,15 +453,13 @@ function getConfidenceScore(confidence: ZoneConfidenceState): { score: number; r
 // MAIN RANKER
 // ============================================================================
 
-export function rankZones(
+function rankZonesV2(
   zones: Zone[],
   confidenceStates: Map<string, ZoneConfidenceState>,
   context: RecommendationContext
 ): RankerResult {
   const timePeriod = getTimePeriod(context.current_time);
-  const weatherModifiers = context.weather 
-    ? calculateWeatherModifiers(context.weather) 
-    : null;
+  const weatherModifiers = context.weather ? calculateWeatherModifiers(context.weather) : null;
 
   const excluded = {
     offline: 0,
@@ -354,10 +512,10 @@ export function rankZones(
     // Weighted total
     const totalScore = Math.round(
       textureResult.score * WEIGHTS.TEXTURE +
-      confidenceResult.score * WEIGHTS.CONFIDENCE +
-      timeScore * WEIGHTS.TIME +
-      weatherResult.score * WEIGHTS.WEATHER +
-      distanceResult.score * WEIGHTS.DISTANCE
+        confidenceResult.score * WEIGHTS.CONFIDENCE +
+        timeScore * WEIGHTS.TIME +
+        weatherResult.score * WEIGHTS.WEATHER +
+        distanceResult.score * WEIGHTS.DISTANCE
     );
 
     // Build reasons and warnings
@@ -390,12 +548,14 @@ export function rankZones(
     }
 
     // Adjusted scores
-    const adjustedWalkability = Math.max(0, Math.min(100,
-      zone.texture.walkability + (weatherResult.adjustment || 0)
-    ));
-    const adjustedSafety = Math.max(0, Math.min(100,
-      zone.texture.safety_score + (weatherModifiers?.safety_modifier || 0)
-    ));
+    const adjustedWalkability = Math.max(
+      0,
+      Math.min(100, zone.texture.walkability + (weatherResult.adjustment || 0))
+    );
+    const adjustedSafety = Math.max(
+      0,
+      Math.min(100, zone.texture.safety_score + (weatherModifiers?.safety_modifier || 0))
+    );
 
     recommendations.push({
       zone,
@@ -417,7 +577,7 @@ export function rankZones(
   recommendations.sort((a, b) => b.total_score - a.total_score);
 
   // Apply max results limit
-  const limitedRecommendations = context.max_results 
+  const limitedRecommendations = context.max_results
     ? recommendations.slice(0, context.max_results)
     : recommendations;
 
@@ -443,27 +603,104 @@ export function rankZones(
   };
 }
 
+export function rankZones(
+  zones: Zone[],
+  confidenceStates: Map<string, ZoneConfidenceState>,
+  context: RecommendationContext
+): RankerResult;
+export function rankZones(zones: LegacyZone[], context: LegacyRankContext): LegacyRecommendation[];
+export function rankZones(
+  zones: Zone[] | LegacyZone[],
+  a: Map<string, ZoneConfidenceState> | LegacyRankContext,
+  b?: RecommendationContext
+): RankerResult | LegacyRecommendation[] {
+  // Legacy/test path
+  if (!(a instanceof Map)) {
+    const context = a as LegacyRankContext;
+    if (!zones.length) return [];
+
+    const now = context.current_time;
+    const prefs = context.preferences || {};
+
+    const ranked: LegacyRecommendation[] = (zones as LegacyZone[])
+      .filter((z) => !z.confidence?.is_offline)
+      .map((z) => {
+        const textureScore = calculateTextureScore(z.texture, prefs);
+        const confidenceScore = clamp01((z.confidence?.score ?? 0) / 100);
+        const timeScore = now ? calculateTimeScore(z.texture.time_tags || [], now) : 0.5;
+
+        const weatherMultiplier = context.weather
+          ? calculateWeatherImpact(z.texture, context.weather)
+          : 1;
+        const distanceKm =
+          context.user_location && z.center ? haversineKm(context.user_location, z.center) : 0;
+        const distanceMultiplier =
+          context.user_location && z.center ? applyDistancePenalty(distanceKm) : 1;
+
+        const baseScore =
+          textureScore * RANKING_WEIGHTS.TEXTURE +
+          confidenceScore * RANKING_WEIGHTS.CONFIDENCE +
+          timeScore * RANKING_WEIGHTS.TIME;
+
+        const score = clamp01(baseScore * weatherMultiplier * distanceMultiplier);
+
+        const reasons: string[] = [];
+        const warnings: string[] = [];
+        if (textureScore >= 0.7) reasons.push('Strong texture match');
+        if (confidenceScore >= 0.75) reasons.push('High confidence intel');
+        if (!reasons.length) reasons.push('Available option');
+
+        if (
+          (z.confidence?.level || '').toUpperCase() === 'DEGRADED' ||
+          (z.confidence as any)?.has_conflicts
+        ) {
+          warnings.push('Degraded intel - verify on ground');
+        }
+        if ((z.confidence?.score ?? 0) < 40) warnings.push('Low confidence');
+
+        return {
+          zone: z,
+          score,
+          reasons,
+          warnings,
+        };
+      })
+      .sort((x, y) => y.score - x.score || x.zone.id.localeCompare(y.zone.id));
+
+    return ranked;
+  }
+
+  // v2/app path
+  return rankZonesV2(
+    zones as Zone[],
+    a as Map<string, ZoneConfidenceState>,
+    b as RecommendationContext
+  );
+}
+
 // ============================================================================
 // EXPLANATION FORMATTER
 // ============================================================================
 
 export function formatRecommendationExplanation(rec: ZoneRecommendation): string {
   const parts: string[] = [];
-  
+
   // Main reason
   parts.push(`RECOMMENDED: ${rec.reasons[0]}`);
-  
+
   // Confidence indicator
   const confidenceLabel = rec.confidence.level;
   parts.push(`INTEL: ${confidenceLabel} CONFIDENCE`);
-  
+
   // Scores breakdown
-  parts.push(`MATCH: ${rec.total_score}% (texture ${rec.texture_score}, time ${rec.time_score}, weather ${rec.weather_score})`);
-  
+  parts.push(
+    `MATCH: ${rec.total_score}% (texture ${rec.texture_score}, time ${rec.time_score}, weather ${rec.weather_score})`
+  );
+
   // Warnings
   if (rec.warnings.length > 0) {
     parts.push(`⚠️ ${rec.warnings.join(' | ')}`);
   }
-  
+
   return parts.join('\n');
 }
