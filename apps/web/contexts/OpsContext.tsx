@@ -6,15 +6,15 @@ interface OpsContextType {
   // Ghost Mode: Reduces screen glow, disables pulsing animations, simplifies color palette
   ghostMode: boolean;
   toggleGhostMode: () => void;
-  
+
   // HUD Collapsed: Minimizes all HUD panels to maximize map area
   hudCollapsed: boolean;
   toggleHudCollapsed: () => void;
-  
+
   // Day Ops: High-contrast blueprint theme for daylight operations
   dayOps: boolean;
   toggleDayOps: () => void;
-  
+
   // Language: User's selected interface language
   language: Language;
   setLanguage: (lang: Language) => void;
@@ -48,8 +48,27 @@ export function OpsProvider({ children }: { children: ReactNode }) {
   // Load language preference
   useEffect(() => {
     const savedLang = localStorage.getItem('unmappedos_language');
-    const supportedLangs = ['en', 'th', 'ja', 'es', 'zh', 'fr', 'de', 'ko', 'pt', 'ru', 'ar', 'hi', 'it', 'nl', 'tr', 'vi', 'id', 'pl'];
-    
+    const supportedLangs = [
+      'en',
+      'th',
+      'ja',
+      'es',
+      'zh',
+      'fr',
+      'de',
+      'ko',
+      'pt',
+      'ru',
+      'ar',
+      'hi',
+      'it',
+      'nl',
+      'tr',
+      'vi',
+      'id',
+      'pl',
+    ];
+
     if (savedLang && supportedLangs.includes(savedLang)) {
       setLanguageState(savedLang as Language);
     } else {
@@ -63,7 +82,7 @@ export function OpsProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     localStorage.setItem('unmappedos_ghost_mode', ghostMode.toString());
-    
+
     // Apply ghost mode class to document for global styling
     if (ghostMode) {
       document.documentElement.classList.add('ghost-mode');
@@ -82,19 +101,19 @@ export function OpsProvider({ children }: { children: ReactNode }) {
   }, [dayOps]);
 
   const toggleGhostMode = () => {
-    setGhostMode(prev => !prev);
+    setGhostMode((prev) => !prev);
   };
 
   const toggleHudCollapsed = () => {
-    setHudCollapsed(prev => !prev);
+    setHudCollapsed((prev) => !prev);
   };
 
   const toggleDayOps = () => {
-    setDayOps(prev => !prev);
+    setDayOps((prev) => !prev);
   };
 
   const toggleShadowCopy = () => {
-    setShadowCopy(prev => ({
+    setShadowCopy((prev) => ({
       enabled: !prev.enabled,
       block_writes: !prev.enabled,
       anonymize_all: !prev.enabled,
@@ -117,7 +136,7 @@ export function OpsProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     localStorage.setItem('unmappedos_shadow_copy', shadowCopy.enabled.toString());
   }, [shadowCopy]);
-  
+
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem('unmappedos_language', lang);
@@ -143,10 +162,25 @@ export function OpsProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// Default values for SSR when OpsProvider is not available
+const defaultOpsContext: OpsContextType = {
+  ghostMode: false,
+  toggleGhostMode: () => {},
+  hudCollapsed: false,
+  toggleHudCollapsed: () => {},
+  dayOps: false,
+  toggleDayOps: () => {},
+  language: 'en',
+  setLanguage: () => {},
+  shadowCopy: { enabled: false, block_writes: false, anonymize_all: false },
+  toggleShadowCopy: () => {},
+};
+
 export function useOps() {
   const context = useContext(OpsContext);
+  // Return defaults for SSR when OpsProvider is not available
   if (context === undefined) {
-    throw new Error('useOps must be used within OpsProvider');
+    return defaultOpsContext;
   }
   return context;
 }

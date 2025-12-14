@@ -4,9 +4,10 @@ import { translations, type Language, type Translations } from './translations';
 
 export function useTranslation() {
   const context = useContext(OpsContext);
-  
+
+  // Return default English translations if OpsProvider not available (SSR or error pages)
   if (!context) {
-    throw new Error('useTranslation must be used within OpsProvider');
+    return { t: translations['en'] as Translations, language: 'en' as Language };
   }
 
   const { language } = context;
