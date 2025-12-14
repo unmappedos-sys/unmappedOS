@@ -1,9 +1,5 @@
 {
   "version": 2,
-  "framework": "nextjs",
-  "installCommand": "pnpm install",
-  "buildCommand": "pnpm run build",
-  "outputDirectory": "apps/web/.next",
   "rewrites": [
     {
       "source": "/data/packs/:path*",
