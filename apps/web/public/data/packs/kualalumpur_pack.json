@@ -1,0 +1,1043 @@
+{
+  "city": "kualalumpur",
+  "generated_at": "2025-12-14T12:33:33.551Z",
+  "version": 1,
+  "zones": [
+    {
+      "zone_id": "KUL_001",
+      "city": "kualalumpur",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.6,
+              3.03
+            ],
+            [
+              101.645,
+              3.03
+            ],
+            [
+              101.645,
+              3.103333333333333
+            ],
+            [
+              101.6,
+              3.103333333333333
+            ],
+            [
+              101.6,
+              3.03
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 3.0666666666666664,
+        "lon": 101.6225
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:KUL_001",
+        "lat": 3.0666666666666664,
+        "lon": 101.6225,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 8,
+        "beer": 18,
+        "taxi_airport": 100
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee MYR8 | Beer MYR18",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              101.6,
+              3.03
+            ],
+            [
+              101.645,
+              3.103333333333333
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "kualalumpur",
+        "KUL_001",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "KUL_002",
+      "city": "kualalumpur",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.645,
+              3.03
+            ],
+            [
+              101.69,
+              3.03
+            ],
+            [
+              101.69,
+              3.103333333333333
+            ],
+            [
+              101.645,
+              3.103333333333333
+            ],
+            [
+              101.645,
+              3.03
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 3.0666666666666664,
+        "lon": 101.66749999999999
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:KUL_002",
+        "lat": 3.0666666666666664,
+        "lon": 101.66749999999999,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 8,
+        "beer": 18,
+        "taxi_airport": 100
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee MYR8 | Beer MYR18",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              101.645,
+              3.03
+            ],
+            [
+              101.69,
+              3.103333333333333
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "kualalumpur",
+        "KUL_002",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "KUL_003",
+      "city": "kualalumpur",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.69,
+              3.03
+            ],
+            [
+              101.735,
+              3.03
+            ],
+            [
+              101.735,
+              3.103333333333333
+            ],
+            [
+              101.69,
+              3.103333333333333
+            ],
+            [
+              101.69,
+              3.03
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 3.0666666666666664,
+        "lon": 101.7125
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:KUL_003",
+        "lat": 3.0666666666666664,
+        "lon": 101.7125,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 8,
+        "beer": 18,
+        "taxi_airport": 100
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee MYR8 | Beer MYR18",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              101.69,
+              3.03
+            ],
+            [
+              101.735,
+              3.103333333333333
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "kualalumpur",
+        "KUL_003",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "KUL_004",
+      "city": "kualalumpur",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.735,
+              3.03
+            ],
+            [
+              101.78,
+              3.03
+            ],
+            [
+              101.78,
+              3.103333333333333
+            ],
+            [
+              101.735,
+              3.103333333333333
+            ],
+            [
+              101.735,
+              3.03
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 3.0666666666666664,
+        "lon": 101.7575
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:KUL_004",
+        "lat": 3.0666666666666664,
+        "lon": 101.7575,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 8,
+        "beer": 18,
+        "taxi_airport": 100
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee MYR8 | Beer MYR18",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              101.735,
+              3.03
+            ],
+            [
+              101.78,
+              3.103333333333333
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "kualalumpur",
+        "KUL_004",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "KUL_005",
+      "city": "kualalumpur",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.6,
+              3.103333333333333
+            ],
+            [
+              101.645,
+              3.103333333333333
+            ],
+            [
+              101.645,
+              3.1766666666666667
+            ],
+            [
+              101.6,
+              3.1766666666666667
+            ],
+            [
+              101.6,
+              3.103333333333333
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 3.1399999999999997,
+        "lon": 101.6225
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:KUL_005",
+        "lat": 3.1399999999999997,
+        "lon": 101.6225,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 8,
+        "beer": 18,
+        "taxi_airport": 100
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee MYR8 | Beer MYR18",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              101.6,
+              3.103333333333333
+            ],
+            [
+              101.645,
+              3.1766666666666667
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "kualalumpur",
+        "KUL_005",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "KUL_006",
+      "city": "kualalumpur",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.645,
+              3.103333333333333
+            ],
+            [
+              101.69,
+              3.103333333333333
+            ],
+            [
+              101.69,
+              3.1766666666666667
+            ],
+            [
+              101.645,
+              3.1766666666666667
+            ],
+            [
+              101.645,
+              3.103333333333333
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 3.1399999999999997,
+        "lon": 101.66749999999999
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:KUL_006",
+        "lat": 3.1399999999999997,
+        "lon": 101.66749999999999,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 8,
+        "beer": 18,
+        "taxi_airport": 100
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee MYR8 | Beer MYR18",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              101.645,
+              3.103333333333333
+            ],
+            [
+              101.69,
+              3.1766666666666667
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "kualalumpur",
+        "KUL_006",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "KUL_007",
+      "city": "kualalumpur",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.69,
+              3.103333333333333
+            ],
+            [
+              101.735,
+              3.103333333333333
+            ],
+            [
+              101.735,
+              3.1766666666666667
+            ],
+            [
+              101.69,
+              3.1766666666666667
+            ],
+            [
+              101.69,
+              3.103333333333333
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 3.1399999999999997,
+        "lon": 101.7125
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:KUL_007",
+        "lat": 3.1399999999999997,
+        "lon": 101.7125,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 8,
+        "beer": 18,
+        "taxi_airport": 100
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee MYR8 | Beer MYR18",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              101.69,
+              3.103333333333333
+            ],
+            [
+              101.735,
+              3.1766666666666667
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "kualalumpur",
+        "KUL_007",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "KUL_008",
+      "city": "kualalumpur",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.735,
+              3.103333333333333
+            ],
+            [
+              101.78,
+              3.103333333333333
+            ],
+            [
+              101.78,
+              3.1766666666666667
+            ],
+            [
+              101.735,
+              3.1766666666666667
+            ],
+            [
+              101.735,
+              3.103333333333333
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 3.1399999999999997,
+        "lon": 101.7575
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:KUL_008",
+        "lat": 3.1399999999999997,
+        "lon": 101.7575,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 8,
+        "beer": 18,
+        "taxi_airport": 100
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee MYR8 | Beer MYR18",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              101.735,
+              3.103333333333333
+            ],
+            [
+              101.78,
+              3.1766666666666667
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "kualalumpur",
+        "KUL_008",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "KUL_009",
+      "city": "kualalumpur",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.6,
+              3.1766666666666667
+            ],
+            [
+              101.645,
+              3.1766666666666667
+            ],
+            [
+              101.645,
+              3.25
+            ],
+            [
+              101.6,
+              3.25
+            ],
+            [
+              101.6,
+              3.1766666666666667
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 3.2133333333333334,
+        "lon": 101.6225
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:KUL_009",
+        "lat": 3.2133333333333334,
+        "lon": 101.6225,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 8,
+        "beer": 18,
+        "taxi_airport": 100
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee MYR8 | Beer MYR18",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              101.6,
+              3.1766666666666667
+            ],
+            [
+              101.645,
+              3.25
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "kualalumpur",
+        "KUL_009",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "KUL_010",
+      "city": "kualalumpur",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.645,
+              3.1766666666666667
+            ],
+            [
+              101.69,
+              3.1766666666666667
+            ],
+            [
+              101.69,
+              3.25
+            ],
+            [
+              101.645,
+              3.25
+            ],
+            [
+              101.645,
+              3.1766666666666667
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 3.2133333333333334,
+        "lon": 101.66749999999999
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:KUL_010",
+        "lat": 3.2133333333333334,
+        "lon": 101.66749999999999,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 8,
+        "beer": 18,
+        "taxi_airport": 100
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee MYR8 | Beer MYR18",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              101.645,
+              3.1766666666666667
+            ],
+            [
+              101.69,
+              3.25
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "kualalumpur",
+        "KUL_010",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "KUL_011",
+      "city": "kualalumpur",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.69,
+              3.1766666666666667
+            ],
+            [
+              101.735,
+              3.1766666666666667
+            ],
+            [
+              101.735,
+              3.25
+            ],
+            [
+              101.69,
+              3.25
+            ],
+            [
+              101.69,
+              3.1766666666666667
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 3.2133333333333334,
+        "lon": 101.7125
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:KUL_011",
+        "lat": 3.2133333333333334,
+        "lon": 101.7125,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 8,
+        "beer": 18,
+        "taxi_airport": 100
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee MYR8 | Beer MYR18",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              101.69,
+              3.1766666666666667
+            ],
+            [
+              101.735,
+              3.25
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "kualalumpur",
+        "KUL_011",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "KUL_012",
+      "city": "kualalumpur",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.735,
+              3.1766666666666667
+            ],
+            [
+              101.78,
+              3.1766666666666667
+            ],
+            [
+              101.78,
+              3.25
+            ],
+            [
+              101.735,
+              3.25
+            ],
+            [
+              101.735,
+              3.1766666666666667
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 3.2133333333333334,
+        "lon": 101.7575
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:KUL_012",
+        "lat": 3.2133333333333334,
+        "lon": 101.7575,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 8,
+        "beer": 18,
+        "taxi_airport": 100
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee MYR8 | Beer MYR18",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              101.735,
+              3.1766666666666667
+            ],
+            [
+              101.78,
+              3.25
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "kualalumpur",
+        "KUL_012",
+        "mixed"
+      ]
+    }
+  ],
+  "meta": {
+    "source": "demo-grid",
+    "seed_count": 12
+  }
+}

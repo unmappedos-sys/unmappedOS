@@ -1,0 +1,1043 @@
+{
+  "city": "seoul",
+  "generated_at": "2025-12-14T12:33:33.546Z",
+  "version": 1,
+  "zones": [
+    {
+      "zone_id": "SEL_001",
+      "city": "seoul",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              126.76,
+              37.42
+            ],
+            [
+              126.86500000000001,
+              37.42
+            ],
+            [
+              126.86500000000001,
+              37.513333333333335
+            ],
+            [
+              126.76,
+              37.513333333333335
+            ],
+            [
+              126.76,
+              37.42
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 37.46666666666667,
+        "lon": 126.8125
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SEL_001",
+        "lat": 37.46666666666667,
+        "lon": 126.8125,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 4500,
+        "beer": 5000,
+        "taxi_airport": 80000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee KRW4500 | Beer KRW5000",
+        "emergency_numbers": {
+          "police": "112",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              126.76,
+              37.42
+            ],
+            [
+              126.86500000000001,
+              37.513333333333335
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "seoul",
+        "SEL_001",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SEL_002",
+      "city": "seoul",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              126.86500000000001,
+              37.42
+            ],
+            [
+              126.97,
+              37.42
+            ],
+            [
+              126.97,
+              37.513333333333335
+            ],
+            [
+              126.86500000000001,
+              37.513333333333335
+            ],
+            [
+              126.86500000000001,
+              37.42
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 37.46666666666667,
+        "lon": 126.9175
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SEL_002",
+        "lat": 37.46666666666667,
+        "lon": 126.9175,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 4500,
+        "beer": 5000,
+        "taxi_airport": 80000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee KRW4500 | Beer KRW5000",
+        "emergency_numbers": {
+          "police": "112",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              126.86500000000001,
+              37.42
+            ],
+            [
+              126.97,
+              37.513333333333335
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "seoul",
+        "SEL_002",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SEL_003",
+      "city": "seoul",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              126.97,
+              37.42
+            ],
+            [
+              127.075,
+              37.42
+            ],
+            [
+              127.075,
+              37.513333333333335
+            ],
+            [
+              126.97,
+              37.513333333333335
+            ],
+            [
+              126.97,
+              37.42
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 37.46666666666667,
+        "lon": 127.02250000000001
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SEL_003",
+        "lat": 37.46666666666667,
+        "lon": 127.02250000000001,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 4500,
+        "beer": 5000,
+        "taxi_airport": 80000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee KRW4500 | Beer KRW5000",
+        "emergency_numbers": {
+          "police": "112",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              126.97,
+              37.42
+            ],
+            [
+              127.075,
+              37.513333333333335
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "seoul",
+        "SEL_003",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SEL_004",
+      "city": "seoul",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              127.075,
+              37.42
+            ],
+            [
+              127.18,
+              37.42
+            ],
+            [
+              127.18,
+              37.513333333333335
+            ],
+            [
+              127.075,
+              37.513333333333335
+            ],
+            [
+              127.075,
+              37.42
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 37.46666666666667,
+        "lon": 127.1275
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SEL_004",
+        "lat": 37.46666666666667,
+        "lon": 127.1275,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 4500,
+        "beer": 5000,
+        "taxi_airport": 80000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee KRW4500 | Beer KRW5000",
+        "emergency_numbers": {
+          "police": "112",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              127.075,
+              37.42
+            ],
+            [
+              127.18,
+              37.513333333333335
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "seoul",
+        "SEL_004",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SEL_005",
+      "city": "seoul",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              126.76,
+              37.513333333333335
+            ],
+            [
+              126.86500000000001,
+              37.513333333333335
+            ],
+            [
+              126.86500000000001,
+              37.60666666666667
+            ],
+            [
+              126.76,
+              37.60666666666667
+            ],
+            [
+              126.76,
+              37.513333333333335
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 37.56,
+        "lon": 126.8125
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SEL_005",
+        "lat": 37.56,
+        "lon": 126.8125,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 4500,
+        "beer": 5000,
+        "taxi_airport": 80000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee KRW4500 | Beer KRW5000",
+        "emergency_numbers": {
+          "police": "112",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              126.76,
+              37.513333333333335
+            ],
+            [
+              126.86500000000001,
+              37.60666666666667
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "seoul",
+        "SEL_005",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SEL_006",
+      "city": "seoul",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              126.86500000000001,
+              37.513333333333335
+            ],
+            [
+              126.97,
+              37.513333333333335
+            ],
+            [
+              126.97,
+              37.60666666666667
+            ],
+            [
+              126.86500000000001,
+              37.60666666666667
+            ],
+            [
+              126.86500000000001,
+              37.513333333333335
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 37.56,
+        "lon": 126.9175
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SEL_006",
+        "lat": 37.56,
+        "lon": 126.9175,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 4500,
+        "beer": 5000,
+        "taxi_airport": 80000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee KRW4500 | Beer KRW5000",
+        "emergency_numbers": {
+          "police": "112",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              126.86500000000001,
+              37.513333333333335
+            ],
+            [
+              126.97,
+              37.60666666666667
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "seoul",
+        "SEL_006",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SEL_007",
+      "city": "seoul",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              126.97,
+              37.513333333333335
+            ],
+            [
+              127.075,
+              37.513333333333335
+            ],
+            [
+              127.075,
+              37.60666666666667
+            ],
+            [
+              126.97,
+              37.60666666666667
+            ],
+            [
+              126.97,
+              37.513333333333335
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 37.56,
+        "lon": 127.02250000000001
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SEL_007",
+        "lat": 37.56,
+        "lon": 127.02250000000001,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 4500,
+        "beer": 5000,
+        "taxi_airport": 80000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee KRW4500 | Beer KRW5000",
+        "emergency_numbers": {
+          "police": "112",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              126.97,
+              37.513333333333335
+            ],
+            [
+              127.075,
+              37.60666666666667
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "seoul",
+        "SEL_007",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SEL_008",
+      "city": "seoul",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              127.075,
+              37.513333333333335
+            ],
+            [
+              127.18,
+              37.513333333333335
+            ],
+            [
+              127.18,
+              37.60666666666667
+            ],
+            [
+              127.075,
+              37.60666666666667
+            ],
+            [
+              127.075,
+              37.513333333333335
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 37.56,
+        "lon": 127.1275
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SEL_008",
+        "lat": 37.56,
+        "lon": 127.1275,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 4500,
+        "beer": 5000,
+        "taxi_airport": 80000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee KRW4500 | Beer KRW5000",
+        "emergency_numbers": {
+          "police": "112",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              127.075,
+              37.513333333333335
+            ],
+            [
+              127.18,
+              37.60666666666667
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "seoul",
+        "SEL_008",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SEL_009",
+      "city": "seoul",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              126.76,
+              37.60666666666667
+            ],
+            [
+              126.86500000000001,
+              37.60666666666667
+            ],
+            [
+              126.86500000000001,
+              37.7
+            ],
+            [
+              126.76,
+              37.7
+            ],
+            [
+              126.76,
+              37.60666666666667
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 37.653333333333336,
+        "lon": 126.8125
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SEL_009",
+        "lat": 37.653333333333336,
+        "lon": 126.8125,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 4500,
+        "beer": 5000,
+        "taxi_airport": 80000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee KRW4500 | Beer KRW5000",
+        "emergency_numbers": {
+          "police": "112",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              126.76,
+              37.60666666666667
+            ],
+            [
+              126.86500000000001,
+              37.7
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "seoul",
+        "SEL_009",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SEL_010",
+      "city": "seoul",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              126.86500000000001,
+              37.60666666666667
+            ],
+            [
+              126.97,
+              37.60666666666667
+            ],
+            [
+              126.97,
+              37.7
+            ],
+            [
+              126.86500000000001,
+              37.7
+            ],
+            [
+              126.86500000000001,
+              37.60666666666667
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 37.653333333333336,
+        "lon": 126.9175
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SEL_010",
+        "lat": 37.653333333333336,
+        "lon": 126.9175,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 4500,
+        "beer": 5000,
+        "taxi_airport": 80000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee KRW4500 | Beer KRW5000",
+        "emergency_numbers": {
+          "police": "112",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              126.86500000000001,
+              37.60666666666667
+            ],
+            [
+              126.97,
+              37.7
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "seoul",
+        "SEL_010",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SEL_011",
+      "city": "seoul",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              126.97,
+              37.60666666666667
+            ],
+            [
+              127.075,
+              37.60666666666667
+            ],
+            [
+              127.075,
+              37.7
+            ],
+            [
+              126.97,
+              37.7
+            ],
+            [
+              126.97,
+              37.60666666666667
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 37.653333333333336,
+        "lon": 127.02250000000001
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SEL_011",
+        "lat": 37.653333333333336,
+        "lon": 127.02250000000001,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 4500,
+        "beer": 5000,
+        "taxi_airport": 80000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee KRW4500 | Beer KRW5000",
+        "emergency_numbers": {
+          "police": "112",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              126.97,
+              37.60666666666667
+            ],
+            [
+              127.075,
+              37.7
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "seoul",
+        "SEL_011",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SEL_012",
+      "city": "seoul",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              127.075,
+              37.60666666666667
+            ],
+            [
+              127.18,
+              37.60666666666667
+            ],
+            [
+              127.18,
+              37.7
+            ],
+            [
+              127.075,
+              37.7
+            ],
+            [
+              127.075,
+              37.60666666666667
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 37.653333333333336,
+        "lon": 127.1275
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SEL_012",
+        "lat": 37.653333333333336,
+        "lon": 127.1275,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 4500,
+        "beer": 5000,
+        "taxi_airport": 80000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee KRW4500 | Beer KRW5000",
+        "emergency_numbers": {
+          "police": "112",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              127.075,
+              37.60666666666667
+            ],
+            [
+              127.18,
+              37.7
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "seoul",
+        "SEL_012",
+        "mixed"
+      ]
+    }
+  ],
+  "meta": {
+    "source": "demo-grid",
+    "seed_count": 12
+  }
+}

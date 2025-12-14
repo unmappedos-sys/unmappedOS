@@ -1,0 +1,1043 @@
+{
+  "city": "hochiminh",
+  "generated_at": "2025-12-14T12:33:33.555Z",
+  "version": 1,
+  "zones": [
+    {
+      "zone_id": "SGN_001",
+      "city": "hochiminh",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              106.55,
+              10.7
+            ],
+            [
+              106.6125,
+              10.7
+            ],
+            [
+              106.6125,
+              10.766666666666666
+            ],
+            [
+              106.55,
+              10.766666666666666
+            ],
+            [
+              106.55,
+              10.7
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 10.733333333333333,
+        "lon": 106.58125
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SGN_001",
+        "lat": 10.733333333333333,
+        "lon": 106.58125,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 30000,
+        "taxi_airport": 150000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND30000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              106.55,
+              10.7
+            ],
+            [
+              106.6125,
+              10.766666666666666
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hochiminh",
+        "SGN_001",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SGN_002",
+      "city": "hochiminh",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              106.6125,
+              10.7
+            ],
+            [
+              106.675,
+              10.7
+            ],
+            [
+              106.675,
+              10.766666666666666
+            ],
+            [
+              106.6125,
+              10.766666666666666
+            ],
+            [
+              106.6125,
+              10.7
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 10.733333333333333,
+        "lon": 106.64375
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SGN_002",
+        "lat": 10.733333333333333,
+        "lon": 106.64375,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 30000,
+        "taxi_airport": 150000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND30000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              106.6125,
+              10.7
+            ],
+            [
+              106.675,
+              10.766666666666666
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hochiminh",
+        "SGN_002",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SGN_003",
+      "city": "hochiminh",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              106.675,
+              10.7
+            ],
+            [
+              106.7375,
+              10.7
+            ],
+            [
+              106.7375,
+              10.766666666666666
+            ],
+            [
+              106.675,
+              10.766666666666666
+            ],
+            [
+              106.675,
+              10.7
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 10.733333333333333,
+        "lon": 106.70625
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SGN_003",
+        "lat": 10.733333333333333,
+        "lon": 106.70625,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 30000,
+        "taxi_airport": 150000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND30000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              106.675,
+              10.7
+            ],
+            [
+              106.7375,
+              10.766666666666666
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hochiminh",
+        "SGN_003",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SGN_004",
+      "city": "hochiminh",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              106.7375,
+              10.7
+            ],
+            [
+              106.8,
+              10.7
+            ],
+            [
+              106.8,
+              10.766666666666666
+            ],
+            [
+              106.7375,
+              10.766666666666666
+            ],
+            [
+              106.7375,
+              10.7
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 10.733333333333333,
+        "lon": 106.76875
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SGN_004",
+        "lat": 10.733333333333333,
+        "lon": 106.76875,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 30000,
+        "taxi_airport": 150000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND30000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              106.7375,
+              10.7
+            ],
+            [
+              106.8,
+              10.766666666666666
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hochiminh",
+        "SGN_004",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SGN_005",
+      "city": "hochiminh",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              106.55,
+              10.766666666666666
+            ],
+            [
+              106.6125,
+              10.766666666666666
+            ],
+            [
+              106.6125,
+              10.833333333333334
+            ],
+            [
+              106.55,
+              10.833333333333334
+            ],
+            [
+              106.55,
+              10.766666666666666
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 10.8,
+        "lon": 106.58125
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SGN_005",
+        "lat": 10.8,
+        "lon": 106.58125,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 30000,
+        "taxi_airport": 150000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND30000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              106.55,
+              10.766666666666666
+            ],
+            [
+              106.6125,
+              10.833333333333334
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hochiminh",
+        "SGN_005",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SGN_006",
+      "city": "hochiminh",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              106.6125,
+              10.766666666666666
+            ],
+            [
+              106.675,
+              10.766666666666666
+            ],
+            [
+              106.675,
+              10.833333333333334
+            ],
+            [
+              106.6125,
+              10.833333333333334
+            ],
+            [
+              106.6125,
+              10.766666666666666
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 10.8,
+        "lon": 106.64375
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SGN_006",
+        "lat": 10.8,
+        "lon": 106.64375,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 30000,
+        "taxi_airport": 150000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND30000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              106.6125,
+              10.766666666666666
+            ],
+            [
+              106.675,
+              10.833333333333334
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hochiminh",
+        "SGN_006",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SGN_007",
+      "city": "hochiminh",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              106.675,
+              10.766666666666666
+            ],
+            [
+              106.7375,
+              10.766666666666666
+            ],
+            [
+              106.7375,
+              10.833333333333334
+            ],
+            [
+              106.675,
+              10.833333333333334
+            ],
+            [
+              106.675,
+              10.766666666666666
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 10.8,
+        "lon": 106.70625
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SGN_007",
+        "lat": 10.8,
+        "lon": 106.70625,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 30000,
+        "taxi_airport": 150000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND30000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              106.675,
+              10.766666666666666
+            ],
+            [
+              106.7375,
+              10.833333333333334
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hochiminh",
+        "SGN_007",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SGN_008",
+      "city": "hochiminh",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              106.7375,
+              10.766666666666666
+            ],
+            [
+              106.8,
+              10.766666666666666
+            ],
+            [
+              106.8,
+              10.833333333333334
+            ],
+            [
+              106.7375,
+              10.833333333333334
+            ],
+            [
+              106.7375,
+              10.766666666666666
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 10.8,
+        "lon": 106.76875
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SGN_008",
+        "lat": 10.8,
+        "lon": 106.76875,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 30000,
+        "taxi_airport": 150000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND30000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              106.7375,
+              10.766666666666666
+            ],
+            [
+              106.8,
+              10.833333333333334
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hochiminh",
+        "SGN_008",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SGN_009",
+      "city": "hochiminh",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              106.55,
+              10.833333333333334
+            ],
+            [
+              106.6125,
+              10.833333333333334
+            ],
+            [
+              106.6125,
+              10.9
+            ],
+            [
+              106.55,
+              10.9
+            ],
+            [
+              106.55,
+              10.833333333333334
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 10.866666666666667,
+        "lon": 106.58125
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SGN_009",
+        "lat": 10.866666666666667,
+        "lon": 106.58125,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 30000,
+        "taxi_airport": 150000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND30000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              106.55,
+              10.833333333333334
+            ],
+            [
+              106.6125,
+              10.9
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hochiminh",
+        "SGN_009",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SGN_010",
+      "city": "hochiminh",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              106.6125,
+              10.833333333333334
+            ],
+            [
+              106.675,
+              10.833333333333334
+            ],
+            [
+              106.675,
+              10.9
+            ],
+            [
+              106.6125,
+              10.9
+            ],
+            [
+              106.6125,
+              10.833333333333334
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 10.866666666666667,
+        "lon": 106.64375
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SGN_010",
+        "lat": 10.866666666666667,
+        "lon": 106.64375,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 30000,
+        "taxi_airport": 150000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND30000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              106.6125,
+              10.833333333333334
+            ],
+            [
+              106.675,
+              10.9
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hochiminh",
+        "SGN_010",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SGN_011",
+      "city": "hochiminh",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              106.675,
+              10.833333333333334
+            ],
+            [
+              106.7375,
+              10.833333333333334
+            ],
+            [
+              106.7375,
+              10.9
+            ],
+            [
+              106.675,
+              10.9
+            ],
+            [
+              106.675,
+              10.833333333333334
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 10.866666666666667,
+        "lon": 106.70625
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SGN_011",
+        "lat": 10.866666666666667,
+        "lon": 106.70625,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 30000,
+        "taxi_airport": 150000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND30000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              106.675,
+              10.833333333333334
+            ],
+            [
+              106.7375,
+              10.9
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hochiminh",
+        "SGN_011",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SGN_012",
+      "city": "hochiminh",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              106.7375,
+              10.833333333333334
+            ],
+            [
+              106.8,
+              10.833333333333334
+            ],
+            [
+              106.8,
+              10.9
+            ],
+            [
+              106.7375,
+              10.9
+            ],
+            [
+              106.7375,
+              10.833333333333334
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 10.866666666666667,
+        "lon": 106.76875
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SGN_012",
+        "lat": 10.866666666666667,
+        "lon": 106.76875,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 30000,
+        "taxi_airport": 150000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND30000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              106.7375,
+              10.833333333333334
+            ],
+            [
+              106.8,
+              10.9
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hochiminh",
+        "SGN_012",
+        "mixed"
+      ]
+    }
+  ],
+  "meta": {
+    "source": "demo-grid",
+    "seed_count": 12
+  }
+}

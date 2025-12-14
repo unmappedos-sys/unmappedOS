@@ -75,7 +75,6 @@ function parseOpeningHours(pois: POIData[]): OpeningHoursPattern {
       pattern.has_24h = true;
       pattern.open_early++;
       pattern.close_late++;
-      parseable++;
       continue;
     }
     
@@ -94,8 +93,6 @@ function parseOpeningHours(pois: POIData[]): OpeningHoursPattern {
       if (closeHour < 18 || (closeHour === 18 && !timeMatch[4])) pattern.close_early++;
       else if (closeHour < 22) pattern.close_evening++;
       else pattern.close_late++;
-      
-      parseable++;
     }
   }
   

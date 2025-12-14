@@ -1,0 +1,1043 @@
+{
+  "city": "bali",
+  "generated_at": "2025-12-14T12:33:33.548Z",
+  "version": 1,
+  "zones": [
+    {
+      "zone_id": "DPS_001",
+      "city": "bali",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              114.4,
+              -8.85
+            ],
+            [
+              114.72500000000001,
+              -8.85
+            ],
+            [
+              114.72500000000001,
+              -8.583333333333334
+            ],
+            [
+              114.4,
+              -8.583333333333334
+            ],
+            [
+              114.4,
+              -8.85
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": -8.716666666666667,
+        "lon": 114.5625
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:DPS_001",
+        "lat": -8.716666666666667,
+        "lon": 114.5625,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 30000,
+        "beer": 45000,
+        "taxi_airport": 200000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee IDR30000 | Beer IDR45000",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "118",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              114.4,
+              -8.85
+            ],
+            [
+              114.72500000000001,
+              -8.583333333333334
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "bali",
+        "DPS_001",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "DPS_002",
+      "city": "bali",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              114.72500000000001,
+              -8.85
+            ],
+            [
+              115.05000000000001,
+              -8.85
+            ],
+            [
+              115.05000000000001,
+              -8.583333333333334
+            ],
+            [
+              114.72500000000001,
+              -8.583333333333334
+            ],
+            [
+              114.72500000000001,
+              -8.85
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": -8.716666666666667,
+        "lon": 114.88750000000002
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:DPS_002",
+        "lat": -8.716666666666667,
+        "lon": 114.88750000000002,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 30000,
+        "beer": 45000,
+        "taxi_airport": 200000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee IDR30000 | Beer IDR45000",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "118",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              114.72500000000001,
+              -8.85
+            ],
+            [
+              115.05000000000001,
+              -8.583333333333334
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "bali",
+        "DPS_002",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "DPS_003",
+      "city": "bali",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              115.05000000000001,
+              -8.85
+            ],
+            [
+              115.375,
+              -8.85
+            ],
+            [
+              115.375,
+              -8.583333333333334
+            ],
+            [
+              115.05000000000001,
+              -8.583333333333334
+            ],
+            [
+              115.05000000000001,
+              -8.85
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": -8.716666666666667,
+        "lon": 115.2125
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:DPS_003",
+        "lat": -8.716666666666667,
+        "lon": 115.2125,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 30000,
+        "beer": 45000,
+        "taxi_airport": 200000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee IDR30000 | Beer IDR45000",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "118",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              115.05000000000001,
+              -8.85
+            ],
+            [
+              115.375,
+              -8.583333333333334
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "bali",
+        "DPS_003",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "DPS_004",
+      "city": "bali",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              115.375,
+              -8.85
+            ],
+            [
+              115.7,
+              -8.85
+            ],
+            [
+              115.7,
+              -8.583333333333334
+            ],
+            [
+              115.375,
+              -8.583333333333334
+            ],
+            [
+              115.375,
+              -8.85
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": -8.716666666666667,
+        "lon": 115.5375
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:DPS_004",
+        "lat": -8.716666666666667,
+        "lon": 115.5375,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 30000,
+        "beer": 45000,
+        "taxi_airport": 200000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee IDR30000 | Beer IDR45000",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "118",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              115.375,
+              -8.85
+            ],
+            [
+              115.7,
+              -8.583333333333334
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "bali",
+        "DPS_004",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "DPS_005",
+      "city": "bali",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              114.4,
+              -8.583333333333334
+            ],
+            [
+              114.72500000000001,
+              -8.583333333333334
+            ],
+            [
+              114.72500000000001,
+              -8.316666666666666
+            ],
+            [
+              114.4,
+              -8.316666666666666
+            ],
+            [
+              114.4,
+              -8.583333333333334
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": -8.45,
+        "lon": 114.5625
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:DPS_005",
+        "lat": -8.45,
+        "lon": 114.5625,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 30000,
+        "beer": 45000,
+        "taxi_airport": 200000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee IDR30000 | Beer IDR45000",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "118",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              114.4,
+              -8.583333333333334
+            ],
+            [
+              114.72500000000001,
+              -8.316666666666666
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "bali",
+        "DPS_005",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "DPS_006",
+      "city": "bali",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              114.72500000000001,
+              -8.583333333333334
+            ],
+            [
+              115.05000000000001,
+              -8.583333333333334
+            ],
+            [
+              115.05000000000001,
+              -8.316666666666666
+            ],
+            [
+              114.72500000000001,
+              -8.316666666666666
+            ],
+            [
+              114.72500000000001,
+              -8.583333333333334
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": -8.45,
+        "lon": 114.88750000000002
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:DPS_006",
+        "lat": -8.45,
+        "lon": 114.88750000000002,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 30000,
+        "beer": 45000,
+        "taxi_airport": 200000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee IDR30000 | Beer IDR45000",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "118",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              114.72500000000001,
+              -8.583333333333334
+            ],
+            [
+              115.05000000000001,
+              -8.316666666666666
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "bali",
+        "DPS_006",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "DPS_007",
+      "city": "bali",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              115.05000000000001,
+              -8.583333333333334
+            ],
+            [
+              115.375,
+              -8.583333333333334
+            ],
+            [
+              115.375,
+              -8.316666666666666
+            ],
+            [
+              115.05000000000001,
+              -8.316666666666666
+            ],
+            [
+              115.05000000000001,
+              -8.583333333333334
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": -8.45,
+        "lon": 115.2125
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:DPS_007",
+        "lat": -8.45,
+        "lon": 115.2125,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 30000,
+        "beer": 45000,
+        "taxi_airport": 200000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee IDR30000 | Beer IDR45000",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "118",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              115.05000000000001,
+              -8.583333333333334
+            ],
+            [
+              115.375,
+              -8.316666666666666
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "bali",
+        "DPS_007",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "DPS_008",
+      "city": "bali",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              115.375,
+              -8.583333333333334
+            ],
+            [
+              115.7,
+              -8.583333333333334
+            ],
+            [
+              115.7,
+              -8.316666666666666
+            ],
+            [
+              115.375,
+              -8.316666666666666
+            ],
+            [
+              115.375,
+              -8.583333333333334
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": -8.45,
+        "lon": 115.5375
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:DPS_008",
+        "lat": -8.45,
+        "lon": 115.5375,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 30000,
+        "beer": 45000,
+        "taxi_airport": 200000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee IDR30000 | Beer IDR45000",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "118",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              115.375,
+              -8.583333333333334
+            ],
+            [
+              115.7,
+              -8.316666666666666
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "bali",
+        "DPS_008",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "DPS_009",
+      "city": "bali",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              114.4,
+              -8.316666666666666
+            ],
+            [
+              114.72500000000001,
+              -8.316666666666666
+            ],
+            [
+              114.72500000000001,
+              -8.05
+            ],
+            [
+              114.4,
+              -8.05
+            ],
+            [
+              114.4,
+              -8.316666666666666
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": -8.183333333333334,
+        "lon": 114.5625
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:DPS_009",
+        "lat": -8.183333333333334,
+        "lon": 114.5625,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 30000,
+        "beer": 45000,
+        "taxi_airport": 200000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee IDR30000 | Beer IDR45000",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "118",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              114.4,
+              -8.316666666666666
+            ],
+            [
+              114.72500000000001,
+              -8.05
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "bali",
+        "DPS_009",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "DPS_010",
+      "city": "bali",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              114.72500000000001,
+              -8.316666666666666
+            ],
+            [
+              115.05000000000001,
+              -8.316666666666666
+            ],
+            [
+              115.05000000000001,
+              -8.05
+            ],
+            [
+              114.72500000000001,
+              -8.05
+            ],
+            [
+              114.72500000000001,
+              -8.316666666666666
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": -8.183333333333334,
+        "lon": 114.88750000000002
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:DPS_010",
+        "lat": -8.183333333333334,
+        "lon": 114.88750000000002,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 30000,
+        "beer": 45000,
+        "taxi_airport": 200000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee IDR30000 | Beer IDR45000",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "118",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              114.72500000000001,
+              -8.316666666666666
+            ],
+            [
+              115.05000000000001,
+              -8.05
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "bali",
+        "DPS_010",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "DPS_011",
+      "city": "bali",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              115.05000000000001,
+              -8.316666666666666
+            ],
+            [
+              115.375,
+              -8.316666666666666
+            ],
+            [
+              115.375,
+              -8.05
+            ],
+            [
+              115.05000000000001,
+              -8.05
+            ],
+            [
+              115.05000000000001,
+              -8.316666666666666
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": -8.183333333333334,
+        "lon": 115.2125
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:DPS_011",
+        "lat": -8.183333333333334,
+        "lon": 115.2125,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 30000,
+        "beer": 45000,
+        "taxi_airport": 200000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee IDR30000 | Beer IDR45000",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "118",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              115.05000000000001,
+              -8.316666666666666
+            ],
+            [
+              115.375,
+              -8.05
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "bali",
+        "DPS_011",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "DPS_012",
+      "city": "bali",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              115.375,
+              -8.316666666666666
+            ],
+            [
+              115.7,
+              -8.316666666666666
+            ],
+            [
+              115.7,
+              -8.05
+            ],
+            [
+              115.375,
+              -8.05
+            ],
+            [
+              115.375,
+              -8.316666666666666
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": -8.183333333333334,
+        "lon": 115.5375
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:DPS_012",
+        "lat": -8.183333333333334,
+        "lon": 115.5375,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 30000,
+        "beer": 45000,
+        "taxi_airport": 200000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee IDR30000 | Beer IDR45000",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "118",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              115.375,
+              -8.316666666666666
+            ],
+            [
+              115.7,
+              -8.05
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "bali",
+        "DPS_012",
+        "mixed"
+      ]
+    }
+  ],
+  "meta": {
+    "source": "demo-grid",
+    "seed_count": 12
+  }
+}

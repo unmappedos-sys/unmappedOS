@@ -1,0 +1,1043 @@
+{
+  "city": "hanoi",
+  "generated_at": "2025-12-14T12:33:33.553Z",
+  "version": 1,
+  "zones": [
+    {
+      "zone_id": "HAN_001",
+      "city": "hanoi",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.7,
+              20.95
+            ],
+            [
+              105.755,
+              20.95
+            ],
+            [
+              105.755,
+              21
+            ],
+            [
+              105.7,
+              21
+            ],
+            [
+              105.7,
+              20.95
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 20.975,
+        "lon": 105.72749999999999
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HAN_001",
+        "lat": 20.975,
+        "lon": 105.72749999999999,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 25000,
+        "taxi_airport": 400000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND25000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              105.7,
+              20.95
+            ],
+            [
+              105.755,
+              21
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hanoi",
+        "HAN_001",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HAN_002",
+      "city": "hanoi",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.755,
+              20.95
+            ],
+            [
+              105.81,
+              20.95
+            ],
+            [
+              105.81,
+              21
+            ],
+            [
+              105.755,
+              21
+            ],
+            [
+              105.755,
+              20.95
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 20.975,
+        "lon": 105.7825
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HAN_002",
+        "lat": 20.975,
+        "lon": 105.7825,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 25000,
+        "taxi_airport": 400000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND25000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              105.755,
+              20.95
+            ],
+            [
+              105.81,
+              21
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hanoi",
+        "HAN_002",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HAN_003",
+      "city": "hanoi",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.81,
+              20.95
+            ],
+            [
+              105.86500000000001,
+              20.95
+            ],
+            [
+              105.86500000000001,
+              21
+            ],
+            [
+              105.81,
+              21
+            ],
+            [
+              105.81,
+              20.95
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 20.975,
+        "lon": 105.8375
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HAN_003",
+        "lat": 20.975,
+        "lon": 105.8375,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 25000,
+        "taxi_airport": 400000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND25000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              105.81,
+              20.95
+            ],
+            [
+              105.86500000000001,
+              21
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hanoi",
+        "HAN_003",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HAN_004",
+      "city": "hanoi",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.86500000000001,
+              20.95
+            ],
+            [
+              105.92,
+              20.95
+            ],
+            [
+              105.92,
+              21
+            ],
+            [
+              105.86500000000001,
+              21
+            ],
+            [
+              105.86500000000001,
+              20.95
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 20.975,
+        "lon": 105.89250000000001
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HAN_004",
+        "lat": 20.975,
+        "lon": 105.89250000000001,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 25000,
+        "taxi_airport": 400000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND25000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              105.86500000000001,
+              20.95
+            ],
+            [
+              105.92,
+              21
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hanoi",
+        "HAN_004",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HAN_005",
+      "city": "hanoi",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.7,
+              21
+            ],
+            [
+              105.755,
+              21
+            ],
+            [
+              105.755,
+              21.05
+            ],
+            [
+              105.7,
+              21.05
+            ],
+            [
+              105.7,
+              21
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 21.025,
+        "lon": 105.72749999999999
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HAN_005",
+        "lat": 21.025,
+        "lon": 105.72749999999999,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 25000,
+        "taxi_airport": 400000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND25000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              105.7,
+              21
+            ],
+            [
+              105.755,
+              21.05
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hanoi",
+        "HAN_005",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HAN_006",
+      "city": "hanoi",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.755,
+              21
+            ],
+            [
+              105.81,
+              21
+            ],
+            [
+              105.81,
+              21.05
+            ],
+            [
+              105.755,
+              21.05
+            ],
+            [
+              105.755,
+              21
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 21.025,
+        "lon": 105.7825
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HAN_006",
+        "lat": 21.025,
+        "lon": 105.7825,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 25000,
+        "taxi_airport": 400000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND25000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              105.755,
+              21
+            ],
+            [
+              105.81,
+              21.05
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hanoi",
+        "HAN_006",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HAN_007",
+      "city": "hanoi",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.81,
+              21
+            ],
+            [
+              105.86500000000001,
+              21
+            ],
+            [
+              105.86500000000001,
+              21.05
+            ],
+            [
+              105.81,
+              21.05
+            ],
+            [
+              105.81,
+              21
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 21.025,
+        "lon": 105.8375
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HAN_007",
+        "lat": 21.025,
+        "lon": 105.8375,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 25000,
+        "taxi_airport": 400000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND25000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              105.81,
+              21
+            ],
+            [
+              105.86500000000001,
+              21.05
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hanoi",
+        "HAN_007",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HAN_008",
+      "city": "hanoi",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.86500000000001,
+              21
+            ],
+            [
+              105.92,
+              21
+            ],
+            [
+              105.92,
+              21.05
+            ],
+            [
+              105.86500000000001,
+              21.05
+            ],
+            [
+              105.86500000000001,
+              21
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 21.025,
+        "lon": 105.89250000000001
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HAN_008",
+        "lat": 21.025,
+        "lon": 105.89250000000001,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 25000,
+        "taxi_airport": 400000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND25000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              105.86500000000001,
+              21
+            ],
+            [
+              105.92,
+              21.05
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hanoi",
+        "HAN_008",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HAN_009",
+      "city": "hanoi",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.7,
+              21.05
+            ],
+            [
+              105.755,
+              21.05
+            ],
+            [
+              105.755,
+              21.1
+            ],
+            [
+              105.7,
+              21.1
+            ],
+            [
+              105.7,
+              21.05
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 21.075000000000003,
+        "lon": 105.72749999999999
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HAN_009",
+        "lat": 21.075000000000003,
+        "lon": 105.72749999999999,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 25000,
+        "taxi_airport": 400000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND25000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              105.7,
+              21.05
+            ],
+            [
+              105.755,
+              21.1
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hanoi",
+        "HAN_009",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HAN_010",
+      "city": "hanoi",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.755,
+              21.05
+            ],
+            [
+              105.81,
+              21.05
+            ],
+            [
+              105.81,
+              21.1
+            ],
+            [
+              105.755,
+              21.1
+            ],
+            [
+              105.755,
+              21.05
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 21.075000000000003,
+        "lon": 105.7825
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HAN_010",
+        "lat": 21.075000000000003,
+        "lon": 105.7825,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 25000,
+        "taxi_airport": 400000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND25000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              105.755,
+              21.05
+            ],
+            [
+              105.81,
+              21.1
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hanoi",
+        "HAN_010",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HAN_011",
+      "city": "hanoi",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.81,
+              21.05
+            ],
+            [
+              105.86500000000001,
+              21.05
+            ],
+            [
+              105.86500000000001,
+              21.1
+            ],
+            [
+              105.81,
+              21.1
+            ],
+            [
+              105.81,
+              21.05
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 21.075000000000003,
+        "lon": 105.8375
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HAN_011",
+        "lat": 21.075000000000003,
+        "lon": 105.8375,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 25000,
+        "taxi_airport": 400000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND25000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              105.81,
+              21.05
+            ],
+            [
+              105.86500000000001,
+              21.1
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hanoi",
+        "HAN_011",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HAN_012",
+      "city": "hanoi",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.86500000000001,
+              21.05
+            ],
+            [
+              105.92,
+              21.05
+            ],
+            [
+              105.92,
+              21.1
+            ],
+            [
+              105.86500000000001,
+              21.1
+            ],
+            [
+              105.86500000000001,
+              21.05
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 21.075000000000003,
+        "lon": 105.89250000000001
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HAN_012",
+        "lat": 21.075000000000003,
+        "lon": 105.89250000000001,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35000,
+        "beer": 25000,
+        "taxi_airport": 400000
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee VND35000 | Beer VND25000",
+        "emergency_numbers": {
+          "police": "113",
+          "ambulance": "115",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              105.86500000000001,
+              21.05
+            ],
+            [
+              105.92,
+              21.1
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hanoi",
+        "HAN_012",
+        "mixed"
+      ]
+    }
+  ],
+  "meta": {
+    "source": "demo-grid",
+    "seed_count": 12
+  }
+}

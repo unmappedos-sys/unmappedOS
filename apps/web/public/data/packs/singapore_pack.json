@@ -1,0 +1,1043 @@
+{
+  "city": "singapore",
+  "generated_at": "2025-12-14T12:33:33.540Z",
+  "version": 1,
+  "zones": [
+    {
+      "zone_id": "SIN_001",
+      "city": "singapore",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              103.6,
+              1.22
+            ],
+            [
+              103.71249999999999,
+              1.22
+            ],
+            [
+              103.71249999999999,
+              1.3033333333333332
+            ],
+            [
+              103.6,
+              1.3033333333333332
+            ],
+            [
+              103.6,
+              1.22
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 1.2616666666666667,
+        "lon": 103.65625
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SIN_001",
+        "lat": 1.2616666666666667,
+        "lon": 103.65625,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 5,
+        "beer": 12,
+        "taxi_airport": 30
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee SGD5 | Beer SGD12",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "995",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              103.6,
+              1.22
+            ],
+            [
+              103.71249999999999,
+              1.3033333333333332
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "singapore",
+        "SIN_001",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SIN_002",
+      "city": "singapore",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              103.71249999999999,
+              1.22
+            ],
+            [
+              103.82499999999999,
+              1.22
+            ],
+            [
+              103.82499999999999,
+              1.3033333333333332
+            ],
+            [
+              103.71249999999999,
+              1.3033333333333332
+            ],
+            [
+              103.71249999999999,
+              1.22
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 1.2616666666666667,
+        "lon": 103.76874999999998
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SIN_002",
+        "lat": 1.2616666666666667,
+        "lon": 103.76874999999998,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 5,
+        "beer": 12,
+        "taxi_airport": 30
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee SGD5 | Beer SGD12",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "995",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              103.71249999999999,
+              1.22
+            ],
+            [
+              103.82499999999999,
+              1.3033333333333332
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "singapore",
+        "SIN_002",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SIN_003",
+      "city": "singapore",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              103.82499999999999,
+              1.22
+            ],
+            [
+              103.9375,
+              1.22
+            ],
+            [
+              103.9375,
+              1.3033333333333332
+            ],
+            [
+              103.82499999999999,
+              1.3033333333333332
+            ],
+            [
+              103.82499999999999,
+              1.22
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 1.2616666666666667,
+        "lon": 103.88125
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SIN_003",
+        "lat": 1.2616666666666667,
+        "lon": 103.88125,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 5,
+        "beer": 12,
+        "taxi_airport": 30
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee SGD5 | Beer SGD12",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "995",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              103.82499999999999,
+              1.22
+            ],
+            [
+              103.9375,
+              1.3033333333333332
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "singapore",
+        "SIN_003",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SIN_004",
+      "city": "singapore",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              103.9375,
+              1.22
+            ],
+            [
+              104.05,
+              1.22
+            ],
+            [
+              104.05,
+              1.3033333333333332
+            ],
+            [
+              103.9375,
+              1.3033333333333332
+            ],
+            [
+              103.9375,
+              1.22
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 1.2616666666666667,
+        "lon": 103.99375
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SIN_004",
+        "lat": 1.2616666666666667,
+        "lon": 103.99375,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 5,
+        "beer": 12,
+        "taxi_airport": 30
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee SGD5 | Beer SGD12",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "995",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              103.9375,
+              1.22
+            ],
+            [
+              104.05,
+              1.3033333333333332
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "singapore",
+        "SIN_004",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SIN_005",
+      "city": "singapore",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              103.6,
+              1.3033333333333332
+            ],
+            [
+              103.71249999999999,
+              1.3033333333333332
+            ],
+            [
+              103.71249999999999,
+              1.3866666666666667
+            ],
+            [
+              103.6,
+              1.3866666666666667
+            ],
+            [
+              103.6,
+              1.3033333333333332
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 1.345,
+        "lon": 103.65625
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SIN_005",
+        "lat": 1.345,
+        "lon": 103.65625,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 5,
+        "beer": 12,
+        "taxi_airport": 30
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee SGD5 | Beer SGD12",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "995",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              103.6,
+              1.3033333333333332
+            ],
+            [
+              103.71249999999999,
+              1.3866666666666667
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "singapore",
+        "SIN_005",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SIN_006",
+      "city": "singapore",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              103.71249999999999,
+              1.3033333333333332
+            ],
+            [
+              103.82499999999999,
+              1.3033333333333332
+            ],
+            [
+              103.82499999999999,
+              1.3866666666666667
+            ],
+            [
+              103.71249999999999,
+              1.3866666666666667
+            ],
+            [
+              103.71249999999999,
+              1.3033333333333332
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 1.345,
+        "lon": 103.76874999999998
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SIN_006",
+        "lat": 1.345,
+        "lon": 103.76874999999998,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 5,
+        "beer": 12,
+        "taxi_airport": 30
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee SGD5 | Beer SGD12",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "995",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              103.71249999999999,
+              1.3033333333333332
+            ],
+            [
+              103.82499999999999,
+              1.3866666666666667
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "singapore",
+        "SIN_006",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SIN_007",
+      "city": "singapore",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              103.82499999999999,
+              1.3033333333333332
+            ],
+            [
+              103.9375,
+              1.3033333333333332
+            ],
+            [
+              103.9375,
+              1.3866666666666667
+            ],
+            [
+              103.82499999999999,
+              1.3866666666666667
+            ],
+            [
+              103.82499999999999,
+              1.3033333333333332
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 1.345,
+        "lon": 103.88125
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SIN_007",
+        "lat": 1.345,
+        "lon": 103.88125,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 5,
+        "beer": 12,
+        "taxi_airport": 30
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee SGD5 | Beer SGD12",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "995",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              103.82499999999999,
+              1.3033333333333332
+            ],
+            [
+              103.9375,
+              1.3866666666666667
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "singapore",
+        "SIN_007",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SIN_008",
+      "city": "singapore",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              103.9375,
+              1.3033333333333332
+            ],
+            [
+              104.05,
+              1.3033333333333332
+            ],
+            [
+              104.05,
+              1.3866666666666667
+            ],
+            [
+              103.9375,
+              1.3866666666666667
+            ],
+            [
+              103.9375,
+              1.3033333333333332
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 1.345,
+        "lon": 103.99375
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SIN_008",
+        "lat": 1.345,
+        "lon": 103.99375,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 5,
+        "beer": 12,
+        "taxi_airport": 30
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee SGD5 | Beer SGD12",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "995",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              103.9375,
+              1.3033333333333332
+            ],
+            [
+              104.05,
+              1.3866666666666667
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "singapore",
+        "SIN_008",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SIN_009",
+      "city": "singapore",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              103.6,
+              1.3866666666666667
+            ],
+            [
+              103.71249999999999,
+              1.3866666666666667
+            ],
+            [
+              103.71249999999999,
+              1.47
+            ],
+            [
+              103.6,
+              1.47
+            ],
+            [
+              103.6,
+              1.3866666666666667
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 1.4283333333333332,
+        "lon": 103.65625
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SIN_009",
+        "lat": 1.4283333333333332,
+        "lon": 103.65625,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 5,
+        "beer": 12,
+        "taxi_airport": 30
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee SGD5 | Beer SGD12",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "995",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              103.6,
+              1.3866666666666667
+            ],
+            [
+              103.71249999999999,
+              1.47
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "singapore",
+        "SIN_009",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SIN_010",
+      "city": "singapore",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              103.71249999999999,
+              1.3866666666666667
+            ],
+            [
+              103.82499999999999,
+              1.3866666666666667
+            ],
+            [
+              103.82499999999999,
+              1.47
+            ],
+            [
+              103.71249999999999,
+              1.47
+            ],
+            [
+              103.71249999999999,
+              1.3866666666666667
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 1.4283333333333332,
+        "lon": 103.76874999999998
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SIN_010",
+        "lat": 1.4283333333333332,
+        "lon": 103.76874999999998,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 5,
+        "beer": 12,
+        "taxi_airport": 30
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee SGD5 | Beer SGD12",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "995",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              103.71249999999999,
+              1.3866666666666667
+            ],
+            [
+              103.82499999999999,
+              1.47
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "singapore",
+        "SIN_010",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SIN_011",
+      "city": "singapore",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              103.82499999999999,
+              1.3866666666666667
+            ],
+            [
+              103.9375,
+              1.3866666666666667
+            ],
+            [
+              103.9375,
+              1.47
+            ],
+            [
+              103.82499999999999,
+              1.47
+            ],
+            [
+              103.82499999999999,
+              1.3866666666666667
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 1.4283333333333332,
+        "lon": 103.88125
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SIN_011",
+        "lat": 1.4283333333333332,
+        "lon": 103.88125,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 5,
+        "beer": 12,
+        "taxi_airport": 30
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee SGD5 | Beer SGD12",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "995",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              103.82499999999999,
+              1.3866666666666667
+            ],
+            [
+              103.9375,
+              1.47
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "singapore",
+        "SIN_011",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "SIN_012",
+      "city": "singapore",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              103.9375,
+              1.3866666666666667
+            ],
+            [
+              104.05,
+              1.3866666666666667
+            ],
+            [
+              104.05,
+              1.47
+            ],
+            [
+              103.9375,
+              1.47
+            ],
+            [
+              103.9375,
+              1.3866666666666667
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 1.4283333333333332,
+        "lon": 103.99375
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:SIN_012",
+        "lat": 1.4283333333333332,
+        "lon": 103.99375,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 5,
+        "beer": 12,
+        "taxi_airport": 30
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee SGD5 | Beer SGD12",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "995",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              103.9375,
+              1.3866666666666667
+            ],
+            [
+              104.05,
+              1.47
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "singapore",
+        "SIN_012",
+        "mixed"
+      ]
+    }
+  ],
+  "meta": {
+    "source": "demo-grid",
+    "seed_count": 12
+  }
+}

@@ -1,0 +1,1043 @@
+{
+  "city": "hongkong",
+  "generated_at": "2025-12-14T12:33:33.544Z",
+  "version": 1,
+  "zones": [
+    {
+      "zone_id": "HKG_001",
+      "city": "hongkong",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.82,
+              22.15
+            ],
+            [
+              113.975,
+              22.15
+            ],
+            [
+              113.975,
+              22.286666666666665
+            ],
+            [
+              113.82,
+              22.286666666666665
+            ],
+            [
+              113.82,
+              22.15
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 22.218333333333334,
+        "lon": 113.8975
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HKG_001",
+        "lat": 22.218333333333334,
+        "lon": 113.8975,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35,
+        "beer": 45,
+        "taxi_airport": 320
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee HKD35 | Beer HKD45",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              113.82,
+              22.15
+            ],
+            [
+              113.975,
+              22.286666666666665
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hongkong",
+        "HKG_001",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HKG_002",
+      "city": "hongkong",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.975,
+              22.15
+            ],
+            [
+              114.13,
+              22.15
+            ],
+            [
+              114.13,
+              22.286666666666665
+            ],
+            [
+              113.975,
+              22.286666666666665
+            ],
+            [
+              113.975,
+              22.15
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 22.218333333333334,
+        "lon": 114.0525
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HKG_002",
+        "lat": 22.218333333333334,
+        "lon": 114.0525,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35,
+        "beer": 45,
+        "taxi_airport": 320
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee HKD35 | Beer HKD45",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              113.975,
+              22.15
+            ],
+            [
+              114.13,
+              22.286666666666665
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hongkong",
+        "HKG_002",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HKG_003",
+      "city": "hongkong",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              114.13,
+              22.15
+            ],
+            [
+              114.285,
+              22.15
+            ],
+            [
+              114.285,
+              22.286666666666665
+            ],
+            [
+              114.13,
+              22.286666666666665
+            ],
+            [
+              114.13,
+              22.15
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 22.218333333333334,
+        "lon": 114.2075
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HKG_003",
+        "lat": 22.218333333333334,
+        "lon": 114.2075,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35,
+        "beer": 45,
+        "taxi_airport": 320
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee HKD35 | Beer HKD45",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              114.13,
+              22.15
+            ],
+            [
+              114.285,
+              22.286666666666665
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hongkong",
+        "HKG_003",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HKG_004",
+      "city": "hongkong",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              114.285,
+              22.15
+            ],
+            [
+              114.44,
+              22.15
+            ],
+            [
+              114.44,
+              22.286666666666665
+            ],
+            [
+              114.285,
+              22.286666666666665
+            ],
+            [
+              114.285,
+              22.15
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 22.218333333333334,
+        "lon": 114.3625
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HKG_004",
+        "lat": 22.218333333333334,
+        "lon": 114.3625,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35,
+        "beer": 45,
+        "taxi_airport": 320
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee HKD35 | Beer HKD45",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              114.285,
+              22.15
+            ],
+            [
+              114.44,
+              22.286666666666665
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hongkong",
+        "HKG_004",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HKG_005",
+      "city": "hongkong",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.82,
+              22.286666666666665
+            ],
+            [
+              113.975,
+              22.286666666666665
+            ],
+            [
+              113.975,
+              22.423333333333332
+            ],
+            [
+              113.82,
+              22.423333333333332
+            ],
+            [
+              113.82,
+              22.286666666666665
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 22.354999999999997,
+        "lon": 113.8975
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HKG_005",
+        "lat": 22.354999999999997,
+        "lon": 113.8975,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35,
+        "beer": 45,
+        "taxi_airport": 320
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee HKD35 | Beer HKD45",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              113.82,
+              22.286666666666665
+            ],
+            [
+              113.975,
+              22.423333333333332
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hongkong",
+        "HKG_005",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HKG_006",
+      "city": "hongkong",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.975,
+              22.286666666666665
+            ],
+            [
+              114.13,
+              22.286666666666665
+            ],
+            [
+              114.13,
+              22.423333333333332
+            ],
+            [
+              113.975,
+              22.423333333333332
+            ],
+            [
+              113.975,
+              22.286666666666665
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 22.354999999999997,
+        "lon": 114.0525
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HKG_006",
+        "lat": 22.354999999999997,
+        "lon": 114.0525,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35,
+        "beer": 45,
+        "taxi_airport": 320
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee HKD35 | Beer HKD45",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              113.975,
+              22.286666666666665
+            ],
+            [
+              114.13,
+              22.423333333333332
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hongkong",
+        "HKG_006",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HKG_007",
+      "city": "hongkong",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              114.13,
+              22.286666666666665
+            ],
+            [
+              114.285,
+              22.286666666666665
+            ],
+            [
+              114.285,
+              22.423333333333332
+            ],
+            [
+              114.13,
+              22.423333333333332
+            ],
+            [
+              114.13,
+              22.286666666666665
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 22.354999999999997,
+        "lon": 114.2075
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HKG_007",
+        "lat": 22.354999999999997,
+        "lon": 114.2075,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35,
+        "beer": 45,
+        "taxi_airport": 320
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee HKD35 | Beer HKD45",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              114.13,
+              22.286666666666665
+            ],
+            [
+              114.285,
+              22.423333333333332
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hongkong",
+        "HKG_007",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HKG_008",
+      "city": "hongkong",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              114.285,
+              22.286666666666665
+            ],
+            [
+              114.44,
+              22.286666666666665
+            ],
+            [
+              114.44,
+              22.423333333333332
+            ],
+            [
+              114.285,
+              22.423333333333332
+            ],
+            [
+              114.285,
+              22.286666666666665
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 22.354999999999997,
+        "lon": 114.3625
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HKG_008",
+        "lat": 22.354999999999997,
+        "lon": 114.3625,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35,
+        "beer": 45,
+        "taxi_airport": 320
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee HKD35 | Beer HKD45",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              114.285,
+              22.286666666666665
+            ],
+            [
+              114.44,
+              22.423333333333332
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hongkong",
+        "HKG_008",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HKG_009",
+      "city": "hongkong",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.82,
+              22.423333333333332
+            ],
+            [
+              113.975,
+              22.423333333333332
+            ],
+            [
+              113.975,
+              22.56
+            ],
+            [
+              113.82,
+              22.56
+            ],
+            [
+              113.82,
+              22.423333333333332
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 22.491666666666667,
+        "lon": 113.8975
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HKG_009",
+        "lat": 22.491666666666667,
+        "lon": 113.8975,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35,
+        "beer": 45,
+        "taxi_airport": 320
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee HKD35 | Beer HKD45",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              113.82,
+              22.423333333333332
+            ],
+            [
+              113.975,
+              22.56
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hongkong",
+        "HKG_009",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HKG_010",
+      "city": "hongkong",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.975,
+              22.423333333333332
+            ],
+            [
+              114.13,
+              22.423333333333332
+            ],
+            [
+              114.13,
+              22.56
+            ],
+            [
+              113.975,
+              22.56
+            ],
+            [
+              113.975,
+              22.423333333333332
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 22.491666666666667,
+        "lon": 114.0525
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HKG_010",
+        "lat": 22.491666666666667,
+        "lon": 114.0525,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35,
+        "beer": 45,
+        "taxi_airport": 320
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee HKD35 | Beer HKD45",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              113.975,
+              22.423333333333332
+            ],
+            [
+              114.13,
+              22.56
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hongkong",
+        "HKG_010",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HKG_011",
+      "city": "hongkong",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              114.13,
+              22.423333333333332
+            ],
+            [
+              114.285,
+              22.423333333333332
+            ],
+            [
+              114.285,
+              22.56
+            ],
+            [
+              114.13,
+              22.56
+            ],
+            [
+              114.13,
+              22.423333333333332
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 22.491666666666667,
+        "lon": 114.2075
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HKG_011",
+        "lat": 22.491666666666667,
+        "lon": 114.2075,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35,
+        "beer": 45,
+        "taxi_airport": 320
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee HKD35 | Beer HKD45",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              114.13,
+              22.423333333333332
+            ],
+            [
+              114.285,
+              22.56
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hongkong",
+        "HKG_011",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "HKG_012",
+      "city": "hongkong",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              114.285,
+              22.423333333333332
+            ],
+            [
+              114.44,
+              22.423333333333332
+            ],
+            [
+              114.44,
+              22.56
+            ],
+            [
+              114.285,
+              22.56
+            ],
+            [
+              114.285,
+              22.423333333333332
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 22.491666666666667,
+        "lon": 114.3625
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:HKG_012",
+        "lat": 22.491666666666667,
+        "lon": 114.3625,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 35,
+        "beer": 45,
+        "taxi_airport": 320
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee HKD35 | Beer HKD45",
+        "emergency_numbers": {
+          "police": "999",
+          "ambulance": "999",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              114.285,
+              22.423333333333332
+            ],
+            [
+              114.44,
+              22.56
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "hongkong",
+        "HKG_012",
+        "mixed"
+      ]
+    }
+  ],
+  "meta": {
+    "source": "demo-grid",
+    "seed_count": 12
+  }
+}

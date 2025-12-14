@@ -220,13 +220,28 @@ function validatePriceRange(
 
 const MANUAL_SEEDS_DIR = path.join(__dirname, '../../data/manual-seeds');
 
+const MANUAL_SEED_ALIASES: Record<string, string[]> = {
+  hongkong: ['hong_kong', 'hong-kong'],
+  hochiminh: ['ho_chi_minh', 'ho-chi-minh'],
+  kualalumpur: ['kuala_lumpur', 'kuala-lumpur'],
+};
+
 /**
  * Load manual seed for a city
  */
 export function loadManualSeed(citySlug: string): ManualSeed | null {
-  const filePath = path.join(MANUAL_SEEDS_DIR, `${citySlug}.json`);
-  
-  if (!fs.existsSync(filePath)) {
+  const candidates = [
+    citySlug,
+    citySlug.replace(/-/g, '_'),
+    citySlug.replace(/_/g, '-'),
+    ...(MANUAL_SEED_ALIASES[citySlug] || []),
+  ];
+
+  const filePath = candidates
+    .map((slug) => path.join(MANUAL_SEEDS_DIR, `${slug}.json`))
+    .find((p) => fs.existsSync(p));
+
+  if (!filePath) {
     console.warn(`[ManualSeed] No manual seed found for: ${citySlug}`);
     return null;
   }

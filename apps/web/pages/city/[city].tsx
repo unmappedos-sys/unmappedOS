@@ -33,6 +33,118 @@ const CITIES = {
       embassy: '+81-3-3224-5000',
     },
   },
+  singapore: {
+    name: 'Singapore',
+    code: 'SIN',
+    country: 'Singapore',
+    zones: 0,
+    description: 'High-compliance city grid. Strong transit reliability. Dense operational hubs.',
+    threat: 'LOW',
+    classification: 'TIER-1 METRO',
+    emergency: {
+      police: '999',
+      ambulance: '995',
+      embassy: '+65-6476-9100',
+    },
+  },
+  hongkong: {
+    name: 'Hong Kong',
+    code: 'HKG',
+    country: 'Hong Kong',
+    zones: 0,
+    description: 'Vertical density. Fast interchanges. High-signal commercial corridors.',
+    threat: 'MODERATE',
+    classification: 'TIER-1 METRO',
+    emergency: {
+      police: '999',
+      ambulance: '999',
+      embassy: '+852-2523-9011',
+    },
+  },
+  seoul: {
+    name: 'Seoul',
+    code: 'SEL',
+    country: 'South Korea',
+    zones: 0,
+    description: 'High-bandwidth nightlife districts. Strong subway coverage. Rapid zone shifts.',
+    threat: 'LOW',
+    classification: 'TIER-1 METRO',
+    emergency: {
+      police: '112',
+      ambulance: '119',
+      embassy: '+82-2-397-4114',
+    },
+  },
+  bali: {
+    name: 'Bali',
+    code: 'DPS',
+    country: 'Indonesia',
+    zones: 0,
+    description: 'Tourist density pockets. Transport dependence. Variable price gradients.',
+    threat: 'MODERATE',
+    classification: 'TIER-2 REGION',
+    emergency: {
+      police: '110',
+      ambulance: '118',
+      embassy: '+62-361-233-605',
+    },
+  },
+  kualalumpur: {
+    name: 'Kuala Lumpur',
+    code: 'KUL',
+    country: 'Malaysia',
+    zones: 0,
+    description: 'Transit-linked business core. Market spillover zones. Mixed-density corridors.',
+    threat: 'LOW',
+    classification: 'TIER-1 METRO',
+    emergency: {
+      police: '999',
+      ambulance: '999',
+      embassy: '+60-3-2168-5000',
+    },
+  },
+  hanoi: {
+    name: 'Hanoi',
+    code: 'HAN',
+    country: 'Vietnam',
+    zones: 0,
+    description: 'Old-quarter maze. Lake-centric flow. Strong street-level vitality bands.',
+    threat: 'MODERATE',
+    classification: 'TIER-2 METRO',
+    emergency: {
+      police: '113',
+      ambulance: '115',
+      embassy: '+84-24-3850-5000',
+    },
+  },
+  hochiminh: {
+    name: 'Ho Chi Minh City',
+    code: 'SGN',
+    country: 'Vietnam',
+    zones: 0,
+    description: 'High-mobility street network. Late-night commerce. High signal volatility.',
+    threat: 'MODERATE',
+    classification: 'TIER-2 METRO',
+    emergency: {
+      police: '113',
+      ambulance: '115',
+      embassy: '+84-28-3520-4200',
+    },
+  },
+  taipei: {
+    name: 'Taipei',
+    code: 'TPE',
+    country: 'Taiwan',
+    zones: 0,
+    description: 'Night market density. MRT-connected districts. Fast elevation escapes.',
+    threat: 'LOW',
+    classification: 'TIER-1 METRO',
+    emergency: {
+      police: '110',
+      ambulance: '119',
+      embassy: '+886-2-2162-2000',
+    },
+  },
 };
 
 export default function CityDossier() {
@@ -47,7 +159,7 @@ export default function CityDossier() {
 
   useEffect(() => {
     if (city && !cityData) {
-      router.push('/city/bangkok');
+      router.push('/cities');
     }
   }, [city, cityData, router]);
 

@@ -16,6 +16,14 @@ export const config = {
 const PACK_URLS: Record<string, string> = {
   bangkok: '/data/packs/bangkok_pack.json',
   tokyo: '/data/packs/tokyo_pack.json',
+  singapore: '/data/packs/singapore_pack.json',
+  hongkong: '/data/packs/hongkong_pack.json',
+  seoul: '/data/packs/seoul_pack.json',
+  bali: '/data/packs/bali_pack.json',
+  kualalumpur: '/data/packs/kualalumpur_pack.json',
+  hanoi: '/data/packs/hanoi_pack.json',
+  hochiminh: '/data/packs/hochiminh_pack.json',
+  taipei: '/data/packs/taipei_pack.json',
 };
 
 // Simple hash function for edge runtime (no Node.js crypto)

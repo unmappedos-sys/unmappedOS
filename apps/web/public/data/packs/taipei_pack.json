@@ -1,0 +1,1043 @@
+{
+  "city": "taipei",
+  "generated_at": "2025-12-14T12:33:33.557Z",
+  "version": 1,
+  "zones": [
+    {
+      "zone_id": "TPE_001",
+      "city": "taipei",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              121.45,
+              24.96
+            ],
+            [
+              121.5025,
+              24.96
+            ],
+            [
+              121.5025,
+              25.043333333333333
+            ],
+            [
+              121.45,
+              25.043333333333333
+            ],
+            [
+              121.45,
+              24.96
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 25.001666666666665,
+        "lon": 121.47625
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:TPE_001",
+        "lat": 25.001666666666665,
+        "lon": 121.47625,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 100,
+        "beer": 80,
+        "taxi_airport": 1200
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee TWD100 | Beer TWD80",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              121.45,
+              24.96
+            ],
+            [
+              121.5025,
+              25.043333333333333
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "taipei",
+        "TPE_001",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "TPE_002",
+      "city": "taipei",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              121.5025,
+              24.96
+            ],
+            [
+              121.555,
+              24.96
+            ],
+            [
+              121.555,
+              25.043333333333333
+            ],
+            [
+              121.5025,
+              25.043333333333333
+            ],
+            [
+              121.5025,
+              24.96
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 25.001666666666665,
+        "lon": 121.52875
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:TPE_002",
+        "lat": 25.001666666666665,
+        "lon": 121.52875,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 100,
+        "beer": 80,
+        "taxi_airport": 1200
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee TWD100 | Beer TWD80",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              121.5025,
+              24.96
+            ],
+            [
+              121.555,
+              25.043333333333333
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "taipei",
+        "TPE_002",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "TPE_003",
+      "city": "taipei",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              121.555,
+              24.96
+            ],
+            [
+              121.6075,
+              24.96
+            ],
+            [
+              121.6075,
+              25.043333333333333
+            ],
+            [
+              121.555,
+              25.043333333333333
+            ],
+            [
+              121.555,
+              24.96
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 25.001666666666665,
+        "lon": 121.58125000000001
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:TPE_003",
+        "lat": 25.001666666666665,
+        "lon": 121.58125000000001,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 100,
+        "beer": 80,
+        "taxi_airport": 1200
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee TWD100 | Beer TWD80",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              121.555,
+              24.96
+            ],
+            [
+              121.6075,
+              25.043333333333333
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "taipei",
+        "TPE_003",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "TPE_004",
+      "city": "taipei",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              121.6075,
+              24.96
+            ],
+            [
+              121.66,
+              24.96
+            ],
+            [
+              121.66,
+              25.043333333333333
+            ],
+            [
+              121.6075,
+              25.043333333333333
+            ],
+            [
+              121.6075,
+              24.96
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 25.001666666666665,
+        "lon": 121.63374999999999
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:TPE_004",
+        "lat": 25.001666666666665,
+        "lon": 121.63374999999999,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 100,
+        "beer": 80,
+        "taxi_airport": 1200
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee TWD100 | Beer TWD80",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              121.6075,
+              24.96
+            ],
+            [
+              121.66,
+              25.043333333333333
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "taipei",
+        "TPE_004",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "TPE_005",
+      "city": "taipei",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              121.45,
+              25.043333333333333
+            ],
+            [
+              121.5025,
+              25.043333333333333
+            ],
+            [
+              121.5025,
+              25.12666666666667
+            ],
+            [
+              121.45,
+              25.12666666666667
+            ],
+            [
+              121.45,
+              25.043333333333333
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 25.085,
+        "lon": 121.47625
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:TPE_005",
+        "lat": 25.085,
+        "lon": 121.47625,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 100,
+        "beer": 80,
+        "taxi_airport": 1200
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee TWD100 | Beer TWD80",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              121.45,
+              25.043333333333333
+            ],
+            [
+              121.5025,
+              25.12666666666667
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "taipei",
+        "TPE_005",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "TPE_006",
+      "city": "taipei",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              121.5025,
+              25.043333333333333
+            ],
+            [
+              121.555,
+              25.043333333333333
+            ],
+            [
+              121.555,
+              25.12666666666667
+            ],
+            [
+              121.5025,
+              25.12666666666667
+            ],
+            [
+              121.5025,
+              25.043333333333333
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 25.085,
+        "lon": 121.52875
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:TPE_006",
+        "lat": 25.085,
+        "lon": 121.52875,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 100,
+        "beer": 80,
+        "taxi_airport": 1200
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee TWD100 | Beer TWD80",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              121.5025,
+              25.043333333333333
+            ],
+            [
+              121.555,
+              25.12666666666667
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "taipei",
+        "TPE_006",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "TPE_007",
+      "city": "taipei",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              121.555,
+              25.043333333333333
+            ],
+            [
+              121.6075,
+              25.043333333333333
+            ],
+            [
+              121.6075,
+              25.12666666666667
+            ],
+            [
+              121.555,
+              25.12666666666667
+            ],
+            [
+              121.555,
+              25.043333333333333
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 25.085,
+        "lon": 121.58125000000001
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:TPE_007",
+        "lat": 25.085,
+        "lon": 121.58125000000001,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 100,
+        "beer": 80,
+        "taxi_airport": 1200
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee TWD100 | Beer TWD80",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              121.555,
+              25.043333333333333
+            ],
+            [
+              121.6075,
+              25.12666666666667
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "taipei",
+        "TPE_007",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "TPE_008",
+      "city": "taipei",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              121.6075,
+              25.043333333333333
+            ],
+            [
+              121.66,
+              25.043333333333333
+            ],
+            [
+              121.66,
+              25.12666666666667
+            ],
+            [
+              121.6075,
+              25.12666666666667
+            ],
+            [
+              121.6075,
+              25.043333333333333
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 25.085,
+        "lon": 121.63374999999999
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:TPE_008",
+        "lat": 25.085,
+        "lon": 121.63374999999999,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 100,
+        "beer": 80,
+        "taxi_airport": 1200
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee TWD100 | Beer TWD80",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              121.6075,
+              25.043333333333333
+            ],
+            [
+              121.66,
+              25.12666666666667
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "taipei",
+        "TPE_008",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "TPE_009",
+      "city": "taipei",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              121.45,
+              25.12666666666667
+            ],
+            [
+              121.5025,
+              25.12666666666667
+            ],
+            [
+              121.5025,
+              25.21
+            ],
+            [
+              121.45,
+              25.21
+            ],
+            [
+              121.45,
+              25.12666666666667
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 25.168333333333337,
+        "lon": 121.47625
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:TPE_009",
+        "lat": 25.168333333333337,
+        "lon": 121.47625,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 100,
+        "beer": 80,
+        "taxi_airport": 1200
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee TWD100 | Beer TWD80",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              121.45,
+              25.12666666666667
+            ],
+            [
+              121.5025,
+              25.21
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "taipei",
+        "TPE_009",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "TPE_010",
+      "city": "taipei",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              121.5025,
+              25.12666666666667
+            ],
+            [
+              121.555,
+              25.12666666666667
+            ],
+            [
+              121.555,
+              25.21
+            ],
+            [
+              121.5025,
+              25.21
+            ],
+            [
+              121.5025,
+              25.12666666666667
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 25.168333333333337,
+        "lon": 121.52875
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:TPE_010",
+        "lat": 25.168333333333337,
+        "lon": 121.52875,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 100,
+        "beer": 80,
+        "taxi_airport": 1200
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee TWD100 | Beer TWD80",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              121.5025,
+              25.12666666666667
+            ],
+            [
+              121.555,
+              25.21
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "taipei",
+        "TPE_010",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "TPE_011",
+      "city": "taipei",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              121.555,
+              25.12666666666667
+            ],
+            [
+              121.6075,
+              25.12666666666667
+            ],
+            [
+              121.6075,
+              25.21
+            ],
+            [
+              121.555,
+              25.21
+            ],
+            [
+              121.555,
+              25.12666666666667
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 25.168333333333337,
+        "lon": 121.58125000000001
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:TPE_011",
+        "lat": 25.168333333333337,
+        "lon": 121.58125000000001,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 100,
+        "beer": 80,
+        "taxi_airport": 1200
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee TWD100 | Beer TWD80",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              121.555,
+              25.12666666666667
+            ],
+            [
+              121.6075,
+              25.21
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "taipei",
+        "TPE_011",
+        "mixed"
+      ]
+    },
+    {
+      "zone_id": "TPE_012",
+      "city": "taipei",
+      "polygon": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              121.6075,
+              25.12666666666667
+            ],
+            [
+              121.66,
+              25.12666666666667
+            ],
+            [
+              121.66,
+              25.21
+            ],
+            [
+              121.6075,
+              25.21
+            ],
+            [
+              121.6075,
+              25.12666666666667
+            ]
+          ]
+        ]
+      },
+      "centroid": {
+        "lat": 25.168333333333337,
+        "lon": 121.63374999999999
+      },
+      "texture_type": "MIXED",
+      "neon_color": "#FFFF00",
+      "selected_anchor": {
+        "id": "seed:TPE_012",
+        "lat": 25.168333333333337,
+        "lon": 121.63374999999999,
+        "tags": {
+          "source": "seed"
+        },
+        "score": 0,
+        "name": "Zone Anchor",
+        "selection_reason": "Seeded centroid anchor (demo)"
+      },
+      "price_medians": {
+        "coffee": 100,
+        "beer": 80,
+        "taxi_airport": 1200
+      },
+      "cheat_sheet": {
+        "taxi_phrase": "",
+        "price_estimates": "Coffee TWD100 | Beer TWD80",
+        "emergency_numbers": {
+          "police": "110",
+          "ambulance": "119",
+          "embassy": ""
+        }
+      },
+      "status": "ACTIVE",
+      "safe_corridors": [
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              121.6075,
+              25.12666666666667
+            ],
+            [
+              121.66,
+              25.21
+            ]
+          ],
+          "vitality_score": 0.6
+        }
+      ],
+      "intel_markers": [],
+      "mission_whisper": "DEMO PACK — LIMITED INTEL. VERIFY ON CONTACT.",
+      "search_index_tokens": [
+        "taipei",
+        "TPE_012",
+        "mixed"
+      ]
+    }
+  ],
+  "meta": {
+    "source": "demo-grid",
+    "seed_count": 12
+  }
+}
