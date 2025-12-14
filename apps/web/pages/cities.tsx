@@ -139,7 +139,9 @@ export default function Cities() {
   const filteredCities = cities.filter(
     (city) =>
       city.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      city.country.toLowerCase().includes(searchQuery.toLowerCase())
+      city.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      city.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      city.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const availableCities = filteredCities.filter((c) => c.status === 'available');
