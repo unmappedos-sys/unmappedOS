@@ -110,10 +110,19 @@ const cities: CityInfo[] = [
 ];
 
 export default function Cities() {
+  const router = useRouter();
   const { user } = useAuth();
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
+  const [liveCityQuery, setLiveCityQuery] = useState('');
   const [bootStage, setBootStage] = useState(0);
+
+  const normalizeCityKey = (input: string) =>
+    input
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/[^a-z0-9]/g, '');
 
   useEffect(() => {
     const stages = [
@@ -191,16 +200,45 @@ export default function Cities() {
 
           {/* Search Bar */}
           <div className="max-w-2xl mx-auto animate-slide-in">
-            <div className="hud-card">
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">🔍</span>
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search cities..."
-                  className="input-tactical flex-1"
-                />
+            <div className="space-y-3">
+              <div className="hud-card">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🔍</span>
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search cities..."
+                    className="input-tactical flex-1"
+                  />
+                </div>
+              </div>
+
+              <div className="hud-card">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">📡</span>
+                  <input
+                    type="text"
+                    value={liveCityQuery}
+                    onChange={(e) => setLiveCityQuery(e.target.value)}
+                    placeholder="Live city (anywhere) e.g., Bangalore"
+                    className="input-tactical flex-1"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const key = normalizeCityKey(liveCityQuery);
+                      if (!key) return;
+                      router.push(`/city/${key}`);
+                    }}
+                    className="btn-tactical-primary px-4 py-2 text-tactical-xs whitespace-nowrap"
+                  >
+                    DEPLOY
+                  </button>
+                </div>
+                <div className="mt-2 font-mono text-[10px] text-ops-night-muted">
+                  Live bootstrap will generate a city pack on-demand and cache it locally.
+                </div>
               </div>
             </div>
           </div>
@@ -232,9 +270,7 @@ export default function Cities() {
                             {city.country}
                           </p>
                         </div>
-                        <div className="status-indicator active">
-                          {t.active.toUpperCase()}
-                        </div>
+                        <div className="status-indicator active">{t.active.toUpperCase()}</div>
                       </div>
 
                       <p className="text-tactical-sm text-ops-night-text/80 mb-4 leading-relaxed">
@@ -269,10 +305,7 @@ export default function Cities() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {comingSoonCities.map((city) => (
-                  <div
-                    key={city.id}
-                    className="hud-card opacity-50 cursor-not-allowed"
-                  >
+                  <div key={city.id} className="hud-card opacity-50 cursor-not-allowed">
                     <div className="flex items-start justify-between mb-3">
                       <div>
                         <div className="flex items-center gap-2 mb-1">
@@ -285,9 +318,7 @@ export default function Cities() {
                           {city.country}
                         </p>
                       </div>
-                      <div className="status-indicator ghost">
-                        SOON
-                      </div>
+                      <div className="status-indicator ghost">SOON</div>
                     </div>
 
                     <p className="text-tactical-sm text-ops-night-text/60 mb-4 leading-relaxed">
@@ -319,12 +350,33 @@ export default function Cities() {
                 <p className="font-mono text-tactical-sm text-ops-night-text/60">
                   Theater of operations not found. Try a different search query.
                 </p>
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="btn-tactical-ghost"
-                >
-                  CLEAR SEARCH
-                </button>
+                {searchQuery.trim().length > 0 && (
+                  <div className="flex items-center justify-center gap-3">
+                    <button
+                      onClick={() => {
+                        const key = normalizeCityKey(searchQuery);
+                        if (!key) return;
+                        router.push(`/city/${key}`);
+                      }}
+                      className="btn-tactical-primary"
+                    >
+                      DEPLOY LIVE CITY
+                    </button>
+                    <button onClick={() => setSearchQuery('')} className="btn-tactical-ghost">
+                      CLEAR SEARCH
+                    </button>
+                  </div>
+                )}
+
+                {searchQuery.trim().length === 0 && (
+                  <button onClick={() => setSearchQuery('')} className="btn-tactical-ghost">
+                    CLEAR SEARCH
+                  </button>
+                )}
+
+                <div className="font-mono text-[10px] text-ops-night-muted">
+                  Tip: try “bengaluru” or “bangalore” — live mode will bootstrap it.
+                </div>
               </div>
             </div>
           )}
@@ -333,21 +385,15 @@ export default function Cities() {
           <div className="flex items-center justify-center gap-4 pt-8 animate-fade-in">
             {!user ? (
               <Link href="/login">
-                <button className="btn-tactical-primary">
-                  {t.signIn.toUpperCase()}
-                </button>
+                <button className="btn-tactical-primary">{t.signIn.toUpperCase()}</button>
               </Link>
             ) : (
               <>
                 <Link href="/operative">
-                  <button className="btn-tactical-ghost">
-                    {t.operativeProfile.toUpperCase()}
-                  </button>
+                  <button className="btn-tactical-ghost">{t.operativeProfile.toUpperCase()}</button>
                 </Link>
                 <Link href="/login?reason=SIGNED_OUT">
-                  <button className="btn-tactical-ghost">
-                    {t.signOut.toUpperCase()}
-                  </button>
+                  <button className="btn-tactical-ghost">{t.signOut.toUpperCase()}</button>
                 </Link>
               </>
             )}
@@ -362,4 +408,3 @@ export default function Cities() {
 export async function getServerSideProps() {
   return { props: {} };
 }
-

@@ -12,6 +12,7 @@ import {
   onConnectionChange,
 } from '@/lib/deviceAPI';
 import { computeTouristPressureIndex } from '@/lib/intel/touristPressure';
+import { getWeatherIcon, type WeatherCategory } from '@/lib/intel/weatherService';
 import { useOps } from '@/contexts/OpsContext';
 import { useTranslation } from '@/lib/i18n/useTranslation';
 import StatusPanel from '@/components/StatusPanel';
@@ -25,6 +26,29 @@ const MapComponent = dynamic(() => import('@/components/MapComponent'), { ssr: f
 type GPSStatus = 'DISABLED' | 'SNAPSHOT' | 'ACTIVE';
 type SyncStatus = 'ONLINE' | 'OFFLINE' | 'BLACK_BOX';
 
+type WeatherSignal = {
+  weather: {
+    temperature: number;
+    apparent_temperature: number;
+    humidity: number;
+    precipitation: number;
+    wind_speed: number;
+    wind_gusts: number;
+    weather_code: number;
+    category: WeatherCategory;
+    is_day: boolean;
+    timestamp: string;
+    description: string;
+    icon: string;
+  };
+  modifiers: {
+    walkability_modifier: number;
+    safety_modifier: number;
+    warning: string | null;
+    recommendation: string | null;
+  };
+};
+
 export default function TacticalDisplay() {
   const router = useRouter();
   const { city } = router.query;
@@ -37,6 +61,8 @@ export default function TacticalDisplay() {
   const [syncStatus, setSyncStatus] = useState<SyncStatus>('ONLINE');
   const [showControls, setShowControls] = useState(true);
   const [toast, setToast] = useState<{ title: string; body?: string } | null>(null);
+  const [weatherSignal, setWeatherSignal] = useState<WeatherSignal | null>(null);
+  const [weatherLoading, setWeatherLoading] = useState(false);
 
   // Helper function to get translated anchor name
   const getAnchorName = (anchor: Zone['selected_anchor']): string => {
@@ -92,20 +118,27 @@ export default function TacticalDisplay() {
 
   const loadPack = async (cityName: string) => {
     setLoading(true);
-    let cityPack = await getCityPack(cityName);
+    const cityPack = await getCityPack(cityName);
 
-    if (!cityPack && isOnline()) {
+    if (cityPack) {
+      // Show cached pack immediately for responsiveness.
+      setPack(cityPack);
+    }
+
+    // Dynamic-first: when online, refresh the pack even if cached.
+    if (isOnline()) {
       try {
         await downloadCityPack(cityName);
-        cityPack = await getCityPack(cityName);
+        const refreshed = await getCityPack(cityName);
+        if (refreshed && refreshed.generated_at !== cityPack?.generated_at) {
+          setPack(refreshed);
+        }
       } catch (error) {
-        console.error('Failed to auto-download city pack:', error);
+        console.error('Failed to refresh city pack:', error);
       }
     }
 
-    if (cityPack) {
-      setPack(cityPack);
-    } else {
+    if (!cityPack && !isOnline()) {
       alert(
         isOnline()
           ? 'City pack not found. Download it first from the mission dossier.'
@@ -135,6 +168,38 @@ export default function TacticalDisplay() {
     vibrateDevice(VIBRATION_PATTERNS.ANCHOR_LOCK);
     setToast({ title: 'ANCHOR LOCKED', body: `POINT REACHED: ${anchor.name.toUpperCase()}` });
   };
+
+  useEffect(() => {
+    const run = async () => {
+      if (!pack) return;
+
+      const ref = selectedZone?.centroid || pack.zones[0]?.centroid;
+      if (!ref) return;
+
+      setWeatherLoading(true);
+      try {
+        const url = `/api/weather?lat=${encodeURIComponent(ref.lat)}&lon=${encodeURIComponent(ref.lon)}`;
+        const resp = await fetch(url);
+        if (!resp.ok) {
+          setWeatherSignal(null);
+          return;
+        }
+
+        const data = (await resp.json()) as WeatherSignal;
+        // Defensive: ensure icon exists even if API changes.
+        if (!data.weather.icon) {
+          data.weather.icon = getWeatherIcon(data.weather.category);
+        }
+        setWeatherSignal(data);
+      } catch {
+        setWeatherSignal(null);
+      } finally {
+        setWeatherLoading(false);
+      }
+    };
+
+    run();
+  }, [pack, selectedZone?.zone_id]);
 
   useEffect(() => {
     if (!toast) return;
@@ -399,9 +464,6 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
             <div className="hud-card">
               <div className="hud-card-header">{t.tacticalDisplay.toUpperCase()} CONTROLS</div>
               <div className="space-y-3">
-                <button className="btn-tactical w-full py-2 text-tactical-xs">
-                  {t.recalibrateGPS.toUpperCase()}
-                </button>
                 <button
                   onClick={handleHudToggle}
                   className={`btn-tactical w-full py-2 text-tactical-xs ${
@@ -409,21 +471,6 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
                   }`}
                 >
                   {hudCollapsed ? t.expandHud.toUpperCase() : '✓ ' + t.collapseHud.toUpperCase()}
-                </button>
-                <button
-                  onClick={handleGhostModeToggle}
-                  className={`btn-tactical w-full py-2 text-tactical-xs ${
-                    ghostMode ? 'bg-ops-neon-green/20 border-ops-neon-green' : ''
-                  }`}
-                >
-                  {ghostMode ? '✓ ' : ''}
-                  {t.ghostMode.toUpperCase()}
-                </button>
-                <button
-                  onClick={() => router.push(`/report?city=${pack.city}`)}
-                  className="btn-tactical w-full py-2 text-tactical-xs"
-                >
-                  {t.reportHazard.toUpperCase()}
                 </button>
               </div>
             </div>
@@ -542,6 +589,59 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
                           PROOF
                         </button>
                       </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Weather Signal (dynamic, privacy-safe via server proxy) */}
+              {!weatherLoading && weatherSignal && (
+                <div className="bg-ops-night-surface/50 border border-ops-neon-cyan/20 p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-tactical text-tactical-sm text-ops-neon-cyan uppercase tracking-wider">
+                      WEATHER SIGNAL
+                    </h3>
+                    <div className="font-mono text-[10px] text-ops-night-muted">
+                      LIVE • OPEN-METEO
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl">{weatherSignal.weather.icon}</div>
+                      <div>
+                        <div className="font-mono text-tactical-base text-ops-night-text">
+                          {Math.round(weatherSignal.weather.temperature)}°C
+                          <span className="text-ops-night-muted"> / feels </span>
+                          {Math.round(weatherSignal.weather.apparent_temperature)}°C
+                        </div>
+                        <div className="font-mono text-tactical-xs text-ops-night-muted">
+                          {weatherSignal.weather.description}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="text-right font-mono text-tactical-xs">
+                      <div>
+                        <span className="text-ops-night-muted">WALK:</span>{' '}
+                        <span className="text-ops-night-text">
+                          {weatherSignal.modifiers.walkability_modifier >= 0 ? '+' : ''}
+                          {weatherSignal.modifiers.walkability_modifier}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-ops-night-muted">SAFE:</span>{' '}
+                        <span className="text-ops-night-text">
+                          {weatherSignal.modifiers.safety_modifier >= 0 ? '+' : ''}
+                          {weatherSignal.modifiers.safety_modifier}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {(weatherSignal.modifiers.warning || weatherSignal.modifiers.recommendation) && (
+                    <div className="mt-3 font-mono text-tactical-xs text-ops-neon-amber/90">
+                      {weatherSignal.modifiers.warning || weatherSignal.modifiers.recommendation}
                     </div>
                   )}
                 </div>
@@ -686,7 +786,9 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
                   {t.exportToMaps.toUpperCase()}
                 </button>
                 <button
-                  onClick={() => router.push(`/report?zone=${selectedZone.zone_id}`)}
+                  onClick={() =>
+                    router.push(`/report?zone=${selectedZone.zone_id}&city=${pack.city}`)
+                  }
                   className="btn-tactical flex-1 py-3 text-tactical-xs"
                 >
                   {t.reportHazard.toUpperCase()}

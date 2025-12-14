@@ -155,16 +155,59 @@ export default function CityDossier() {
   const [downloadComplete, setDownloadComplete] = useState(false);
   const [downloadStage, setDownloadStage] = useState('');
 
-  const cityData = city && typeof city === 'string' ? CITIES[city as keyof typeof CITIES] : null;
+  const rawCity = typeof city === 'string' ? city : null;
+  const cityKey = rawCity
+    ? rawCity
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, '')
+        .replace(/[^a-z0-9]/g, '')
+    : null;
+
+  const knownCityData = cityKey ? (CITIES[cityKey as keyof typeof CITIES] ?? null) : null;
+
+  const displayName =
+    knownCityData?.name ||
+    (rawCity
+      ? rawCity
+          .trim()
+          .split(/\s+/)
+          .filter(Boolean)
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+          .join(' ')
+      : 'UNKNOWN');
+
+  const displayCode =
+    knownCityData?.code || (cityKey ? cityKey.slice(0, 3).toUpperCase().padEnd(3, 'X') : 'XXX');
+
+  const cityData =
+    knownCityData ||
+    (cityKey
+      ? {
+          name: displayName,
+          code: displayCode,
+          country: 'LIVE THEATER',
+          zones: 12,
+          description:
+            'LIVE MODE // City pack will be bootstrapped on-demand from public map data. Cache is stored locally for this device.',
+          threat: 'LOW',
+          classification: 'LIVE BOOTSTRAP',
+          emergency: {
+            police: '112',
+            ambulance: '112',
+            embassy: '112',
+          },
+        }
+      : null);
 
   useEffect(() => {
-    if (city && !cityData) {
+    if (city && typeof city !== 'string') {
       router.push('/cities');
     }
-  }, [city, cityData, router]);
+  }, [city, router]);
 
   const handleDownload = async () => {
-    if (!city || typeof city !== 'string') return;
+    if (!cityKey) return;
 
     setDownloading(true);
     setProgress(0);
@@ -188,11 +231,11 @@ export default function CityDossier() {
         setProgress(((i + 1) / steps.length) * 100);
       }
 
-      await downloadCityPack(city);
+      await downloadCityPack(cityKey);
       setDownloadComplete(true);
 
       setTimeout(() => {
-        router.push(`/map/${city}`);
+        router.push(`/map/${cityKey}`);
       }, 1200);
     } catch (error) {
       console.error('Pack download failed:', error);
@@ -201,7 +244,7 @@ export default function CityDossier() {
     }
   };
 
-  if (!cityData) return null;
+  if (!cityData || !cityKey) return null;
 
   return (
     <>
