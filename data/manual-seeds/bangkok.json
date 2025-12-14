@@ -1,0 +1,191 @@
+{
+  "$schema": "../schemas/manual-seed-schema.json",
+  "_meta": {
+    "city_slug": "bangkok",
+    "city_name": "Bangkok",
+    "country": "Thailand",
+    "last_updated": "2024-12-01",
+    "updated_by": "unmapped-os-team",
+    "data_points": 18,
+    "notes": "Minimal manual seeds - ranges only, no scraping"
+  },
+  
+  "emergency": {
+    "police": "191",
+    "ambulance": "1669",
+    "fire": "199",
+    "tourist_police": "1155"
+  },
+  
+  "electrical": {
+    "voltage": 220,
+    "frequency": 50,
+    "plug_types": ["A", "B", "C", "O"]
+  },
+  
+  "airports": [
+    {
+      "iata_code": "BKK",
+      "name": "Suvarnabhumi Airport",
+      "distance_to_center_km": 30,
+      "taxi_to_center": {
+        "min": 300,
+        "max": 500,
+        "typical": 400,
+        "currency": "THB",
+        "notes": "Metered taxi + airport surcharge (50 THB) + tolls (~75 THB)"
+      },
+      "legit_transport": [
+        {
+          "type": "AIRPORT_RAIL",
+          "name": "Airport Rail Link",
+          "price_min": 15,
+          "price_max": 45,
+          "duration_min": 25,
+          "duration_max": 30,
+          "notes": "Cheapest option, runs 6am-midnight"
+        },
+        {
+          "type": "METER_TAXI",
+          "name": "Official Meter Taxi",
+          "price_min": 300,
+          "price_max": 500,
+          "duration_min": 30,
+          "duration_max": 90,
+          "notes": "Insist on meter. Add 50 THB surcharge + tolls"
+        },
+        {
+          "type": "GRAB",
+          "name": "Grab",
+          "price_min": 350,
+          "price_max": 600,
+          "duration_min": 30,
+          "duration_max": 90,
+          "notes": "Fixed price, meet at designated pickup"
+        }
+      ],
+      "scam_warnings": [
+        "Avoid unlicensed taxis approaching you",
+        "Never agree to flat-rate without meter",
+        "Beware 'gem shop' detours"
+      ],
+      "exit_tips": [
+        "Follow signs to Public Taxi on level 1",
+        "Get queue ticket before boarding",
+        "Keep receipt for complaints"
+      ]
+    },
+    {
+      "iata_code": "DMK",
+      "name": "Don Mueang Airport",
+      "distance_to_center_km": 24,
+      "taxi_to_center": {
+        "min": 200,
+        "max": 400,
+        "typical": 300,
+        "currency": "THB",
+        "notes": "Metered taxi + 50 THB surcharge + tolls"
+      },
+      "legit_transport": [
+        {
+          "type": "BUS",
+          "name": "A1/A2 Airport Bus",
+          "price_min": 30,
+          "price_max": 30,
+          "duration_min": 45,
+          "duration_max": 90,
+          "notes": "To BTS Mo Chit, runs 7:30am-midnight"
+        },
+        {
+          "type": "METER_TAXI",
+          "name": "Official Meter Taxi",
+          "price_min": 200,
+          "price_max": 400,
+          "duration_min": 30,
+          "duration_max": 75,
+          "notes": "50 THB surcharge applies"
+        }
+      ],
+      "scam_warnings": [
+        "Same warnings as BKK",
+        "Fewer English speakers, have address written in Thai"
+      ],
+      "exit_tips": [
+        "Taxi queue at arrivals level 1",
+        "SIM cards available before exit"
+      ]
+    }
+  ],
+  
+  "price_baselines": {
+    "coffee": {
+      "min": 35,
+      "max": 150,
+      "typical": 60,
+      "currency": "THB",
+      "notes": "Street coffee ~35, cafe ~60-80, Starbucks ~120-150"
+    },
+    "beer": {
+      "min": 60,
+      "max": 200,
+      "typical": 90,
+      "currency": "THB",
+      "notes": "7-Eleven ~60, local bar ~90-120, tourist bar ~150-200"
+    },
+    "street_meal": {
+      "min": 40,
+      "max": 100,
+      "typical": 60,
+      "currency": "THB",
+      "notes": "Pad thai ~50-60, rice dishes ~40-60, noodle soup ~50"
+    },
+    "restaurant_meal": {
+      "min": 150,
+      "max": 500,
+      "typical": 250,
+      "currency": "THB",
+      "notes": "Local restaurant ~150-200, mid-range ~250-400, upscale 500+"
+    },
+    "local_transport": {
+      "min": 10,
+      "max": 60,
+      "typical": 35,
+      "currency": "THB",
+      "notes": "BTS/MRT single ~16-60, bus ~10-25, motorbike taxi ~20-40"
+    }
+  },
+  
+  "cultural_facts": {
+    "tipping": {
+      "expected": false,
+      "typical_percent": 0,
+      "notes": "Not expected. Round up small bills at restaurants. 20-50 THB for exceptional service."
+    },
+    "payment": {
+      "cash_preferred": true,
+      "card_acceptance": "MEDIUM",
+      "mobile_payment": ["PromptPay", "TrueMoney", "LINE Pay"],
+      "atm_notes": "Most ATMs charge 220 THB foreign card fee. Bangkok Bank has lower fees."
+    },
+    "etiquette": [
+      "Remove shoes before entering temples and homes",
+      "Don't touch people's heads",
+      "Don't point feet at Buddha images or people",
+      "Stand for royal anthem in theaters",
+      "Dress modestly at temples (cover shoulders and knees)"
+    ],
+    "scam_warnings": [
+      "Grand Palace is never 'closed today'",
+      "Avoid tuk-tuk drivers offering 'tours'",
+      "Gem shops are almost always scams",
+      "Verify taxi meter is running and reset",
+      "Be wary of overly friendly strangers near tourist sites"
+    ],
+    "safety_tips": [
+      "Traffic is dangerous - use overpasses",
+      "Drink bottled water only",
+      "Keep valuables in front pockets in crowds",
+      "Use BTS/MRT after dark if unsure of area"
+    ]
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "$schema": "../schemas/manual-seed-schema.json",
+  "_meta": {
+    "city_slug": "hanoi",
+    "city_name": "Hanoi",
+    "country": "Vietnam",
+    "last_updated": "2024-12-01",
+    "updated_by": "unmapped-os-team",
+    "data_points": 14,
+    "notes": "Minimal manual seeds - ranges only, no scraping"
+  },
+  
+  "emergency": {
+    "police": "113",
+    "ambulance": "115",
+    "fire": "114"
+  },
+  
+  "electrical": {
+    "voltage": 220,
+    "frequency": 50,
+    "plug_types": ["A", "C", "G"]
+  },
+  
+  "airports": [
+    {
+      "iata_code": "HAN",
+      "name": "Noi Bai International Airport",
+      "distance_to_center_km": 25,
+      "taxi_to_center": {
+        "min": 350000,
+        "max": 500000,
+        "typical": 400000,
+        "currency": "VND",
+        "notes": "Use official taxi (Mai Linh, Vinasun) or Grab. ~30-45 min."
+      },
+      "legit_transport": [
+        {
+          "type": "BUS",
+          "name": "Bus 86",
+          "price_min": 45000,
+          "price_max": 45000,
+          "duration_min": 45,
+          "duration_max": 60,
+          "notes": "To Hanoi Railway Station. Orange express bus."
+        },
+        {
+          "type": "GRAB",
+          "name": "Grab",
+          "price_min": 250000,
+          "price_max": 400000,
+          "duration_min": 30,
+          "duration_max": 60,
+          "notes": "Fixed price shown. Meet at pickup zone."
+        },
+        {
+          "type": "METER_TAXI",
+          "name": "Mai Linh/Vinasun Taxi",
+          "price_min": 350000,
+          "price_max": 500000,
+          "duration_min": 30,
+          "duration_max": 60,
+          "notes": "Green (Mai Linh) or white (Vinasun). Insist on meter."
+        }
+      ],
+      "scam_warnings": [
+        "Avoid random taxi touts",
+        "Use only reputable taxi brands",
+        "Confirm meter is reset and running",
+        "Watch for fake taxi company logos"
+      ],
+      "exit_tips": [
+        "Get SIM card at arrivals - Viettel or Mobifone",
+        "VND only - withdraw at airport ATM",
+        "Download Grab before arriving"
+      ]
+    }
+  ],
+  
+  "price_baselines": {
+    "coffee": {
+      "min": 15000,
+      "max": 80000,
+      "typical": 35000,
+      "currency": "VND",
+      "notes": "Cà phê sữa đá (iced) ~15k-25k street, ~35k-50k cafe, ~60k-80k specialty"
+    },
+    "beer": {
+      "min": 10000,
+      "max": 60000,
+      "typical": 25000,
+      "currency": "VND",
+      "notes": "Bia hơi (fresh) ~10k-15k, bottled at bar ~25k-40k, tourist bar ~50k-60k"
+    },
+    "street_meal": {
+      "min": 30000,
+      "max": 80000,
+      "typical": 50000,
+      "currency": "VND",
+      "notes": "Phở ~35k-50k, bún chả ~40k-60k, bánh mì ~25k-35k"
+    },
+    "restaurant_meal": {
+      "min": 100000,
+      "max": 400000,
+      "typical": 200000,
+      "currency": "VND",
+      "notes": "Local restaurant ~100k-150k, mid-range ~200k-300k, upscale 400k+"
+    },
+    "local_transport": {
+      "min": 7000,
+      "max": 50000,
+      "typical": 20000,
+      "currency": "VND",
+      "notes": "Bus ~7k-10k, Grab bike ~15k-30k, Grab car ~30k-60k"
+    }
+  },
+  
+  "cultural_facts": {
+    "tipping": {
+      "expected": false,
+      "typical_percent": 0,
+      "notes": "Not traditional. Round up at restaurants. 50k-100k for exceptional service."
+    },
+    "payment": {
+      "cash_preferred": true,
+      "card_acceptance": "LOW_TO_MEDIUM",
+      "mobile_payment": ["MoMo", "ZaloPay", "VNPay"],
+      "atm_notes": "ATMs have low limits (~2-3M VND). Techcombank, Vietcombank reliable. ~50k fee."
+    },
+    "etiquette": [
+      "Remove shoes entering homes",
+      "Two hands when giving/receiving from elders",
+      "Bargaining expected at markets (not in shops with prices)",
+      "Dress modestly at temples",
+      "Crossing street: walk slowly, predictably"
+    ],
+    "scam_warnings": [
+      "Cyclo drivers: agree price BEFORE",
+      "Shoe shine boys: may demand high prices",
+      "Taxi: use Grab or Mai Linh/Vinasun only",
+      "Motorbike repair scams",
+      "Street vendors: confirm price before ordering"
+    ],
+    "safety_tips": [
+      "Traffic is chaotic - cross slowly and predictably",
+      "Watch for motorbikes on sidewalks",
+      "Bag snatching from motorbikes - be aware",
+      "Drink bottled water, ice usually safe in tourist areas",
+      "Keep valuables secure, especially phones"
+    ]
+  }
+}

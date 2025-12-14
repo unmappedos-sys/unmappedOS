@@ -1,0 +1,178 @@
+{
+  "$schema": "../schemas/manual-seed-schema.json",
+  "_meta": {
+    "city_slug": "taipei",
+    "city_name": "Taipei",
+    "country": "Taiwan",
+    "last_updated": "2024-12-01",
+    "updated_by": "unmapped-os-team",
+    "data_points": 15,
+    "notes": "Minimal manual seeds - ranges only, no scraping"
+  },
+  
+  "emergency": {
+    "police": "110",
+    "ambulance": "119",
+    "fire": "119",
+    "tourist_helpline": "0800-011-765"
+  },
+  
+  "electrical": {
+    "voltage": 110,
+    "frequency": 60,
+    "plug_types": ["A", "B"]
+  },
+  
+  "airports": [
+    {
+      "iata_code": "TPE",
+      "name": "Taiwan Taoyuan International Airport",
+      "distance_to_center_km": 40,
+      "taxi_to_center": {
+        "min": 1000,
+        "max": 1500,
+        "typical": 1200,
+        "currency": "TWD",
+        "notes": "Metered plus freeway tolls. ~45-70 min depending on traffic."
+      },
+      "legit_transport": [
+        {
+          "type": "TRAIN",
+          "name": "Taoyuan Airport MRT",
+          "price_min": 150,
+          "price_max": 160,
+          "duration_min": 35,
+          "duration_max": 50,
+          "notes": "Express to Taipei Main Station. Best option."
+        },
+        {
+          "type": "BUS",
+          "name": "Kuo-Kuang Bus 1819",
+          "price_min": 125,
+          "price_max": 145,
+          "duration_min": 55,
+          "duration_max": 90,
+          "notes": "To Taipei Main Station. 24 hours."
+        },
+        {
+          "type": "METER_TAXI",
+          "name": "Taxi",
+          "price_min": 1000,
+          "price_max": 1500,
+          "duration_min": 40,
+          "duration_max": 70,
+          "notes": "Yellow taxis. Metered. Add tolls."
+        }
+      ],
+      "scam_warnings": [
+        "Very few scams - highly regulated",
+        "All taxis use meters"
+      ],
+      "exit_tips": [
+        "Get EasyCard at MRT station",
+        "SIM cards at arrivals counter",
+        "Free WiFi available"
+      ]
+    },
+    {
+      "iata_code": "TSA",
+      "name": "Taipei Songshan Airport",
+      "distance_to_center_km": 5,
+      "taxi_to_center": {
+        "min": 150,
+        "max": 300,
+        "typical": 200,
+        "currency": "TWD",
+        "notes": "Very close to center. Domestic flights mainly."
+      },
+      "legit_transport": [
+        {
+          "type": "TRAIN",
+          "name": "MRT Brown Line",
+          "price_min": 20,
+          "price_max": 40,
+          "duration_min": 10,
+          "duration_max": 25,
+          "notes": "Direct MRT connection. Very convenient."
+        }
+      ],
+      "scam_warnings": [],
+      "exit_tips": [
+        "City center very close",
+        "MRT most efficient"
+      ]
+    }
+  ],
+  
+  "price_baselines": {
+    "coffee": {
+      "min": 35,
+      "max": 180,
+      "typical": 100,
+      "currency": "TWD",
+      "notes": "7-Eleven ~35-50, cafe ~80-120, Starbucks ~130-180"
+    },
+    "beer": {
+      "min": 40,
+      "max": 180,
+      "typical": 80,
+      "currency": "TWD",
+      "notes": "Convenience store ~40-60, restaurant ~60-100, bar ~120-180"
+    },
+    "street_meal": {
+      "min": 50,
+      "max": 150,
+      "typical": 80,
+      "currency": "TWD",
+      "notes": "Night market ~50-100, beef noodles ~120-150"
+    },
+    "restaurant_meal": {
+      "min": 150,
+      "max": 600,
+      "typical": 300,
+      "currency": "TWD",
+      "notes": "Local ~150-250, mid-range ~300-500, upscale 600+"
+    },
+    "local_transport": {
+      "min": 20,
+      "max": 65,
+      "typical": 30,
+      "currency": "TWD",
+      "notes": "MRT ~20-65, bus ~15-30, taxi starting from ~85"
+    }
+  },
+  
+  "cultural_facts": {
+    "tipping": {
+      "expected": false,
+      "typical_percent": 0,
+      "notes": "Not expected. 10% service charge at upscale restaurants."
+    },
+    "payment": {
+      "cash_preferred": false,
+      "card_acceptance": "HIGH",
+      "mobile_payment": ["LINE Pay", "JKoPay", "Apple Pay", "EasyCard"],
+      "atm_notes": "ATMs at every convenience store. Cards widely accepted."
+    },
+    "etiquette": [
+      "Queue properly - Taiwanese are orderly",
+      "Give/receive with both hands",
+      "Remove shoes when entering homes",
+      "Offer seat to elderly on MRT",
+      "No eating/drinking on MRT"
+    ],
+    "scam_warnings": [
+      "Very few scams",
+      "Watch for overpriced items at tourist markets",
+      "Legitimate taxi apps: 55688, Taiwan Taxi"
+    ],
+    "safety_tips": [
+      "One of the safest cities in Asia",
+      "Typhoon season Jun-Oct - check forecasts",
+      "Earthquakes possible - know drill",
+      "Tap water safe but locals prefer filtered",
+      "24/7 convenience stores everywhere",
+      "Healthcare excellent and affordable"
+    ]
+  }
+}

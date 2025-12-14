@@ -1,0 +1,185 @@
+{
+  "$schema": "../schemas/manual-seed-schema.json",
+  "_meta": {
+    "city_slug": "kuala_lumpur",
+    "city_name": "Kuala Lumpur",
+    "country": "Malaysia",
+    "last_updated": "2024-12-01",
+    "updated_by": "unmapped-os-team",
+    "data_points": 15,
+    "notes": "Minimal manual seeds - ranges only, no scraping"
+  },
+  
+  "emergency": {
+    "police": "999",
+    "ambulance": "999",
+    "fire": "994",
+    "tourist_police": "03-2149-6590"
+  },
+  
+  "electrical": {
+    "voltage": 240,
+    "frequency": 50,
+    "plug_types": ["G"]
+  },
+  
+  "airports": [
+    {
+      "iata_code": "KUL",
+      "name": "Kuala Lumpur International Airport",
+      "distance_to_center_km": 55,
+      "taxi_to_center": {
+        "min": 80,
+        "max": 130,
+        "typical": 100,
+        "currency": "MYR",
+        "notes": "Budget taxi ~80, Premier ~130. Use prepaid counter."
+      },
+      "legit_transport": [
+        {
+          "type": "TRAIN",
+          "name": "KLIA Ekspres",
+          "price_min": 55,
+          "price_max": 55,
+          "duration_min": 28,
+          "duration_max": 33,
+          "notes": "Non-stop to KL Sentral. Fastest option."
+        },
+        {
+          "type": "TRAIN",
+          "name": "KLIA Transit",
+          "price_min": 55,
+          "price_max": 55,
+          "duration_min": 35,
+          "duration_max": 45,
+          "notes": "Stops at Salak Tinggi, Putrajaya, Bandar Tasik Selatan"
+        },
+        {
+          "type": "BUS",
+          "name": "Airport Coach",
+          "price_min": 12,
+          "price_max": 18,
+          "duration_min": 60,
+          "duration_max": 90,
+          "notes": "Budget option. Various companies."
+        },
+        {
+          "type": "GRAB",
+          "name": "Grab",
+          "price_min": 70,
+          "price_max": 120,
+          "duration_min": 45,
+          "duration_max": 75,
+          "notes": "Fixed price. Pickup at designated area."
+        }
+      ],
+      "scam_warnings": [
+        "Use prepaid taxi counter, not touts",
+        "Verify meter if using regular taxi"
+      ],
+      "exit_tips": [
+        "Get Touch 'n Go card for transport",
+        "SIM cards at arrivals - Maxis, Digi, Celcom",
+        "Free WiFi throughout airport"
+      ]
+    },
+    {
+      "iata_code": "SZB",
+      "name": "Sultan Abdul Aziz Shah Airport (Subang)",
+      "distance_to_center_km": 25,
+      "taxi_to_center": {
+        "min": 40,
+        "max": 70,
+        "typical": 55,
+        "currency": "MYR",
+        "notes": "Smaller airport, mostly domestic"
+      },
+      "legit_transport": [
+        {
+          "type": "GRAB",
+          "name": "Grab",
+          "price_min": 30,
+          "price_max": 60,
+          "duration_min": 30,
+          "duration_max": 50,
+          "notes": "Most convenient option"
+        }
+      ],
+      "scam_warnings": [],
+      "exit_tips": []
+    }
+  ],
+  
+  "price_baselines": {
+    "coffee": {
+      "min": 2,
+      "max": 18,
+      "typical": 8,
+      "currency": "MYR",
+      "notes": "Kopi O ~2-3, cafe ~8-12, specialty coffee ~15-18"
+    },
+    "beer": {
+      "min": 12,
+      "max": 30,
+      "typical": 18,
+      "currency": "MYR",
+      "notes": "7-Eleven ~12-15, bar ~18-25, club ~25-30. Not sold in many areas."
+    },
+    "street_meal": {
+      "min": 6,
+      "max": 15,
+      "typical": 10,
+      "currency": "MYR",
+      "notes": "Hawker stall ~6-10, food court ~10-15"
+    },
+    "restaurant_meal": {
+      "min": 15,
+      "max": 60,
+      "typical": 30,
+      "currency": "MYR",
+      "notes": "Local restaurant ~15-25, mid-range ~30-50, upscale 60+"
+    },
+    "local_transport": {
+      "min": 1.2,
+      "max": 6,
+      "typical": 3,
+      "currency": "MYR",
+      "notes": "LRT/MRT ~1.2-4, bus ~1-3, Grab starting from ~6"
+    }
+  },
+  
+  "cultural_facts": {
+    "tipping": {
+      "expected": false,
+      "typical_percent": 0,
+      "notes": "Not expected. 10% service charge often added. Round up at local places."
+    },
+    "payment": {
+      "cash_preferred": true,
+      "card_acceptance": "MEDIUM",
+      "mobile_payment": ["Touch 'n Go eWallet", "GrabPay", "Boost"],
+      "atm_notes": "ATMs widely available. Maybank, CIMB, Public Bank common."
+    },
+    "etiquette": [
+      "Remove shoes before entering mosques/temples/homes",
+      "Dress modestly at religious sites",
+      "Use right hand for eating/giving",
+      "Respect during call to prayer",
+      "Multi-ethnic society - Malay, Chinese, Indian, others"
+    ],
+    "scam_warnings": [
+      "Taxi meter scams - use Grab",
+      "Watch bags in crowded areas",
+      "Fake goods in some markets",
+      "Verify prices at Bukit Bintang bars"
+    ],
+    "safety_tips": [
+      "Generally safe, petty crime exists",
+      "Bag snatching from motorbikes - carry bags away from road",
+      "Stay hydrated - very hot and humid",
+      "Flash floods during monsoon - check weather",
+      "Alcohol restricted in some areas",
+      "Tap water not recommended - drink bottled"
+    ]
+  }
+}

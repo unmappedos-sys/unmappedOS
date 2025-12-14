@@ -1,0 +1,148 @@
+{
+  "$schema": "../schemas/manual-seed-schema.json",
+  "_meta": {
+    "city_slug": "hong_kong",
+    "city_name": "Hong Kong",
+    "country": "China (SAR)",
+    "last_updated": "2024-12-01",
+    "updated_by": "unmapped-os-team",
+    "data_points": 15,
+    "notes": "Minimal manual seeds - ranges only, no scraping"
+  },
+  
+  "emergency": {
+    "police": "999",
+    "ambulance": "999",
+    "fire": "999"
+  },
+  
+  "electrical": {
+    "voltage": 220,
+    "frequency": 50,
+    "plug_types": ["G"]
+  },
+  
+  "airports": [
+    {
+      "iata_code": "HKG",
+      "name": "Hong Kong International Airport",
+      "distance_to_center_km": 35,
+      "taxi_to_center": {
+        "min": 250,
+        "max": 400,
+        "typical": 320,
+        "currency": "HKD",
+        "notes": "Metered. Add toll fees (~30 HKD). Red taxis for Hong Kong Island."
+      },
+      "legit_transport": [
+        {
+          "type": "TRAIN",
+          "name": "Airport Express",
+          "price_min": 100,
+          "price_max": 115,
+          "duration_min": 24,
+          "duration_max": 28,
+          "notes": "To Hong Kong Station. Free shuttle to hotels."
+        },
+        {
+          "type": "BUS",
+          "name": "Cityflyer/Airport Bus",
+          "price_min": 23,
+          "price_max": 48,
+          "duration_min": 45,
+          "duration_max": 90,
+          "notes": "A21 to Tsim Sha Tsui, A11 to Central"
+        },
+        {
+          "type": "METER_TAXI",
+          "name": "Taxi",
+          "price_min": 250,
+          "price_max": 400,
+          "duration_min": 30,
+          "duration_max": 60,
+          "notes": "All metered. Extra for tunnel tolls."
+        }
+      ],
+      "scam_warnings": [
+        "Very few scams - well regulated",
+        "Ensure taxi uses meter"
+      ],
+      "exit_tips": [
+        "Get Octopus card at Airport Express counter",
+        "Free WiFi throughout airport",
+        "In-town check-in available at Kowloon/HK stations"
+      ]
+    }
+  ],
+  
+  "price_baselines": {
+    "coffee": {
+      "min": 15,
+      "max": 60,
+      "typical": 35,
+      "currency": "HKD",
+      "notes": "Cha chaan teng ~15-20, Pacific Coffee ~35-45, Starbucks ~40-60"
+    },
+    "beer": {
+      "min": 20,
+      "max": 80,
+      "typical": 45,
+      "currency": "HKD",
+      "notes": "7-Eleven ~20, local bar ~40-60, LKF bars ~60-80+"
+    },
+    "street_meal": {
+      "min": 30,
+      "max": 80,
+      "typical": 50,
+      "currency": "HKD",
+      "notes": "Dai pai dong ~40-60, cha chaan teng ~50-80"
+    },
+    "restaurant_meal": {
+      "min": 80,
+      "max": 300,
+      "typical": 150,
+      "currency": "HKD",
+      "notes": "Local ~80-120, mid-range ~150-250, upscale 300+"
+    },
+    "local_transport": {
+      "min": 5,
+      "max": 30,
+      "typical": 12,
+      "currency": "HKD",
+      "notes": "MTR ~5-30, Bus ~5-15, Star Ferry ~3-5"
+    }
+  },
+  
+  "cultural_facts": {
+    "tipping": {
+      "expected": false,
+      "typical_percent": 0,
+      "notes": "Not expected. 10% service charge often included. Round up at local restaurants."
+    },
+    "payment": {
+      "cash_preferred": false,
+      "card_acceptance": "HIGH",
+      "mobile_payment": ["Octopus", "Alipay HK", "WeChat Pay HK", "PayMe"],
+      "atm_notes": "ATMs everywhere. HSBC and Hang Seng widely available."
+    },
+    "etiquette": [
+      "Let passengers exit MTR before boarding",
+      "Stand right on escalators",
+      "Cash is less common in younger generation",
+      "English widely spoken in business areas",
+      "Cantonese is main language"
+    ],
+    "scam_warnings": [
+      "Watch for fake designer goods in markets",
+      "Verify restaurant prices before ordering",
+      "Taxi receipts available - keep for reference"
+    ],
+    "safety_tips": [
+      "Very safe city overall",
+      "Typhoon warnings - check for T8 signal",
+      "Air quality can be poor - check index",
+      "Tap water safe but locals prefer bottled",
+      "Carry umbrella - sudden rain common"
+    ]
+  }
+}

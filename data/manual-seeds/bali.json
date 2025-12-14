@@ -1,0 +1,155 @@
+{
+  "$schema": "../schemas/manual-seed-schema.json",
+  "_meta": {
+    "city_slug": "bali",
+    "city_name": "Bali",
+    "country": "Indonesia",
+    "last_updated": "2024-12-01",
+    "updated_by": "unmapped-os-team",
+    "data_points": 14,
+    "notes": "Island destination - prices vary by area. Seminyak/Canggu more expensive than Ubud/Sanur."
+  },
+  
+  "emergency": {
+    "police": "110",
+    "ambulance": "118",
+    "fire": "113",
+    "tourist_police": "0361-224111"
+  },
+  
+  "electrical": {
+    "voltage": 230,
+    "frequency": 50,
+    "plug_types": ["C", "F"]
+  },
+  
+  "airports": [
+    {
+      "iata_code": "DPS",
+      "name": "Ngurah Rai International Airport",
+      "distance_to_center_km": 13,
+      "taxi_to_center": {
+        "min": 150000,
+        "max": 350000,
+        "typical": 200000,
+        "currency": "IDR",
+        "notes": "Depends heavily on destination. Seminyak ~150k, Ubud ~350k. Use official taxi or pre-book."
+      },
+      "legit_transport": [
+        {
+          "type": "METER_TAXI",
+          "name": "Official Airport Taxi",
+          "price_min": 100000,
+          "price_max": 350000,
+          "duration_min": 20,
+          "duration_max": 90,
+          "notes": "Prepaid counter in arrivals. Fixed rates by zone."
+        },
+        {
+          "type": "GRAB",
+          "name": "Grab",
+          "price_min": 80000,
+          "price_max": 300000,
+          "duration_min": 20,
+          "duration_max": 90,
+          "notes": "Cannot pickup at airport - walk to pickup zone on road"
+        },
+        {
+          "type": "HOTEL_TRANSFER",
+          "name": "Hotel Pickup",
+          "price_min": 150000,
+          "price_max": 400000,
+          "duration_min": 20,
+          "duration_max": 90,
+          "notes": "Arrange in advance. Often similar price to taxi."
+        }
+      ],
+      "scam_warnings": [
+        "Aggressive taxi touts - walk past them",
+        "Use official prepaid taxi counter only",
+        "Do not agree to 'tours' from drivers",
+        "Money changers near airport have poor rates"
+      ],
+      "exit_tips": [
+        "SIM card at arrivals - Telkomsel recommended",
+        "ATMs in arrivals hall",
+        "Grab pickup requires walk outside airport",
+        "Book hotel transfer in advance if arriving late"
+      ]
+    }
+  ],
+  
+  "price_baselines": {
+    "coffee": {
+      "min": 10000,
+      "max": 60000,
+      "typical": 30000,
+      "currency": "IDR",
+      "notes": "Kopi local ~10k-15k, cafe ~25k-40k, specialty ~40k-60k"
+    },
+    "beer": {
+      "min": 30000,
+      "max": 80000,
+      "typical": 45000,
+      "currency": "IDR",
+      "notes": "Large Bintang: warung ~30k, bar ~45k-60k, beach club ~70k+"
+    },
+    "street_meal": {
+      "min": 20000,
+      "max": 60000,
+      "typical": 35000,
+      "currency": "IDR",
+      "notes": "Warung ~20k-35k, nasi campur ~25k-40k"
+    },
+    "restaurant_meal": {
+      "min": 60000,
+      "max": 250000,
+      "typical": 120000,
+      "currency": "IDR",
+      "notes": "Local restaurant ~60k-100k, tourist restaurant ~120k-200k, upscale 250k+"
+    },
+    "local_transport": {
+      "min": 5000,
+      "max": 50000,
+      "typical": 15000,
+      "currency": "IDR",
+      "notes": "Ojek (motorbike) ~5k-15k, Grab ~15k-50k. Scooter rental ~70k-100k/day"
+    }
+  },
+  
+  "cultural_facts": {
+    "tipping": {
+      "expected": false,
+      "typical_percent": 5,
+      "notes": "Not traditional but appreciated. Round up or 5-10% for good service."
+    },
+    "payment": {
+      "cash_preferred": true,
+      "card_acceptance": "LOW_TO_MEDIUM",
+      "mobile_payment": ["GoPay", "OVO", "DANA"],
+      "atm_notes": "ATMs in tourist areas. BCA and Mandiri reliable. ~30k-50k fee. Watch for skimmers."
+    },
+    "etiquette": [
+      "Dress modestly at temples (sarong provided)",
+      "Use right hand for giving/receiving",
+      "Don't touch people's heads",
+      "Point with thumb, not index finger",
+      "Remove shoes before entering homes"
+    ],
+    "scam_warnings": [
+      "Money changers: use banks or authorized only",
+      "Taxi meter scams: use Grab or Bluebird",
+      "Broken scooter claims: photo everything before renting",
+      "Massage/spa prices: confirm before service",
+      "Do not buy or use drugs - severe penalties"
+    ],
+    "safety_tips": [
+      "Traffic is chaotic - extreme caution on scooters",
+      "Drink bottled water only",
+      "Monkeys will steal belongings - especially at Monkey Forest",
+      "Strong currents at beaches - check flags",
+      "Travel insurance essential - medical costs high",
+      "Mosquito repellent - dengue exists"
+    ]
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "$schema": "../schemas/manual-seed-schema.json",
+  "_meta": {
+    "city_slug": "ho_chi_minh",
+    "city_name": "Ho Chi Minh City",
+    "country": "Vietnam",
+    "last_updated": "2024-12-01",
+    "updated_by": "unmapped-os-team",
+    "data_points": 14,
+    "notes": "Minimal manual seeds - ranges only, no scraping. Formerly Saigon."
+  },
+  
+  "emergency": {
+    "police": "113",
+    "ambulance": "115",
+    "fire": "114"
+  },
+  
+  "electrical": {
+    "voltage": 220,
+    "frequency": 50,
+    "plug_types": ["A", "C", "G"]
+  },
+  
+  "airports": [
+    {
+      "iata_code": "SGN",
+      "name": "Tan Son Nhat International Airport",
+      "distance_to_center_km": 8,
+      "taxi_to_center": {
+        "min": 120000,
+        "max": 200000,
+        "typical": 150000,
+        "currency": "VND",
+        "notes": "Very close to center. Use Mai Linh or Vinasun. Grab also available."
+      },
+      "legit_transport": [
+        {
+          "type": "BUS",
+          "name": "Bus 109",
+          "price_min": 20000,
+          "price_max": 20000,
+          "duration_min": 40,
+          "duration_max": 60,
+          "notes": "To Ben Thanh. Yellow bus."
+        },
+        {
+          "type": "GRAB",
+          "name": "Grab",
+          "price_min": 80000,
+          "price_max": 150000,
+          "duration_min": 20,
+          "duration_max": 45,
+          "notes": "Fixed price. Pickup at designated zone."
+        },
+        {
+          "type": "METER_TAXI",
+          "name": "Mai Linh/Vinasun Taxi",
+          "price_min": 120000,
+          "price_max": 200000,
+          "duration_min": 20,
+          "duration_max": 45,
+          "notes": "Only use these brands. Green or white cars."
+        }
+      ],
+      "scam_warnings": [
+        "Same taxi warnings as Hanoi",
+        "More motorbike bag snatching than Hanoi",
+        "Xe om (motorbike taxi) - agree price first"
+      ],
+      "exit_tips": [
+        "SIM cards at arrivals",
+        "Grab more efficient than taxi here",
+        "Short ride to District 1"
+      ]
+    }
+  ],
+  
+  "price_baselines": {
+    "coffee": {
+      "min": 15000,
+      "max": 80000,
+      "typical": 35000,
+      "currency": "VND",
+      "notes": "Similar to Hanoi. Cà phê sữa đá everywhere."
+    },
+    "beer": {
+      "min": 12000,
+      "max": 70000,
+      "typical": 30000,
+      "currency": "VND",
+      "notes": "333/Saigon ~12k-20k, Bui Vien ~20k-30k, nice bar ~50k-70k"
+    },
+    "street_meal": {
+      "min": 30000,
+      "max": 80000,
+      "typical": 50000,
+      "currency": "VND",
+      "notes": "Cơm tấm ~35k-50k, bánh mì ~25k-35k, phở ~35k-50k"
+    },
+    "restaurant_meal": {
+      "min": 100000,
+      "max": 500000,
+      "typical": 200000,
+      "currency": "VND",
+      "notes": "Local ~100k-150k, mid-range ~200k-350k, upscale 500k+"
+    },
+    "local_transport": {
+      "min": 7000,
+      "max": 60000,
+      "typical": 25000,
+      "currency": "VND",
+      "notes": "Bus ~7k, Grab bike ~15k-30k, Grab car ~40k-80k. Metro under construction."
+    }
+  },
+  
+  "cultural_facts": {
+    "tipping": {
+      "expected": false,
+      "typical_percent": 0,
+      "notes": "Same as Hanoi. Not traditional but appreciated for good service."
+    },
+    "payment": {
+      "cash_preferred": true,
+      "card_acceptance": "MEDIUM",
+      "mobile_payment": ["MoMo", "ZaloPay", "VNPay"],
+      "atm_notes": "Same as Hanoi. More ATMs in District 1."
+    },
+    "etiquette": [
+      "Same as Hanoi",
+      "More relaxed atmosphere than Hanoi",
+      "Business culture more fast-paced",
+      "Better English in tourist areas"
+    ],
+    "scam_warnings": [
+      "Higher petty crime than Hanoi",
+      "Phone snatching common - be very aware",
+      "Massage parlor scams in tourist areas",
+      "Same taxi warnings - use Grab",
+      "Money changer scams - use banks"
+    ],
+    "safety_tips": [
+      "More traffic than Hanoi - be extra careful",
+      "Don't walk with phone in hand",
+      "Bui Vien backpacker area: watch drinks",
+      "Flooding during rainy season (May-Nov)",
+      "Keep copies of passport separately"
+    ]
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "$schema": "../schemas/manual-seed-schema.json",
+  "_meta": {
+    "city_slug": "seoul",
+    "city_name": "Seoul",
+    "country": "South Korea",
+    "last_updated": "2024-12-01",
+    "updated_by": "unmapped-os-team",
+    "data_points": 15,
+    "notes": "Minimal manual seeds - ranges only, no scraping"
+  },
+  
+  "emergency": {
+    "police": "112",
+    "ambulance": "119",
+    "fire": "119",
+    "tourist_helpline": "1330"
+  },
+  
+  "electrical": {
+    "voltage": 220,
+    "frequency": 60,
+    "plug_types": ["C", "F"]
+  },
+  
+  "airports": [
+    {
+      "iata_code": "ICN",
+      "name": "Incheon International Airport",
+      "distance_to_center_km": 52,
+      "taxi_to_center": {
+        "min": 65000,
+        "max": 100000,
+        "typical": 80000,
+        "currency": "KRW",
+        "notes": "Regular or deluxe taxi. Tolls ~8000 KRW extra."
+      },
+      "legit_transport": [
+        {
+          "type": "TRAIN",
+          "name": "AREX Express",
+          "price_min": 9500,
+          "price_max": 9500,
+          "duration_min": 43,
+          "duration_max": 51,
+          "notes": "Non-stop to Seoul Station"
+        },
+        {
+          "type": "TRAIN",
+          "name": "AREX All-Stop",
+          "price_min": 4750,
+          "price_max": 4750,
+          "duration_min": 58,
+          "duration_max": 66,
+          "notes": "Budget option with stops"
+        },
+        {
+          "type": "BUS",
+          "name": "Airport Limousine Bus",
+          "price_min": 15000,
+          "price_max": 18000,
+          "duration_min": 60,
+          "duration_max": 90,
+          "notes": "Various routes to different districts"
+        }
+      ],
+      "scam_warnings": [
+        "Very few scams",
+        "Official taxis have orange/silver markings"
+      ],
+      "exit_tips": [
+        "Get T-money card at convenience store",
+        "Pocket WiFi at KT/SKT counters",
+        "SIM card easier than most countries"
+      ]
+    },
+    {
+      "iata_code": "GMP",
+      "name": "Gimpo International Airport",
+      "distance_to_center_km": 15,
+      "taxi_to_center": {
+        "min": 20000,
+        "max": 40000,
+        "typical": 30000,
+        "currency": "KRW",
+        "notes": "Much closer to center. Metered."
+      },
+      "legit_transport": [
+        {
+          "type": "TRAIN",
+          "name": "Subway Line 5/9/AREX",
+          "price_min": 1400,
+          "price_max": 2000,
+          "duration_min": 20,
+          "duration_max": 40,
+          "notes": "Direct metro access"
+        }
+      ],
+      "scam_warnings": [],
+      "exit_tips": [
+        "Closer to city - preferred for domestic"
+      ]
+    }
+  ],
+  
+  "price_baselines": {
+    "coffee": {
+      "min": 1500,
+      "max": 7000,
+      "typical": 4500,
+      "currency": "KRW",
+      "notes": "Convenience store ~1500-2000, cafe ~4000-5000, Starbucks ~5000-7000"
+    },
+    "beer": {
+      "min": 3000,
+      "max": 9000,
+      "typical": 5000,
+      "currency": "KRW",
+      "notes": "Convenience store ~3000, hof ~4000-6000, bar ~6000-9000"
+    },
+    "street_meal": {
+      "min": 5000,
+      "max": 12000,
+      "typical": 8000,
+      "currency": "KRW",
+      "notes": "Kimbap ~3000-4000, bibimbap ~8000, Korean BBQ starts ~15000"
+    },
+    "restaurant_meal": {
+      "min": 8000,
+      "max": 30000,
+      "typical": 15000,
+      "currency": "KRW",
+      "notes": "Local ~8000-12000, mid-range ~15000-25000, upscale 30000+"
+    },
+    "local_transport": {
+      "min": 1400,
+      "max": 3000,
+      "typical": 1500,
+      "currency": "KRW",
+      "notes": "Metro base ~1400, free transfers within 30min"
+    }
+  },
+  
+  "cultural_facts": {
+    "tipping": {
+      "expected": false,
+      "typical_percent": 0,
+      "notes": "Not expected and can cause confusion. Service is included."
+    },
+    "payment": {
+      "cash_preferred": false,
+      "card_acceptance": "VERY_HIGH",
+      "mobile_payment": ["Samsung Pay", "Kakao Pay", "Naver Pay", "T-money"],
+      "atm_notes": "Cards accepted almost everywhere. Global ATMs at convenience stores."
+    },
+    "etiquette": [
+      "Use two hands when giving/receiving",
+      "Pour drinks for others, not yourself",
+      "Age hierarchy is important",
+      "Remove shoes in traditional restaurants",
+      "Bow slightly in greeting"
+    ],
+    "scam_warnings": [
+      "Watch for fake luxury goods in markets",
+      "Some bars in Itaewon have inflated prices",
+      "Verify prices at tourist-heavy areas"
+    ],
+    "safety_tips": [
+      "Very safe city, even late at night",
+      "24/7 convenience stores everywhere",
+      "Metro until ~midnight, night buses available",
+      "Air quality can be poor - check AQI",
+      "Download Kakao Maps - better than Google Maps"
+    ]
+  }
+}

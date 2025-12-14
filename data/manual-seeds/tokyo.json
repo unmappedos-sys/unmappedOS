@@ -1,0 +1,198 @@
+{
+  "$schema": "../schemas/manual-seed-schema.json",
+  "_meta": {
+    "city_slug": "tokyo",
+    "city_name": "Tokyo",
+    "country": "Japan",
+    "last_updated": "2024-12-01",
+    "updated_by": "unmapped-os-team",
+    "data_points": 16,
+    "notes": "Minimal manual seeds - ranges only, no scraping"
+  },
+  
+  "emergency": {
+    "police": "110",
+    "ambulance": "119",
+    "fire": "119",
+    "tourist_police": null,
+    "english_helpline": "03-3501-0110"
+  },
+  
+  "electrical": {
+    "voltage": 100,
+    "frequency": 50,
+    "plug_types": ["A", "B"],
+    "notes": "Lower voltage than most countries, chargers usually fine"
+  },
+  
+  "airports": [
+    {
+      "iata_code": "NRT",
+      "name": "Narita International Airport",
+      "distance_to_center_km": 60,
+      "taxi_to_center": {
+        "min": 20000,
+        "max": 30000,
+        "typical": 25000,
+        "currency": "JPY",
+        "notes": "Fixed-rate taxis available. Very expensive."
+      },
+      "legit_transport": [
+        {
+          "type": "TRAIN",
+          "name": "Narita Express (N'EX)",
+          "price_min": 3070,
+          "price_max": 3250,
+          "duration_min": 55,
+          "duration_max": 90,
+          "notes": "Direct to Shinjuku/Shibuya. JR Pass valid."
+        },
+        {
+          "type": "BUS",
+          "name": "Airport Limousine Bus",
+          "price_min": 3200,
+          "price_max": 3200,
+          "duration_min": 85,
+          "duration_max": 120,
+          "notes": "Various city stops. Luggage space."
+        },
+        {
+          "type": "TRAIN",
+          "name": "Keisei Skyliner",
+          "price_min": 2520,
+          "price_max": 2520,
+          "duration_min": 36,
+          "duration_max": 41,
+          "notes": "To Ueno. Fastest option."
+        },
+        {
+          "type": "TRAIN",
+          "name": "Access Express",
+          "price_min": 1270,
+          "price_max": 1520,
+          "duration_min": 55,
+          "duration_max": 80,
+          "notes": "Budget option to various stations"
+        }
+      ],
+      "scam_warnings": [
+        "Very few scams at Japanese airports",
+        "Avoid unlicensed taxi touts (rare)"
+      ],
+      "exit_tips": [
+        "Get Suica/Pasmo card at JR counter",
+        "Pocket WiFi rental at arrivals",
+        "JR Pass exchange at JR counter"
+      ]
+    },
+    {
+      "iata_code": "HND",
+      "name": "Haneda Airport",
+      "distance_to_center_km": 15,
+      "taxi_to_center": {
+        "min": 5000,
+        "max": 10000,
+        "typical": 7000,
+        "currency": "JPY",
+        "notes": "Much closer to center than Narita"
+      },
+      "legit_transport": [
+        {
+          "type": "TRAIN",
+          "name": "Tokyo Monorail",
+          "price_min": 500,
+          "price_max": 500,
+          "duration_min": 13,
+          "duration_max": 20,
+          "notes": "To Hamamatsucho, transfer to JR"
+        },
+        {
+          "type": "TRAIN",
+          "name": "Keikyu Line",
+          "price_min": 300,
+          "price_max": 600,
+          "duration_min": 15,
+          "duration_max": 30,
+          "notes": "Direct to Shinagawa, Asakusa"
+        }
+      ],
+      "scam_warnings": [],
+      "exit_tips": [
+        "24-hour trains on some routes",
+        "Convenience stores in terminals"
+      ]
+    }
+  ],
+  
+  "price_baselines": {
+    "coffee": {
+      "min": 150,
+      "max": 600,
+      "typical": 350,
+      "currency": "JPY",
+      "notes": "Convenience store ~150, Doutor ~250, Starbucks ~400-600"
+    },
+    "beer": {
+      "min": 200,
+      "max": 800,
+      "typical": 500,
+      "currency": "JPY",
+      "notes": "Convenience store ~200-300, izakaya ~400-600, bar ~600-800"
+    },
+    "street_meal": {
+      "min": 400,
+      "max": 1000,
+      "typical": 700,
+      "currency": "JPY",
+      "notes": "Onigiri ~150, ramen ~700-1000, gyudon ~400-600"
+    },
+    "restaurant_meal": {
+      "min": 800,
+      "max": 3000,
+      "typical": 1200,
+      "currency": "JPY",
+      "notes": "Teishoku ~800-1000, mid-range ~1500-2500, upscale 3000+"
+    },
+    "local_transport": {
+      "min": 170,
+      "max": 600,
+      "typical": 250,
+      "currency": "JPY",
+      "notes": "Metro single trip ~170-320, JR varies by distance"
+    }
+  },
+  
+  "cultural_facts": {
+    "tipping": {
+      "expected": false,
+      "typical_percent": 0,
+      "notes": "NEVER tip. Can be seen as insulting. Service charge included."
+    },
+    "payment": {
+      "cash_preferred": true,
+      "card_acceptance": "MEDIUM",
+      "mobile_payment": ["Suica", "Pasmo", "PayPay", "LINE Pay"],
+      "atm_notes": "7-Eleven and Japan Post ATMs accept foreign cards. Most bank ATMs don't."
+    },
+    "etiquette": [
+      "Bow in greeting (slight nod is fine for foreigners)",
+      "Remove shoes at temples, homes, some restaurants",
+      "Don't eat or drink while walking",
+      "Queue properly, stand left on escalators (right in Osaka)",
+      "Silence phones on trains",
+      "Don't blow nose in public"
+    ],
+    "scam_warnings": [
+      "Watch for fake monks asking donations",
+      "Kabukicho: avoid aggressive touts",
+      "Check bills at hostess bars/izakaya in Roppongi",
+      "Extremely safe otherwise"
+    ],
+    "safety_tips": [
+      "One of the safest major cities globally",
+      "Lost items often returned - check station lost & found",
+      "Earthquakes: follow local instructions",
+      "Tap water is safe to drink"
+    ]
+  }
+}

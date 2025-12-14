@@ -1,10 +1,30 @@
-# Unmapped OS v3.0
+# Unmapped OS v3.1
 
-**The Unmapped Operating System — Field intelligence for urban operatives.**
+**The Unmapped Operating System — Confidence-first intelligence for urban exploration.**
 
-A Next.js TypeScript PWA providing offline-first city intelligence packs, tactical map visualization, anchor-based navigation, hazard reporting, crowdsourced structured comments with verification, and advanced zone search. Built for operatives navigating unfamiliar urban terrain.
+A Next.js TypeScript PWA providing offline-first city intelligence packs with adaptive confidence scoring. We never claim perfect accuracy — instead, we detect change, show confidence, adapt behavior, degrade gracefully, and stay useful offline.
 
-## ⚡ Latest: Strategy 6.0++ Complete
+> ⚠️ **Core Principle**: Unmapped OS shows you what travelers have observed, weighted by confidence. It never claims perfect knowledge.
+
+## ⚡ Latest: Intelligence System v2.0
+
+### 🧠 Adaptive Confidence Engine (NEW)
+- **Zone Confidence Scoring**: Every zone has a 0-100 confidence score with decay and intel boost
+- **Kill Switch**: 2+ hazard reports in 24h → zone goes OFFLINE for 7 days
+- **Weather Integration**: Open-Meteo weather modifies recommendations in real-time
+- **Explainable Rankings**: See *why* zones are recommended (texture match, confidence, time, weather)
+
+### 🌍 10-City OSM Ingestion (v2.0)
+- **Cities**: Bangkok, Tokyo, Singapore, Hong Kong, Seoul, Bali, Kuala Lumpur, Hanoi, Ho Chi Minh City, Taipei
+- **Data Sources**: OpenStreetMap POIs, streets, lighting, opening hours
+- **City Packs v2.0**: Offline-first JSON packs with confidence snapshots
+- **Deterministic Pipeline**: Repeatable, auditable city seeding from OSM + manual seeds
+- **Anchor Selection**: Priority-based algorithm (artwork > fountain > memorial > plaza > intersection)
+
+### 📊 Trust & Transparency
+- **Confidence Levels**: HIGH (80+), MEDIUM (60-79), LOW (40-59), DEGRADED (<40)
+- **Freshness Indicators**: Clear staleness warnings on old data
+- **No Pin Claims**: Zones describe *texture*, not exact locations
 
 ### 🆕 Intelligence Layer (v3.0)
 - **Dynamic Texture System**: Real-time zone adaptation (SILENCE → ANALOG → NEON → CHAOS) based on time, incidents, and crowd density
@@ -27,21 +47,28 @@ A Next.js TypeScript PWA providing offline-first city intelligence packs, tactic
 - **Shadow Mode**: Read-only privacy mode with coordinate coarsening and anonymous IDs
 - **Safe Return Path**: Vitality-based extraction routes for dangerous situations
 
+## 📖 Documentation
+
+- **[City Seeding Guide](./docs/CITY_SEEDING_GUIDE.md)**: Complete guide to the deterministic city data pipeline
+- **[Intelligence System](./docs/INTELLIGENCE_SYSTEM.md)**: How confidence scoring, weather, and recommendations work
+- **[Trust & Disclaimer](./docs/TRUST_DISCLAIMER.md)**: What this app is and isn't, liability info
+- **[API Documentation](./docs/API_DOCUMENTATION.md)**: Endpoint reference
+- **[Security Model](./docs/SECURITY_MODEL.md)**: Auth, RLS, and data protection
+
 ## 🎯 Core Features
 
 ### Foundation (Strategy 6.0)
-- **Offline City Packs**: Download Bangkok & Tokyo intelligence packs (<1MB) for offline use
+- **Offline City Packs**: Download city intelligence packs (<1MB each) for offline use
+- **Confidence-First Display**: Every zone shows confidence score, freshness, and warnings
+- **Weather-Aware Recommendations**: Recommendations adjust based on current conditions
+- **Intel Submission**: Report prices, crowds, hazards, and verify zones
+- **Kill Switch Protection**: Zones auto-disable on multiple hazard reports
 - **Anchor-Based Navigation**: Algorithmic selection of stable geographic anchors using OpenStreetMap data
-- **Tactical Display**: Real-time map with neon zone overlays and anchor visualization
 - **Snapshot GPS**: Privacy-focused location tracking (snapshot only, no continuous tracking)
 - **PWA**: Full Progressive Web App with service worker and offline capability
 - **Advanced Search**: Server-side search with ranking algorithm (texture, anchor quality, hassle, price, freshness)
-- **Structured Comments**: Field intelligence system with 10 predefined tags and 240-char notes
-- **Comment Verification**: GPS-verified peer review system with trust scoring
-- **Karma System**: Reward operatives for verified intel (+5 comments, +10 price verification, +20 hazard reports)
-- **Hazard Reporting**: Crowdsourced reports with automated zone kill-switch (2+ reports = 7-day offline)
+- **Karma System**: Reward users for verified intel (+5 comments, +10 price verification, +15 hazard reports)
 - **Export to Maps**: One-tap export to Google Maps with cheat sheet clipboard copy
-- **Active Trip**: 45-minute check-in timer with notifications for exported routes
 
 ### Advanced Features (Strategy 6.0++)
 - **Gamification**: Karma, badges (common → legendary), streak system, leaderboards
