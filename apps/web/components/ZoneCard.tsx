@@ -300,7 +300,8 @@ export function ZoneCard({
       {/* Offline Warning Banner */}
       {confidence.is_offline && (
         <ZoneWarningBanner 
-          reason={confidence.offline_reason || 'Zone temporarily offline'} 
+          type="degraded"
+          message={confidence.offline_reason || 'Zone temporarily offline'} 
         />
       )}
 
