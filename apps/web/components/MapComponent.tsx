@@ -31,9 +31,25 @@ export default function MapComponent({
 }: MapComponentProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<MapInstance | null>(null);
+  const lastZoneId = useRef<string | null>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [providerInfo, setProviderInfo] = useState<MapProviderDecision | null>(null);
   const [showUsagePanel, setShowUsagePanel] = useState(false);
+
+  const pointInPolygon = useCallback((point: [number, number], polygon: [number, number][]) => {
+    const [x, y] = point;
+    let inside = false;
+
+    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+      const [xi, yi] = polygon[i];
+      const [xj, yj] = polygon[j];
+
+      const intersect = yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi;
+      if (intersect) inside = !inside;
+    }
+
+    return inside;
+  }, []);
 
   useEffect(() => {
     if (!mapContainer.current) return;
@@ -187,6 +203,48 @@ export default function MapComponent({
       map.current?.remove();
     };
   }, [zones, onZoneClick, onAnchorReached]);
+
+  useEffect(() => {
+    if (!mapLoaded) return;
+    if (!onZoneClick) return;
+    if (!('geolocation' in navigator)) return;
+
+    const watchId = navigator.geolocation.watchPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        // Find containing zone (prefer exact polygon match)
+        let active: Zone | null = null;
+        for (const zone of zones) {
+          const ring = zone.polygon.coordinates?.[0];
+          if (!ring || ring.length < 4) continue;
+          if (pointInPolygon([lon, lat], ring as [number, number][])) {
+            active = zone;
+            break;
+          }
+        }
+
+        if (!active) return;
+        if (lastZoneId.current === active.zone_id) return;
+
+        lastZoneId.current = active.zone_id;
+        onZoneClick(active);
+      },
+      () => {
+        // Silent: user may deny location; map remains usable.
+      },
+      {
+        enableHighAccuracy: false,
+        maximumAge: 15000,
+        timeout: 20000,
+      }
+    );
+
+    return () => {
+      navigator.geolocation.clearWatch(watchId);
+    };
+  }, [mapLoaded, onZoneClick, pointInPolygon, zones]);
 
   const locateUser = useCallback(() => {
     if ('geolocation' in navigator) {

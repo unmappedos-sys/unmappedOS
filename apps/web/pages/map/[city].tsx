@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
@@ -11,6 +11,7 @@ import {
   isOnline,
   onConnectionChange,
 } from '@/lib/deviceAPI';
+import { computeTouristPressureIndex } from '@/lib/intel/touristPressure';
 import { useOps } from '@/contexts/OpsContext';
 import { useTranslation } from '@/lib/i18n/useTranslation';
 import StatusPanel from '@/components/StatusPanel';
@@ -35,6 +36,7 @@ export default function TacticalDisplay() {
   const [gpsStatus, setGpsStatus] = useState<GPSStatus>('ACTIVE');
   const [syncStatus, setSyncStatus] = useState<SyncStatus>('ONLINE');
   const [showControls, setShowControls] = useState(true);
+  const [toast, setToast] = useState<{ title: string; body?: string } | null>(null);
 
   // Helper function to get translated anchor name
   const getAnchorName = (anchor: Zone['selected_anchor']): string => {
@@ -131,7 +133,72 @@ export default function TacticalDisplay() {
 
   const handleAnchorReached = (anchor: Zone['selected_anchor']) => {
     vibrateDevice(VIBRATION_PATTERNS.ANCHOR_LOCK);
-    alert(`ANCHOR POINT REACHED: ${anchor.name}`);
+    setToast({ title: 'ANCHOR LOCKED', body: `POINT REACHED: ${anchor.name.toUpperCase()}` });
+  };
+
+  useEffect(() => {
+    if (!toast) return;
+    const timeout = setTimeout(() => setToast(null), 4500);
+    return () => clearTimeout(timeout);
+  }, [toast]);
+
+  const tpi = useMemo(() => {
+    if (!selectedZone || !pack) return null;
+    return computeTouristPressureIndex(selectedZone, pack.zones);
+  }, [selectedZone, pack]);
+
+  const parseCoffeeCurrency = (priceEstimates: string): string | null => {
+    // Examples: "Coffee ฿60 | Beer ฿80" OR "Coffee SGD5 | Beer SGD12" OR "Coffee ¥400"
+    const match = priceEstimates.match(/Coffee\s+([^\d\s]+)?\s*(\d+(?:\.\d+)?)/i);
+    if (!match) return null;
+    const token = (match[1] || '').trim();
+    if (token) return token;
+
+    // Handle cases where currency is a 3-letter code directly adjacent to amount, e.g. "SGD5"
+    const alt = priceEstimates.match(/Coffee\s+([A-Z]{3})\s*(\d+(?:\.\d+)?)/);
+    return alt ? alt[1] : null;
+  };
+
+  const formatMoney = (currencyToken: string | null, amount: number): string => {
+    const rounded = amount >= 10 ? amount.toFixed(0) : amount.toFixed(1);
+    if (!currencyToken) return rounded;
+    return /^[A-Z]{3}$/.test(currencyToken)
+      ? `${currencyToken}${rounded}`
+      : `${currencyToken}${rounded}`;
+  };
+
+  const handleExtractToNormalPrices = () => {
+    if (!pack || !selectedZone || !tpi?.recommendation) return;
+
+    const target = pack.zones.find((z) => z.zone_id === tpi.recommendation!.target_zone_id) || null;
+    openGoogleMaps(tpi.recommendation.target_lat, tpi.recommendation.target_lon);
+    vibrateDevice(VIBRATION_PATTERNS.CONFIRM);
+
+    if (!target) {
+      setToast({ title: 'EXTRACT ROUTE SET', body: tpi.recommendation.message });
+      return;
+    }
+
+    const currentCoffee = selectedZone.price_medians?.coffee;
+    const targetCoffee = target.price_medians?.coffee;
+    const currencyToken = parseCoffeeCurrency(selectedZone.cheat_sheet.price_estimates);
+    const savings =
+      typeof currentCoffee === 'number' && typeof targetCoffee === 'number'
+        ? Math.max(0, currentCoffee - targetCoffee)
+        : null;
+
+    if (tpi.status === 'COMPROMISED') {
+      setToast({
+        title: 'MISSION COMPLETE',
+        body:
+          `YOU AVOIDED A HIGH-PRESSURE ZONE` +
+          (savings && savings > 0
+            ? ` // SAVINGS ESTIMATED: ${formatMoney(currencyToken, savings)}`
+            : ''),
+      });
+    } else {
+      setToast({ title: 'EXTRACT ROUTE SET', body: tpi.recommendation.message });
+    }
   };
 
   const handleExportToMaps = () => {
@@ -218,6 +285,22 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
       {/* Scan Line Effect */}
       <div className="scan-line" />
 
+      {/* HUD Toast */}
+      {toast && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[60]">
+          <div className="hud-card px-4 py-3 min-w-[260px] border border-ops-neon-green/30">
+            <div className="font-tactical text-tactical-xs text-ops-neon-green uppercase tracking-widest">
+              {toast.title}
+            </div>
+            {toast.body && (
+              <div className="mt-1 font-mono text-tactical-xs text-ops-night-text-dim">
+                {toast.body}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       <div className="h-screen flex flex-col relative">
         {/* Top HUD Bar */}
         <div className="bg-ops-night-surface/90 backdrop-blur-tactical border-b border-ops-neon-green/30 p-3 flex items-center justify-between z-20 neon-border-top">
@@ -229,6 +312,9 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
           </button>
           <h1 className="font-tactical text-tactical-base text-ops-neon-cyan uppercase tracking-widest">
             {pack.city} {t.tacticalDisplay.toUpperCase()}
+            <span className="ml-3 font-mono text-[10px] text-ops-neon-green/80 align-middle">
+              LOCAL MODE — ACTIVE
+            </span>
           </h1>
           <button
             onClick={() => router.push('/operative')}
@@ -384,6 +470,83 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
             </div>
 
             <div className="space-y-4">
+              {/* Tourist Pressure Index (internal) */}
+              {tpi && (
+                <div
+                  className={`bg-ops-night-surface/50 border p-4 ${
+                    tpi.status === 'COMPROMISED'
+                      ? 'border-ops-neon-red/30'
+                      : tpi.status === 'WATCH'
+                        ? 'border-ops-neon-amber/30'
+                        : 'border-ops-neon-green/20'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-tactical text-tactical-sm text-ops-neon-cyan uppercase tracking-wider">
+                      ZONE SIGNAL
+                    </h3>
+                    <div className="font-mono text-[10px] text-ops-night-muted">
+                      TOURIST PRESSURE INDEX
+                    </div>
+                  </div>
+
+                  <div className="space-y-1 font-mono text-tactical-xs">
+                    <div className="flex justify-between">
+                      <span className="text-ops-night-muted">ZONE STATUS:</span>
+                      <span
+                        className={
+                          tpi.status === 'COMPROMISED'
+                            ? 'text-ops-neon-red'
+                            : tpi.status === 'WATCH'
+                              ? 'text-ops-neon-amber'
+                              : 'text-ops-neon-green'
+                        }
+                      >
+                        {tpi.status}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-ops-night-muted">TOURIST DENSITY:</span>
+                      <span className="text-ops-night-text">{tpi.tourist_density}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-ops-night-muted">LOCAL ACTIVITY:</span>
+                      <span className="text-ops-night-text">{tpi.local_activity}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-ops-night-muted">REASON:</span>
+                      <span className="text-ops-night-text">{tpi.reason}</span>
+                    </div>
+                  </div>
+
+                  {tpi.recommendation && (
+                    <div className="mt-3">
+                      <div className="font-mono text-tactical-base text-ops-neon-amber/90">
+                        {tpi.recommendation.message}
+                      </div>
+                      <div className="mt-2 flex gap-3">
+                        <button
+                          onClick={handleExtractToNormalPrices}
+                          className="btn-tactical-primary flex-1 py-2 text-tactical-xs"
+                        >
+                          EXTRACT
+                        </button>
+                        <button
+                          onClick={() =>
+                            router.push(
+                              `/proof?city=${encodeURIComponent(pack.city)}&zone=${encodeURIComponent(selectedZone.zone_id)}`
+                            )
+                          }
+                          className="btn-tactical flex-1 py-2 text-tactical-xs"
+                        >
+                          PROOF
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* Anchor Point */}
               <div className="bg-ops-night-surface/50 border border-ops-neon-green/20 p-4">
                 <div className="flex items-center gap-2 mb-2">
