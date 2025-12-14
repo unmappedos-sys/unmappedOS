@@ -34,3 +34,8 @@ export default function Custom500() {
     </div>
   );
 }
+
+// Force SSR to avoid static generation issues
+export async function getServerSideProps() {
+  return { props: {} };
+}
