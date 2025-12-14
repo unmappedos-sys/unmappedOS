@@ -123,13 +123,32 @@ export function ConfidenceBar({
 // CONFIDENCE BADGE
 // ============================================================================
 
-export function ConfidenceBadge({ 
-  level, 
-  compact = false 
-}: { 
-  level: ConfidenceLevel; 
-  compact?: boolean;
-}) {
+// Helper to convert score to level
+function scoreToLevel(score: number): ConfidenceLevel {
+  if (score >= 80) return 'HIGH';
+  if (score >= 60) return 'MEDIUM';
+  if (score >= 40) return 'LOW';
+  if (score >= 20) return 'DEGRADED';
+  return 'UNKNOWN';
+}
+
+type ConfidenceBadgeProps = 
+  | { level: ConfidenceLevel; compact?: boolean; score?: never; isOffline?: never; }
+  | { score: number; isOffline?: boolean; level?: never; compact?: boolean; };
+
+export function ConfidenceBadge(props: ConfidenceBadgeProps) {
+  const { compact = false } = props;
+  
+  // Determine the level from either direct level prop or score
+  let level: ConfidenceLevel;
+  if ('level' in props && props.level) {
+    level = props.level;
+  } else if ('score' in props && props.score !== undefined) {
+    level = props.isOffline ? 'DEGRADED' : scoreToLevel(props.score);
+  } else {
+    level = 'UNKNOWN';
+  }
+  
   return (
     <span 
       className={`
