@@ -1,11 +1,9 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "apps/web/package.json",
-      "use": "@vercel/next"
-    }
-  ],
+  "framework": "nextjs",
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm run build",
+  "outputDirectory": "apps/web/.next",
   "rewrites": [
     {
       "source": "/data/packs/:path*",
@@ -16,7 +14,10 @@
     {
       "source": "/api/packs/:city",
       "headers": [
-        { "key": "Cache-Control", "value": "public, s-maxage=86400, stale-while-revalidate=604800" },
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=86400, stale-while-revalidate=604800"
+        },
         { "key": "CDN-Cache-Control", "value": "public, max-age=86400" }
       ]
     },
@@ -32,8 +33,5 @@
         { "key": "Cache-Control", "value": "public, s-maxage=60, stale-while-revalidate=300" }
       ]
     }
-  ],
-  "env": {
-    "NEXT_PUBLIC_DOMAIN": "unmappedos.com"
-  }
+  ]
 }
