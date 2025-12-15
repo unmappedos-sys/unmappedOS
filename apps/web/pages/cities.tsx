@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks/useAuth';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useTranslation } from '@/lib/i18n/useTranslation';
 import LanguageSelector from '@/components/LanguageSelector';
+import { getAllCityPackRecords, normalizeCityKey } from '@/lib/cityPack';
 
 interface CityInfo {
   id: string;
@@ -117,12 +118,37 @@ export default function Cities() {
   const [liveCityQuery, setLiveCityQuery] = useState('');
   const [bootStage, setBootStage] = useState(0);
 
-  const normalizeCityKey = (input: string) =>
-    input
-      .trim()
-      .toLowerCase()
-      .replace(/\s+/g, '')
-      .replace(/[^a-z0-9]/g, '');
+  const [packMetaByCity, setPackMetaByCity] = useState<
+    Record<
+      string,
+      {
+        zones: number;
+        version: number;
+        generatedAt: string;
+        downloadedAt: string;
+      }
+    >
+  >({});
+
+  const refreshPackMeta = useCallback(async () => {
+    const records = await getAllCityPackRecords();
+    const next: Record<
+      string,
+      { zones: number; version: number; generatedAt: string; downloadedAt: string }
+    > = {};
+
+    for (const rec of records) {
+      if (!rec?.city || !rec?.pack) continue;
+      next[rec.city] = {
+        zones: Array.isArray(rec.pack.zones) ? rec.pack.zones.length : 0,
+        version: typeof rec.pack.version === 'number' ? rec.pack.version : 0,
+        generatedAt: String(rec.pack.generated_at || ''),
+        downloadedAt: String(rec.downloadedAt || ''),
+      };
+    }
+
+    setPackMetaByCity(next);
+  }, []);
 
   useEffect(() => {
     const stages = [
@@ -136,16 +162,59 @@ export default function Cities() {
     });
   }, []);
 
-  const filteredCities = cities.filter(
-    (city) =>
-      city.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      city.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      city.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      city.description.toLowerCase().includes(searchQuery.toLowerCase())
+  useEffect(() => {
+    refreshPackMeta();
+
+    const onFocus = () => refreshPackMeta();
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') refreshPackMeta();
+    };
+
+    window.addEventListener('focus', onFocus);
+    document.addEventListener('visibilitychange', onVisibility);
+
+    let channel: BroadcastChannel | null = null;
+    try {
+      if ('BroadcastChannel' in window) {
+        channel = new BroadcastChannel('unmapped-city-packs');
+        channel.onmessage = () => refreshPackMeta();
+      }
+    } catch {
+      channel = null;
+    }
+
+    const interval = window.setInterval(() => {
+      if (document.visibilityState === 'visible') refreshPackMeta();
+    }, 2500);
+
+    return () => {
+      window.removeEventListener('focus', onFocus);
+      document.removeEventListener('visibilitychange', onVisibility);
+      window.clearInterval(interval);
+      if (channel) channel.close();
+    };
+  }, [refreshPackMeta]);
+
+  const filteredCities = useMemo(
+    () =>
+      cities.filter(
+        (city) =>
+          city.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          city.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          city.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          city.description.toLowerCase().includes(searchQuery.toLowerCase())
+      ),
+    [searchQuery]
   );
 
-  const availableCities = filteredCities.filter((c) => c.status === 'available');
-  const comingSoonCities = filteredCities.filter((c) => c.status === 'coming-soon');
+  const availableCities = useMemo(
+    () => filteredCities.filter((c) => c.status === 'available'),
+    [filteredCities]
+  );
+  const comingSoonCities = useMemo(
+    () => filteredCities.filter((c) => c.status === 'coming-soon'),
+    [filteredCities]
+  );
 
   return (
     <>
@@ -281,7 +350,7 @@ export default function Cities() {
 
                       <div className="flex items-center justify-between pt-3 border-t border-ops-neon-green/20">
                         <div className="font-mono text-tactical-xs text-ops-neon-green">
-                          {city.zones} {t.zonesLoaded}
+                          {packMetaByCity[normalizeCityKey(city.id)]?.zones ?? '—'} {t.zonesLoaded}
                         </div>
                         <div className="font-tactical text-tactical-xs text-ops-neon-cyan group-hover:text-ops-neon-green transition-colors">
                           {t.deploy.toUpperCase()} →

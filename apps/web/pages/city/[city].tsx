@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import type { CityPack, Zone } from '@unmapped/lib';
-import { downloadCityPack, getCityPack } from '@/lib/cityPack';
+import { downloadCityPack, getCityPackRecord } from '@/lib/cityPack';
 import { computeTouristPressureIndex } from '@/lib/intel/touristPressure';
 import {
   isOnline,
@@ -163,6 +163,7 @@ export default function CityDossier() {
   const router = useRouter();
   const { city } = router.query;
   const [pack, setPack] = useState<CityPack | null>(null);
+  const [packDownloadedAt, setPackDownloadedAt] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState(false);
   const [downloadStage, setDownloadStage] = useState<string | null>(null);
@@ -237,10 +238,9 @@ export default function CityDossier() {
     const run = async () => {
       if (!cityKey) return;
       setLoading(true);
-      const cached = await getCityPack(cityKey);
-      if (cached) {
-        setPack(cached);
-      }
+      const cached = await getCityPackRecord(cityKey);
+      if (cached?.pack) setPack(cached.pack);
+      setPackDownloadedAt(cached?.downloadedAt ?? null);
       setLoading(false);
     };
 
@@ -372,8 +372,9 @@ export default function CityDossier() {
       }
 
       await downloadCityPack(cityKey);
-      const refreshed = await getCityPack(cityKey);
-      setPack(refreshed);
+      const refreshed = await getCityPackRecord(cityKey);
+      setPack(refreshed?.pack ?? null);
+      setPackDownloadedAt(refreshed?.downloadedAt ?? null);
       setDownloading(false);
       setDownloadStage(null);
       vibrateDevice(VIBRATION_PATTERNS.CONFIRM);
@@ -443,6 +444,27 @@ export default function CityDossier() {
                 <span className="text-ops-night-muted">{c('city.header.status')}:</span>
                 <span className="text-ops-night-text">{statusLine}</span>
               </div>
+
+              {pack && (
+                <>
+                  <div className="flex justify-between gap-4">
+                    <span className="text-ops-night-muted">PACK ZONES:</span>
+                    <span className="text-ops-night-text">{pack.zones.length}</span>
+                  </div>
+                  <div className="flex justify-between gap-4">
+                    <span className="text-ops-night-muted">PACK VERSION:</span>
+                    <span className="text-ops-night-text">v{pack.version}</span>
+                  </div>
+                  <div className="flex justify-between gap-4">
+                    <span className="text-ops-night-muted">PACK GENERATED:</span>
+                    <span className="text-ops-night-text">{String(pack.generated_at)}</span>
+                  </div>
+                  <div className="flex justify-between gap-4">
+                    <span className="text-ops-night-muted">PACK CACHED:</span>
+                    <span className="text-ops-night-text">{packDownloadedAt ?? 'UNKNOWN'}</span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 

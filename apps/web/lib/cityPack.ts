@@ -1,13 +1,19 @@
 import { openDB, DBSchema, IDBPDatabase } from 'idb';
 import type { CityPack } from '@unmapped/lib';
 
-function normalizeCityKey(input: string): string {
+export function normalizeCityKey(input: string): string {
   return input
     .trim()
     .toLowerCase()
     .replace(/\s+/g, '')
     .replace(/[^a-z0-9]/g, '');
 }
+
+export type CityPackRecord = {
+  city: string;
+  pack: CityPack;
+  downloadedAt: string;
+};
 
 interface CityPackDB extends DBSchema {
   packs: {
@@ -25,6 +31,26 @@ interface CityPackDB extends DBSchema {
 }
 
 let dbPromise: Promise<IDBPDatabase<CityPackDB>> | null = null;
+
+function getBroadcastChannel(): BroadcastChannel | null {
+  try {
+    if (typeof window === 'undefined') return null;
+    if (!('BroadcastChannel' in window)) return null;
+    return new BroadcastChannel('unmapped-city-packs');
+  } catch {
+    return null;
+  }
+}
+
+function broadcastPackUpdate(message: { type: 'updated' | 'deleted'; city: string }) {
+  const channel = getBroadcastChannel();
+  if (!channel) return;
+  try {
+    channel.postMessage({ ...message, ts: Date.now() });
+  } finally {
+    channel.close();
+  }
+}
 
 function getDB() {
   if (!dbPromise) {
@@ -63,6 +89,8 @@ export async function downloadCityPack(city: string): Promise<void> {
       downloadedAt: new Date().toISOString(),
     });
 
+    broadcastPackUpdate({ type: 'updated', city: cityKey });
+
     console.log(`✓ ${cityKey} pack downloaded and cached`);
   } catch (error) {
     console.error('downloadCityPack error:', error);
@@ -83,6 +111,30 @@ export async function getCityPack(city: string): Promise<CityPack | null> {
   }
 }
 
+export async function getCityPackRecord(city: string): Promise<CityPackRecord | null> {
+  try {
+    const cityKey = normalizeCityKey(city);
+    if (!cityKey) return null;
+    const db = await getDB();
+    const record = await db.get('packs', cityKey);
+    return record ?? null;
+  } catch (error) {
+    console.error('getCityPackRecord error:', error);
+    return null;
+  }
+}
+
+export async function getAllCityPackRecords(): Promise<CityPackRecord[]> {
+  try {
+    const db = await getDB();
+    const records = await db.getAll('packs');
+    return records as CityPackRecord[];
+  } catch (error) {
+    console.error('getAllCityPackRecords error:', error);
+    return [];
+  }
+}
+
 export async function getDownloadedPacks(): Promise<string[]> {
   try {
     const db = await getDB();
@@ -100,6 +152,7 @@ export async function deleteCityPack(city: string): Promise<void> {
     if (!cityKey) return;
     const db = await getDB();
     await db.delete('packs', cityKey);
+    broadcastPackUpdate({ type: 'deleted', city: cityKey });
     console.log(`✓ ${cityKey} pack deleted`);
   } catch (error) {
     console.error('deleteCityPack error:', error);
