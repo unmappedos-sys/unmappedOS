@@ -577,7 +577,7 @@ export default function CityDossierV2() {
       vibrateDevice(VIBRATION_PATTERNS.CONFIRM);
     } catch (error) {
       console.error('Pack download failed:', error);
-      vibrateDevice(VIBRATION_PATTERNS.ERROR);
+      vibrateDevice(VIBRATION_PATTERNS.HAZARD_ALERT);
     }
     setDownloading(false);
   }, [cityKey, downloading]);
@@ -585,7 +585,7 @@ export default function CityDossierV2() {
   // Enter field handler
   const handleEnterField = useCallback(() => {
     if (!cityKey) return;
-    vibrateDevice(VIBRATION_PATTERNS.TAP);
+    vibrateDevice(VIBRATION_PATTERNS.LIGHT_CLICK);
     router.push(`/map/${encodeURIComponent(cityKey)}`);
   }, [cityKey, router]);
 
