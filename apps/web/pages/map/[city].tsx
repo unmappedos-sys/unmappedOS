@@ -1,15 +1,11 @@
 /**
- * LOCAL SENSE - Map Page
+ * NEXT MOVE — Primary Experience
  *
- * A calm, human-centered map experience.
- * One sentence. Gentle suggestions. Invisible intelligence.
+ * This is NOT a map app.
+ * This is a decision engine.
  *
- * This UX feels:
- * - calm
- * - human
- * - intuitive
- * - reassuring
- * - quietly intelligent
+ * Every time the user opens this, it answers:
+ * "What should I do right now to avoid overpaying or being annoyed?"
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -19,40 +15,39 @@ import dynamic from 'next/dynamic';
 
 import { getCityPack, downloadCityPack } from '@/lib/cityPack';
 import {
-  vibrateDevice,
-  VIBRATION_PATTERNS,
   isOnline,
   onConnectionChange,
   getSnapshotPosition,
+  vibrateDevice,
+  VIBRATION_PATTERNS,
 } from '@/lib/deviceAPI';
 
 import {
-  AdaptiveSentence,
-  ContextWhisper,
+  NextMoveCard,
+  WhyPanel,
+  FeedbackPrompt,
   HelpButton,
-  LongPressDetails,
-  generateSentence,
-  generateWhisper,
-  convertZoneToLocalArea,
-  type LocalArea,
+  generateRecommendation,
+  recordFeedback,
+  type Recommendation,
   type Position,
-  type Whisper,
   type HelpInfo,
-  type LocalSenseMapRef,
-} from '@/components/localsense';
-import type { AdaptiveSentence as AdaptiveSentenceType } from '@/components/localsense/types';
+} from '@/components/nextmove';
 
 import type { CityPack } from '@unmapped/lib';
 
-// Dynamic import for map
-const LocalSenseMap = dynamic(() => import('@/components/localsense/LocalSenseMap'), {
+// Dynamic import for map (only loaded when needed)
+const DirectionMap = dynamic(() => import('@/components/nextmove/DirectionMap'), {
   ssr: false,
 });
 
-export default function LocalSenseMapPage() {
+// Feedback timing: 20-45 minutes after recommendation
+const FEEDBACK_DELAY_MIN = 20 * 60 * 1000; // 20 minutes
+const FEEDBACK_DELAY_MAX = 45 * 60 * 1000; // 45 minutes
+
+export default function NextMovePage() {
   const router = useRouter();
   const { city } = router.query;
-  const mapRef = useRef<LocalSenseMapRef>(null);
 
   // Core state
   const [pack, setPack] = useState<CityPack | null>(null);
@@ -60,18 +55,15 @@ export default function LocalSenseMapPage() {
   const [offline, setOffline] = useState(false);
   const [userPosition, setUserPosition] = useState<Position | null>(null);
 
-  // UI state
-  const [sentence, setSentence] = useState<AdaptiveSentenceType | null>(null);
-  const [whisper, setWhisper] = useState<Whisper | null>(null);
-  const [selectedArea, setSelectedArea] = useState<LocalArea | null>(null);
-  const [showNavigation, setShowNavigation] = useState(false);
-  const [longPressArea, setLongPressArea] = useState<LocalArea | null>(null);
-  const [longPressPos, setLongPressPos] = useState({ x: 0, y: 0 });
-  const [showLongPress, setShowLongPress] = useState(false);
+  // Recommendation state
+  const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
+  const [showWhy, setShowWhy] = useState(false);
+  const [showMap, setShowMap] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
 
-  // Long press timer
-  const longPressTimer = useRef<NodeJS.Timeout | null>(null);
-  const tapCount = useRef(0);
+  // Refs
+  const feedbackTimer = useRef<NodeJS.Timeout | null>(null);
+  const lastRecommendationId = useRef<string | null>(null);
 
   // City key
   const cityKey = useMemo(() => {
@@ -79,18 +71,11 @@ export default function LocalSenseMapPage() {
     return city.toLowerCase().trim();
   }, [city]);
 
-  // Convert zones to local areas
-  const areas = useMemo<LocalArea[]>(() => {
-    if (!pack) return [];
-    return pack.zones.map(convertZoneToLocalArea);
-  }, [pack]);
-
   // Help info from pack
   const helpInfo = useMemo<HelpInfo>(() => {
     const defaultInfo: HelpInfo = {
-      police: '110',
-      ambulance: '119',
-      phrases: [],
+      police: '191',
+      ambulance: '1669',
     };
 
     if (!pack || pack.zones.length === 0) return defaultInfo;
@@ -98,17 +83,9 @@ export default function LocalSenseMapPage() {
     const firstZone = pack.zones[0];
     if (firstZone.cheat_sheet?.emergency_numbers) {
       return {
-        police: firstZone.cheat_sheet.emergency_numbers.police || '110',
-        ambulance: firstZone.cheat_sheet.emergency_numbers.ambulance || '119',
-        phrases: firstZone.cheat_sheet.taxi_phrase
-          ? [
-              {
-                local: firstZone.cheat_sheet.taxi_phrase,
-                english: 'Take me to...',
-                context: 'Show to taxi driver',
-              },
-            ]
-          : [],
+        police: firstZone.cheat_sheet.emergency_numbers.police || '191',
+        ambulance: firstZone.cheat_sheet.emergency_numbers.ambulance || '1669',
+        taxiPhrase: firstZone.cheat_sheet.taxi_phrase,
       };
     }
 
@@ -158,7 +135,7 @@ export default function LocalSenseMapPage() {
     return cleanup;
   }, []);
 
-  // GPS (snapshot only - no continuous tracking)
+  // Get position (snapshot only - no continuous tracking)
   useEffect(() => {
     const getPosition = async () => {
       const pos = await getSnapshotPosition();
@@ -169,115 +146,102 @@ export default function LocalSenseMapPage() {
 
     getPosition();
 
-    // Update every 30 seconds only
-    const interval = setInterval(getPosition, 30000);
+    // Update every 2 minutes only (battery conscious)
+    const interval = setInterval(getPosition, 120000);
     return () => clearInterval(interval);
   }, []);
 
-  // Generate sentence when context changes
+  // Generate recommendation when data changes
   useEffect(() => {
-    if (areas.length === 0) return;
+    if (!pack) return;
 
-    const newSentence = generateSentence(areas, userPosition, offline);
-    setSentence(newSentence);
-  }, [areas, userPosition, offline]);
+    const rec = generateRecommendation(pack, userPosition ?? undefined, offline);
+    setRecommendation(rec);
+    lastRecommendationId.current = rec.id;
 
-  // Area tap handler
-  const handleAreaTap = useCallback(
-    (area: LocalArea, screenPos: { x: number; y: number }) => {
-      // Clear long press
-      if (longPressTimer.current) {
-        clearTimeout(longPressTimer.current);
-        longPressTimer.current = null;
+    // Schedule feedback prompt
+    if (feedbackTimer.current) {
+      clearTimeout(feedbackTimer.current);
+    }
+
+    const delay = FEEDBACK_DELAY_MIN + Math.random() * (FEEDBACK_DELAY_MAX - FEEDBACK_DELAY_MIN);
+    feedbackTimer.current = setTimeout(() => {
+      setShowFeedback(true);
+    }, delay);
+
+    return () => {
+      if (feedbackTimer.current) {
+        clearTimeout(feedbackTimer.current);
       }
+    };
+  }, [pack, userPosition, offline]);
 
-      // Track taps
-      if (selectedArea?.id === area.id) {
-        tapCount.current++;
-      } else {
-        tapCount.current = 1;
-        setSelectedArea(area);
-        setShowNavigation(false);
-      }
+  // Handlers
+  const handleShowMe = useCallback(() => {
+    if (recommendation?.destination) {
+      setShowMap(true);
+      vibrateDevice(VIBRATION_PATTERNS.LIGHT_CLICK);
+    }
+  }, [recommendation]);
 
-      // First tap: show whisper
-      if (tapCount.current === 1) {
-        const whisperText = generateWhisper(area);
-        setWhisper({
-          id: area.id,
-          text: whisperText,
-          position: screenPos,
-          areaId: area.id,
-        });
-        vibrateDevice(VIBRATION_PATTERNS.LIGHT_CLICK);
-      }
+  const handleWhy = useCallback(() => {
+    setShowWhy(true);
+    vibrateDevice(VIBRATION_PATTERNS.LIGHT_CLICK);
+  }, []);
 
-      // Second tap: show navigation
-      if (tapCount.current >= 2) {
-        setShowNavigation(true);
-        vibrateDevice(VIBRATION_PATTERNS.LIGHT_CLICK);
-      }
+  const handleCloseMap = useCallback(() => {
+    setShowMap(false);
+  }, []);
 
-      // Start long press timer
-      longPressTimer.current = setTimeout(() => {
-        setLongPressArea(area);
-        setLongPressPos(screenPos);
-        setShowLongPress(true);
-        vibrateDevice(VIBRATION_PATTERNS.CONFIRM);
-      }, 600);
-    },
-    [selectedArea]
-  );
+  const handleNavigate = useCallback(() => {
+    if (recommendation?.destination) {
+      const { lat, lon } = recommendation.destination;
+      window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`, '_blank');
+    }
+  }, [recommendation]);
 
-  // Handle navigation
-  const handleNavigate = useCallback((area: LocalArea) => {
+  const handleFeedbackYes = useCallback(() => {
+    if (lastRecommendationId.current) {
+      recordFeedback(lastRecommendationId.current, true);
+    }
+    setShowFeedback(false);
     vibrateDevice(VIBRATION_PATTERNS.CONFIRM);
-
-    // Open in native maps
-    const url = `https://www.google.com/maps/dir/?api=1&destination=${area.center.lat},${area.center.lon}`;
-    window.open(url, '_blank');
   }, []);
 
-  // Dismiss whisper
-  const handleDismissWhisper = useCallback(() => {
-    setWhisper(null);
-    setSelectedArea(null);
-    setShowNavigation(false);
-    tapCount.current = 0;
-  }, []);
-
-  // Dismiss long press
-  const handleDismissLongPress = useCallback(() => {
-    setShowLongPress(false);
-    setLongPressArea(null);
-  }, []);
-
-  // Map move handler - subtle haptic when entering good area
-  const handleMapMove = useCallback(() => {
-    // Could add subtle feedback here
-  }, []);
+  const handleFeedbackNo = useCallback(() => {
+    if (lastRecommendationId.current) {
+      recordFeedback(lastRecommendationId.current, false);
+    }
+    setShowFeedback(false);
+    // Silently adjust - maybe generate new recommendation
+    if (pack) {
+      const rec = generateRecommendation(pack, userPosition ?? undefined, offline);
+      setRecommendation(rec);
+      lastRecommendationId.current = rec.id;
+    }
+  }, [pack, userPosition, offline]);
 
   // Loading state
   if (loading) {
     return (
-      <div className="h-screen flex items-center justify-center bg-stone-50">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
-          <div className="w-8 h-8 border-2 border-stone-300 border-t-stone-600 rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-stone-500 text-sm">Loading local info...</p>
+          <div className="w-6 h-6 border-2 border-stone-200 border-t-stone-600 rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-stone-400 text-sm">Loading...</p>
         </div>
       </div>
     );
   }
 
-  // No pack state
+  // No pack
   if (!pack) {
     return (
-      <div className="h-screen flex items-center justify-center bg-stone-50">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center px-8">
-          <p className="text-stone-600 mb-4">No local info available.</p>
+          <p className="text-stone-600 mb-4">No data for this city yet.</p>
           <button
             onClick={() => router.push(`/city/${cityKey}`)}
-            className="px-6 py-3 bg-stone-800 text-white rounded-xl text-sm font-medium"
+            className="px-6 py-3 bg-stone-900 text-white rounded-xl font-medium"
           >
             Download first
           </button>
@@ -289,60 +253,66 @@ export default function LocalSenseMapPage() {
   return (
     <>
       <Head>
-        <title>{pack.city} — Unmapped</title>
+        <title>Next Move — {pack.city}</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
         />
       </Head>
 
-      <div className="h-screen w-screen overflow-hidden bg-stone-50 relative">
-        {/* Adaptive Sentence (Top) */}
-        <div className="absolute top-0 left-0 right-0 z-20 pt-safe">
-          <AdaptiveSentence sentence={sentence} isOffline={offline} />
-        </div>
+      <div className="min-h-screen flex flex-col bg-white">
+        {/* Header */}
+        <header className="pt-safe px-6 pt-6 pb-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-sm font-semibold text-stone-400 tracking-wider uppercase">
+              Next Move
+            </h1>
 
-        {/* Map */}
-        <LocalSenseMap
-          ref={mapRef}
-          areas={areas}
-          userPosition={userPosition}
-          isOffline={offline}
-          onAreaTap={handleAreaTap}
-          onMapMove={handleMapMove}
-          className="absolute inset-0"
-        />
-
-        {/* Context Whisper */}
-        <ContextWhisper
-          whisper={whisper}
-          area={selectedArea}
-          showNavigation={showNavigation}
-          onNavigate={handleNavigate}
-          onDismiss={handleDismissWhisper}
-        />
-
-        {/* Long Press Details */}
-        <LongPressDetails
-          area={longPressArea}
-          visible={showLongPress}
-          position={longPressPos}
-          onDismiss={handleDismissLongPress}
-        />
-
-        {/* Help Button (Bottom Right) */}
-        <div className="absolute bottom-6 right-6 z-20 pb-safe">
-          <HelpButton info={helpInfo} />
-        </div>
-
-        {/* Offline indicator - very subtle */}
-        {offline && (
-          <div className="absolute bottom-6 left-6 z-20 pb-safe">
-            <div className="bg-stone-200/80 backdrop-blur-sm px-3 py-1.5 rounded-full">
-              <span className="text-stone-500 text-xs">Offline</span>
-            </div>
+            {/* Offline indicator */}
+            {offline && (
+              <div className="px-3 py-1 bg-stone-100 rounded-full">
+                <span className="text-stone-500 text-xs font-medium">Offline</span>
+              </div>
+            )}
           </div>
-        )}
+        </header>
+
+        {/* Main Content */}
+        <main className="flex-1 flex flex-col">
+          <NextMoveCard
+            recommendation={recommendation}
+            onShowMe={handleShowMe}
+            onWhy={handleWhy}
+            loading={loading}
+          />
+        </main>
+
+        {/* Footer - City name (subtle) */}
+        <footer className="pb-safe px-6 py-4">
+          <p className="text-center text-stone-300 text-xs">{pack.city}</p>
+        </footer>
+
+        {/* Why Panel */}
+        <WhyPanel
+          recommendation={recommendation}
+          visible={showWhy}
+          onClose={() => setShowWhy(false)}
+        />
+
+        {/* Direction Map */}
+        <DirectionMap
+          userPosition={userPosition}
+          destination={recommendation?.destination ?? null}
+          visible={showMap}
+          onClose={handleCloseMap}
+          onNavigate={handleNavigate}
+        />
+
+        {/* Feedback Prompt */}
+        <FeedbackPrompt visible={showFeedback} onYes={handleFeedbackYes} onNo={handleFeedbackNo} />
+
+        {/* Help Button (Always visible) */}
+        <HelpButton info={helpInfo} />
       </div>
     </>
   );
