@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -358,7 +358,7 @@ export default function CityDossier() {
     return { zone: best.zone, why: whyParts.join(' • ') };
   }, [pack]);
 
-  const handleDownload = async () => {
+  const handleDownload = useCallback(async () => {
     if (!cityKey) return;
 
     setDownloading(true);
@@ -383,7 +383,18 @@ export default function CityDossier() {
       setDownloading(false);
       setDownloadStage(null);
     }
-  };
+  }, [cityKey]);
+
+  useEffect(() => {
+    if (!cityKey) return;
+    if (loading) return;
+    if (pack) return;
+    if (downloading) return;
+    if (!isOnline()) return;
+
+    // Auto-acquire a pack on first entry when online.
+    handleDownload();
+  }, [cityKey, downloading, handleDownload, loading, pack]);
 
   if (!cityData || !cityKey) return null;
 

@@ -1,6 +1,14 @@
 import { openDB, DBSchema, IDBPDatabase } from 'idb';
 import type { CityPack } from '@unmapped/lib';
 
+function normalizeCityKey(input: string): string {
+  return input
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '')
+    .replace(/[^a-z0-9]/g, '');
+}
+
 interface CityPackDB extends DBSchema {
   packs: {
     key: string;
@@ -36,8 +44,11 @@ function getDB() {
 
 export async function downloadCityPack(city: string): Promise<void> {
   try {
+    const cityKey = normalizeCityKey(city);
+    if (!cityKey) throw new Error('Invalid city key');
+
     // Fetch pack from API or static file
-    const response = await fetch(`/api/packs/${city}`);
+    const response = await fetch(`/api/packs/${encodeURIComponent(cityKey)}`);
     if (!response.ok) {
       throw new Error(`Failed to fetch pack: ${response.statusText}`);
     }
@@ -47,12 +58,12 @@ export async function downloadCityPack(city: string): Promise<void> {
     // Store in IndexedDB
     const db = await getDB();
     await db.put('packs', {
-      city,
+      city: cityKey,
       pack,
       downloadedAt: new Date().toISOString(),
     });
 
-    console.log(`✓ ${city} pack downloaded and cached`);
+    console.log(`✓ ${cityKey} pack downloaded and cached`);
   } catch (error) {
     console.error('downloadCityPack error:', error);
     throw error;
@@ -61,8 +72,10 @@ export async function downloadCityPack(city: string): Promise<void> {
 
 export async function getCityPack(city: string): Promise<CityPack | null> {
   try {
+    const cityKey = normalizeCityKey(city);
+    if (!cityKey) return null;
     const db = await getDB();
-    const record = await db.get('packs', city);
+    const record = await db.get('packs', cityKey);
     return record?.pack || null;
   } catch (error) {
     console.error('getCityPack error:', error);
@@ -83,9 +96,11 @@ export async function getDownloadedPacks(): Promise<string[]> {
 
 export async function deleteCityPack(city: string): Promise<void> {
   try {
+    const cityKey = normalizeCityKey(city);
+    if (!cityKey) return;
     const db = await getDB();
-    await db.delete('packs', city);
-    console.log(`✓ ${city} pack deleted`);
+    await db.delete('packs', cityKey);
+    console.log(`✓ ${cityKey} pack deleted`);
   } catch (error) {
     console.error('deleteCityPack error:', error);
     throw error;
