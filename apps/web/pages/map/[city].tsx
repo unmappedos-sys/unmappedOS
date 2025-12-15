@@ -99,28 +99,47 @@ export default function NextMovePage() {
     const loadPack = async () => {
       setLoading(true);
 
-      const cached = await getCityPack(cityKey);
-      if (cached) {
-        setPack(cached);
+      try {
+        // Try cached first
+        let currentPack = await getCityPack(cityKey);
+
+        if (currentPack) {
+          setPack(currentPack);
+          // Generate recommendation immediately
+          const rec = generateRecommendation(currentPack, undefined, !isOnline());
+          setRecommendation(rec);
+          lastRecommendationId.current = rec.id;
+        }
+
+        // If online, try to download/refresh
+        if (isOnline()) {
+          try {
+            await downloadCityPack(cityKey);
+            const refreshed = await getCityPack(cityKey);
+            if (refreshed) {
+              setPack(refreshed);
+              currentPack = refreshed;
+              // Update recommendation with new data
+              const rec = generateRecommendation(refreshed, undefined, false);
+              setRecommendation(rec);
+              lastRecommendationId.current = rec.id;
+            }
+          } catch (error) {
+            console.error('Failed to download pack:', error);
+            // Continue with cached pack if available
+          }
+        }
+
+        // If still no pack and offline, redirect
+        if (!currentPack && !isOnline()) {
+          router.push(`/city/${cityKey}`);
+          return;
+        }
+      } catch (error) {
+        console.error('Pack loading error:', error);
+      } finally {
         setLoading(false);
       }
-
-      if (isOnline()) {
-        try {
-          await downloadCityPack(cityKey);
-          const refreshed = await getCityPack(cityKey);
-          if (refreshed) setPack(refreshed);
-        } catch (error) {
-          console.error('Failed to refresh pack:', error);
-        }
-      }
-
-      if (!cached && !isOnline()) {
-        router.push(`/city/${cityKey}`);
-        return;
-      }
-
-      setLoading(false);
     };
 
     loadPack();
