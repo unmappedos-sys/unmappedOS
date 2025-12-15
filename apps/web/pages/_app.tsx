@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import '@/styles/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@/components/tactical/tactical.css';
+import '@/components/localsense/localsense.css';
 import BootSequence from '@/components/ux/BootSequence';
 
 // Dynamically import OpsProvider with no SSR to avoid build issues
