@@ -38,7 +38,25 @@ export type CopyKey =
   | 'daily.anchorsReached'
   | 'daily.overpaymentsAvoided'
   | 'share.localPriceVerified'
-  | 'share.date';
+  | 'share.date'
+  // New tactical copy keys
+  | 'action.acquirePack'
+  | 'action.enterField'
+  | 'action.initiateSync'
+  | 'action.openOfflineMap'
+  | 'section.dossier'
+  | 'section.intelGrid'
+  | 'section.threatAssessment'
+  | 'section.economics'
+  | 'section.atmospherics'
+  | 'section.signal'
+  | 'section.tacticalIntel'
+  | 'section.liveWire'
+  | 'status.operational'
+  | 'status.offline'
+  | 'status.connectionSevered'
+  | 'status.assetsSecured'
+  | 'status.cacheActive';
 
 export const COPY: Record<CopyKey, string> = {
   'boot.initializing': 'INITIALIZING LOCAL INTELLIGENCE',
@@ -51,10 +69,10 @@ export const COPY: Record<CopyKey, string> = {
   'intel.degraded': 'INTEL DEGRADED',
   'intel.proceedWithCaution': 'PROCEED WITH CAUTION',
 
-  'city.header.city': 'CITY',
+  'city.header.city': 'TARGET',
   'city.header.localTime': 'LOCAL TIME',
   'city.header.status': 'STATUS',
-  'city.header.weather': 'WEATHER',
+  'city.header.weather': 'ATMOSPHERICS',
 
   'tpi.title': 'TOURIST PRESSURE INDEX',
   'tpi.touristPressure': 'TOURIST PRESSURE',
@@ -62,10 +80,10 @@ export const COPY: Record<CopyKey, string> = {
   'tpi.youWereRight': 'YOU WERE RIGHT',
   'tpi.areaOverpriced': 'THIS AREA IS OVERPRICED',
 
-  'startHere.title': 'WHERE DO I GO FIRST?',
+  'startHere.title': 'RECOMMENDED INSERTION POINT',
   'startHere.zone': 'ZONE',
   'startHere.anchor': 'ANCHOR',
-  'startHere.why': 'WHY',
+  'startHere.why': 'RATIONALE',
   'startHere.navigate': 'NAVIGATE TO ANCHOR',
 
   'zone.lowPressure': 'LOW PRESSURE ZONE',
@@ -91,6 +109,27 @@ export const COPY: Record<CopyKey, string> = {
 
   'share.localPriceVerified': 'LOCAL PRICE VERIFIED',
   'share.date': 'DATE',
+
+  // New tactical copy
+  'action.acquirePack': 'ACQUIRE CITY PACK',
+  'action.enterField': 'ENTER FIELD',
+  'action.initiateSync': 'INITIATE SYNC',
+  'action.openOfflineMap': 'OPEN OFFLINE MAP',
+
+  'section.dossier': 'DOSSIER',
+  'section.intelGrid': 'INTEL GRID',
+  'section.threatAssessment': 'THREAT ASSESSMENT',
+  'section.economics': 'ECONOMICS',
+  'section.atmospherics': 'ATMOSPHERICS',
+  'section.signal': 'SIGNAL',
+  'section.tacticalIntel': 'TACTICAL INTEL',
+  'section.liveWire': 'LIVE WIRE',
+
+  'status.operational': 'OPERATIONAL',
+  'status.offline': 'OFFLINE',
+  'status.connectionSevered': 'CONNECTION SEVERED',
+  'status.assetsSecured': 'ASSETS SECURED',
+  'status.cacheActive': 'LOCAL CACHE ACTIVE',
 };
 
 export function c(key: CopyKey, vars?: Record<string, string | number>): string {

@@ -43,7 +43,7 @@ function getUsageStats(): MapUsageStats {
     }
 
     const stats: MapUsageStats = JSON.parse(stored);
-    
+
     // Reset if new month
     if (stats.month !== getCurrentMonth()) {
       const newStats = createEmptyStats();
@@ -70,7 +70,7 @@ function createEmptyStats(): MapUsageStats {
 
 function saveUsageStats(stats: MapUsageStats): void {
   if (typeof window === 'undefined') return;
-  
+
   try {
     stats.lastUpdated = Date.now();
     localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
@@ -84,13 +84,13 @@ function saveUsageStats(stats: MapUsageStats): void {
  */
 export function recordMapLoad(provider: 'mapbox' | 'maplibre'): void {
   const stats = getUsageStats();
-  
+
   if (provider === 'mapbox') {
     stats.mapboxLoads++;
   } else {
     stats.maplibreLoads++;
   }
-  
+
   saveUsageStats(stats);
 }
 
@@ -99,9 +99,12 @@ export function recordMapLoad(provider: 'mapbox' | 'maplibre'): void {
  */
 export function getMapProviderDecision(): MapProviderDecision {
   const stats = getUsageStats();
-  const configuredProvider = process.env.NEXT_PUBLIC_MAP_PROVIDER as 'mapbox' | 'maplibre' | undefined;
+  const configuredProvider = process.env.NEXT_PUBLIC_MAP_PROVIDER as
+    | 'mapbox'
+    | 'maplibre'
+    | undefined;
   const hasMapboxToken = !!process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
-  
+
   const usagePercent = stats.mapboxLoads / MAPBOX_FREE_TIER_LIMIT;
   const remainingLoads = MAPBOX_FREE_TIER_LIMIT - stats.mapboxLoads;
   const isWarning = usagePercent >= WARNING_THRESHOLD;
@@ -116,6 +119,30 @@ export function getMapProviderDecision(): MapProviderDecision {
       remainingLoads,
       isWarning,
       isCritical,
+    };
+  }
+
+  // Configured provider takes precedence over everything else.
+  // This avoids surprising Mapbox loads when a token is present.
+  if (configuredProvider === 'maplibre') {
+    return {
+      provider: 'maplibre',
+      reason: 'Configured provider: maplibre',
+      usagePercent,
+      remainingLoads,
+      isWarning,
+      isCritical,
+    };
+  }
+
+  if (configuredProvider === 'mapbox' && !hasMapboxToken) {
+    return {
+      provider: 'maplibre',
+      reason: 'Configured provider mapbox but no token configured',
+      usagePercent: 0,
+      remainingLoads: MAPBOX_FREE_TIER_LIMIT,
+      isWarning: false,
+      isCritical: false,
     };
   }
 
@@ -136,9 +163,11 @@ export function getMapProviderDecision(): MapProviderDecision {
     if (!stats.autoSwitched) {
       stats.autoSwitched = true;
       saveUsageStats(stats);
-      console.warn(`[MapUsage] Auto-switched to MapLibre. Mapbox usage at ${(usagePercent * 100).toFixed(1)}%`);
+      console.warn(
+        `[MapUsage] Auto-switched to MapLibre. Mapbox usage at ${(usagePercent * 100).toFixed(1)}%`
+      );
     }
-    
+
     return {
       provider: 'maplibre',
       reason: `Auto-switched: Mapbox at ${(usagePercent * 100).toFixed(1)}% of free tier`,
@@ -149,14 +178,28 @@ export function getMapProviderDecision(): MapProviderDecision {
     };
   }
 
-  // Use configured provider (default to mapbox if token exists)
-  const provider = configuredProvider || 'mapbox';
-  
+  // If Mapbox is explicitly configured and under limit, allow it.
+  if (configuredProvider === 'mapbox') {
+    return {
+      provider: 'mapbox',
+      reason: isWarning
+        ? `Using mapbox (warning: ${(usagePercent * 100).toFixed(1)}% of free tier used)`
+        : 'Using configured provider: mapbox',
+      usagePercent,
+      remainingLoads,
+      isWarning,
+      isCritical,
+    };
+  }
+
+  // Default: MapLibre (even if a Mapbox token exists).
+  const provider = 'maplibre' as const;
+
   return {
     provider,
-    reason: isWarning 
-      ? `Using ${provider} (warning: ${(usagePercent * 100).toFixed(1)}% of free tier used)`
-      : `Using configured provider: ${provider}`,
+    reason: isWarning
+      ? `Using maplibre (warning: ${(usagePercent * 100).toFixed(1)}% of free tier used)`
+      : 'Defaulting to maplibre',
     usagePercent,
     remainingLoads,
     isWarning,
@@ -167,8 +210,8 @@ export function getMapProviderDecision(): MapProviderDecision {
 /**
  * Get current usage statistics
  */
-export function getMapUsageStats(): MapUsageStats & { 
-  usagePercent: number; 
+export function getMapUsageStats(): MapUsageStats & {
+  usagePercent: number;
   remainingLoads: number;
   freeLimit: number;
 } {

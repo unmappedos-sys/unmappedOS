@@ -8,7 +8,7 @@ import {
   setMapProviderOverride,
   resetMapUsageStats,
   shouldShowUsageWarning,
-  hasAutoSwitched,
+  // hasAutoSwitched - exported but tested via getMapProviderDecision
 } from '../lib/mapUsageTracker';
 
 describe('mapUsageTracker', () => {
@@ -27,8 +27,15 @@ describe('mapUsageTracker', () => {
       expect(decision.reason).toContain('No Mapbox token');
     });
 
-    it('should use Mapbox when token is configured and under limit', () => {
+    it('should default to MapLibre even when a Mapbox token exists', () => {
       process.env.NEXT_PUBLIC_MAPBOX_TOKEN = 'pk.test_token';
+      const decision = getMapProviderDecision();
+      expect(decision.provider).toBe('maplibre');
+    });
+
+    it('should use Mapbox when explicitly configured', () => {
+      process.env.NEXT_PUBLIC_MAPBOX_TOKEN = 'pk.test_token';
+      process.env.NEXT_PUBLIC_MAP_PROVIDER = 'mapbox';
       const decision = getMapProviderDecision();
       expect(decision.provider).toBe('mapbox');
     });
@@ -78,13 +85,16 @@ describe('mapUsageTracker', () => {
   describe('auto-switching', () => {
     it('should auto-switch to MapLibre at 90% usage', () => {
       process.env.NEXT_PUBLIC_MAPBOX_TOKEN = 'pk.test_token';
-      
+
       // Simulate being at 90% usage (45,000 loads)
       const stats = getMapUsageStats();
-      localStorage.setItem('unmapped_map_usage', JSON.stringify({
-        ...stats,
-        mapboxLoads: 45001,
-      }));
+      localStorage.setItem(
+        'unmapped_map_usage',
+        JSON.stringify({
+          ...stats,
+          mapboxLoads: 45001,
+        })
+      );
 
       const decision = getMapProviderDecision();
       expect(decision.provider).toBe('maplibre');
@@ -94,13 +104,16 @@ describe('mapUsageTracker', () => {
 
     it('should show warning at 75% usage', () => {
       process.env.NEXT_PUBLIC_MAPBOX_TOKEN = 'pk.test_token';
-      
+
       // Simulate being at 75% usage (37,500 loads)
       const stats = getMapUsageStats();
-      localStorage.setItem('unmapped_map_usage', JSON.stringify({
-        ...stats,
-        mapboxLoads: 37500,
-      }));
+      localStorage.setItem(
+        'unmapped_map_usage',
+        JSON.stringify({
+          ...stats,
+          mapboxLoads: 37500,
+        })
+      );
 
       const decision = getMapProviderDecision();
       expect(decision.isWarning).toBe(true);
@@ -113,9 +126,9 @@ describe('mapUsageTracker', () => {
       recordMapLoad('mapbox');
       recordMapLoad('mapbox');
       recordMapLoad('maplibre');
-      
+
       resetMapUsageStats();
-      
+
       const stats = getMapUsageStats();
       expect(stats.mapboxLoads).toBe(0);
       expect(stats.maplibreLoads).toBe(0);
@@ -125,25 +138,31 @@ describe('mapUsageTracker', () => {
   describe('shouldShowUsageWarning', () => {
     it('should return true at warning threshold but not critical', () => {
       process.env.NEXT_PUBLIC_MAPBOX_TOKEN = 'pk.test_token';
-      
+
       // At 80% - warning but not critical
       const stats = getMapUsageStats();
-      localStorage.setItem('unmapped_map_usage', JSON.stringify({
-        ...stats,
-        mapboxLoads: 40000, // 80%
-      }));
+      localStorage.setItem(
+        'unmapped_map_usage',
+        JSON.stringify({
+          ...stats,
+          mapboxLoads: 40000, // 80%
+        })
+      );
 
       expect(shouldShowUsageWarning()).toBe(true);
     });
 
     it('should return false below warning threshold', () => {
       process.env.NEXT_PUBLIC_MAPBOX_TOKEN = 'pk.test_token';
-      
+
       const stats = getMapUsageStats();
-      localStorage.setItem('unmapped_map_usage', JSON.stringify({
-        ...stats,
-        mapboxLoads: 10000, // 20%
-      }));
+      localStorage.setItem(
+        'unmapped_map_usage',
+        JSON.stringify({
+          ...stats,
+          mapboxLoads: 10000, // 20%
+        })
+      );
 
       expect(shouldShowUsageWarning()).toBe(false);
     });
@@ -152,18 +171,21 @@ describe('mapUsageTracker', () => {
   describe('month rollover', () => {
     it('should reset stats on new month', () => {
       // Set stats from previous month
-      localStorage.setItem('unmapped_map_usage', JSON.stringify({
-        month: '2024-01', // Old month
-        mapboxLoads: 49000,
-        maplibreLoads: 1000,
-        lastUpdated: Date.now(),
-        autoSwitched: true,
-        manualOverride: null,
-      }));
+      localStorage.setItem(
+        'unmapped_map_usage',
+        JSON.stringify({
+          month: '2024-01', // Old month
+          mapboxLoads: 49000,
+          maplibreLoads: 1000,
+          lastUpdated: Date.now(),
+          autoSwitched: true,
+          manualOverride: null,
+        })
+      );
 
       const stats = getMapUsageStats();
       const currentMonth = new Date().toISOString().slice(0, 7);
-      
+
       expect(stats.month).toBe(currentMonth);
       expect(stats.mapboxLoads).toBe(0); // Reset
       expect(stats.autoSwitched).toBe(false); // Reset

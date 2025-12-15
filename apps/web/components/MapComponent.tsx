@@ -1,8 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import maplibregl from 'maplibre-gl';
-import mapboxgl from 'mapbox-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import 'mapbox-gl/dist/mapbox-gl.css';
 import type { Zone } from '@unmapped/lib';
 import { getMapProviderDecision, recordMapLoad } from '../lib/mapUsageTracker';
 
@@ -13,7 +11,9 @@ interface MapComponentProps {
   onAnchorReached?: (anchor: Zone['selected_anchor']) => void;
 }
 
-type MapInstance = maplibregl.Map | mapboxgl.Map;
+// Mapbox is only loaded dynamically when needed.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type MapInstance = maplibregl.Map | any;
 type MapProvider = 'mapbox' | 'maplibre';
 
 export default function MapComponent({
@@ -46,111 +46,128 @@ export default function MapComponent({
   useEffect(() => {
     if (!mapContainer.current) return;
 
-    // Get smart provider decision based on usage tracking
-    const decision = getMapProviderDecision();
-    providerRef.current = decision.provider;
+    let disposed = false;
+    let localMap: MapInstance | null = null;
 
-    // Calculate center from first zone
-    const center: [number, number] =
-      zones.length > 0 ? [zones[0].centroid.lon, zones[0].centroid.lat] : [100.5, 13.75]; // Bangkok default
+    const init = async () => {
+      // Get smart provider decision based on usage tracking
+      const decision = getMapProviderDecision();
+      providerRef.current = decision.provider;
 
-    let mapInstance: MapInstance;
+      // Calculate center from first zone
+      const center: [number, number] =
+        zones.length > 0 ? [zones[0].centroid.lon, zones[0].centroid.lat] : [100.5, 13.75];
 
-    if (decision.provider === 'mapbox') {
-      // Use Mapbox GL
-      const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
-      mapboxgl.accessToken = mapboxToken;
+      if (decision.provider === 'mapbox') {
+        const mod = await import('mapbox-gl');
+        const mapboxgl = mod.default;
 
-      const mapboxStyle = process.env.NEXT_PUBLIC_MAPBOX_STYLE || 'mapbox://styles/mapbox/dark-v11';
-
-      mapInstance = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: mapboxStyle,
-        center,
-        zoom: 13,
-      });
-
-      // Record the load
-      recordMapLoad('mapbox');
-
-      console.log(
-        `[Map] Using Mapbox (${decision.remainingLoads.toLocaleString()} loads remaining this month)`
-      );
-    } else {
-      // Use MapLibre (free fallback)
-      const styleUrl =
-        process.env.NEXT_PUBLIC_MAPLIBRE_STYLE_URL || 'https://demotiles.maplibre.org/style.json';
-
-      mapInstance = new maplibregl.Map({
-        container: mapContainer.current,
-        style: styleUrl,
-        center,
-        zoom: 13,
-      });
-
-      // Record the load
-      recordMapLoad('maplibre');
-
-      console.log(`[Map] Using MapLibre (${decision.reason})`);
-    }
-
-    map.current = mapInstance;
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (mapInstance as any).on('load', () => {
-      setMapLoaded(true);
-
-      // Add zones as polygons
-      zones.forEach((zone) => {
-        const sourceId = `zone-${zone.zone_id}`;
-        const layerId = `zone-layer-${zone.zone_id}`;
-
-        if (map.current) {
-          map.current.addSource(sourceId, {
-            type: 'geojson',
-            data: {
-              type: 'Feature',
-              geometry: zone.polygon,
-              properties: {
-                zone_id: zone.zone_id,
-                status: zone.status,
-                neon_color: zone.neon_color,
-              },
-            },
-          });
-
-          map.current.addLayer({
-            id: layerId,
-            type: 'fill',
-            source: sourceId,
-            paint: {
-              'fill-color': zone.status === 'OFFLINE' ? '#666666' : zone.neon_color,
-              'fill-opacity': zone.status === 'OFFLINE' ? 0.2 : 0.4,
-            },
-          });
-
-          // Add zone borders
-          map.current.addLayer({
-            id: `${layerId}-border`,
-            type: 'line',
-            source: sourceId,
-            paint: {
-              'line-color': zone.status === 'OFFLINE' ? '#999999' : zone.neon_color,
-              'line-width': 2,
-            },
-          });
-
-          // Click handler
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (map.current as any).on('click', layerId, () => {
-            onZoneClick?.(zone);
-          });
+        const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
+        if (!mapboxToken) {
+          throw new Error('Mapbox selected but NEXT_PUBLIC_MAPBOX_TOKEN is missing');
         }
+
+        mapboxgl.accessToken = mapboxToken;
+        const mapboxStyle =
+          process.env.NEXT_PUBLIC_MAPBOX_STYLE || 'mapbox://styles/mapbox/dark-v11';
+
+        localMap = new mapboxgl.Map({
+          container: mapContainer.current!,
+          style: mapboxStyle,
+          center,
+          zoom: 13,
+        });
+
+        recordMapLoad('mapbox');
+        console.log(
+          `[Map] Using Mapbox (${decision.remainingLoads.toLocaleString()} loads remaining this month)`
+        );
+      } else {
+        const styleUrl =
+          process.env.NEXT_PUBLIC_MAPLIBRE_STYLE_URL || 'https://demotiles.maplibre.org/style.json';
+
+        localMap = new maplibregl.Map({
+          container: mapContainer.current!,
+          style: styleUrl,
+          center,
+          zoom: 13,
+        });
+
+        recordMapLoad('maplibre');
+        console.log(`[Map] Using MapLibre (${decision.reason})`);
+      }
+
+      if (disposed) {
+        localMap?.remove();
+        return;
+      }
+
+      map.current = localMap;
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (localMap as any).on('load', () => {
+        setMapLoaded(true);
+
+        // Add zones as polygons
+        zones.forEach((zone) => {
+          const sourceId = `zone-${zone.zone_id}`;
+          const layerId = `zone-layer-${zone.zone_id}`;
+
+          if (map.current) {
+            map.current.addSource(sourceId, {
+              type: 'geojson',
+              data: {
+                type: 'Feature',
+                geometry: zone.polygon,
+                properties: {
+                  zone_id: zone.zone_id,
+                  status: zone.status,
+                  neon_color: zone.neon_color,
+                },
+              },
+            });
+
+            map.current.addLayer({
+              id: layerId,
+              type: 'fill',
+              source: sourceId,
+              paint: {
+                'fill-color': zone.status === 'OFFLINE' ? '#666666' : zone.neon_color,
+                'fill-opacity': zone.status === 'OFFLINE' ? 0.08 : 0.16,
+              },
+            });
+
+            // Add zone borders
+            map.current.addLayer({
+              id: `${layerId}-border`,
+              type: 'line',
+              source: sourceId,
+              paint: {
+                'line-color': zone.status === 'OFFLINE' ? '#999999' : zone.neon_color,
+                'line-width': 1,
+              },
+            });
+
+            // Click handler
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (map.current as any).on('click', layerId, () => {
+              onZoneClick?.(zone);
+            });
+          }
+        });
       });
-    });
+    };
+
+    init();
 
     return () => {
-      map.current?.remove();
+      disposed = true;
+      try {
+        localMap?.remove();
+      } catch {
+        // ignore
+      }
+      map.current = null;
     };
   }, [zones, onZoneClick, onAnchorReached]);
 
@@ -196,7 +213,7 @@ export default function MapComponent({
     };
   }, [mapLoaded, onZoneClick, pointInPolygon, zones]);
 
-  const locateUser = useCallback(() => {
+  const locateUser = useCallback(async () => {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -206,8 +223,11 @@ export default function MapComponent({
           };
 
           if (map.current) {
-            const MarkerImpl =
-              providerRef.current === 'mapbox' ? mapboxgl.Marker : maplibregl.Marker;
+            const resolveMarker = async () => {
+              if (providerRef.current !== 'mapbox') return maplibregl.Marker;
+              const mod = await import('mapbox-gl');
+              return mod.default.Marker;
+            };
 
             // Add user marker
             const el = document.createElement('div');
@@ -219,9 +239,18 @@ export default function MapComponent({
             el.style.border = '3px solid white';
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            new MarkerImpl({ element: el }).setLngLat([pos.lon, pos.lat]).addTo(map.current as any);
-
-            map.current.flyTo({ center: [pos.lon, pos.lat], zoom: 15 });
+            resolveMarker()
+              .then((MarkerImpl) => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                new MarkerImpl({ element: el })
+                  .setLngLat([pos.lon, pos.lat])
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  .addTo(map.current as any);
+                map.current?.flyTo({ center: [pos.lon, pos.lat], zoom: 15 });
+              })
+              .catch(() => {
+                // ignore
+              });
           }
 
           // Vibrate on location found
@@ -239,7 +268,7 @@ export default function MapComponent({
 
   return (
     <div className="relative w-full h-full">
-      <div ref={mapContainer} className="w-full h-full mapboxgl-canvas maplibregl-canvas" />
+      <div ref={mapContainer} className="w-full h-full" />
 
       {/* Map controls overlay */}
       <div className="absolute top-4 right-4 space-y-2">

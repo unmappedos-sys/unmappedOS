@@ -1,554 +1,752 @@
+/**
+ * UNMAPPED OS - City Dossier Page
+ *
+ * This is NOT a travel guide.
+ * This is NOT a map app.
+ * This is a LOADOUT SCREEN before entering a city.
+ *
+ * UX Philosophy:
+ * - Information density WITHOUT clutter
+ * - One dominant action per screen
+ * - Always show "why" + confidence
+ * - Tactical, not tourist
+ * - Prepared > impressed
+ */
+
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
-import type { CityPack, Zone } from '@unmapped/lib';
+import type { CityPack } from '@unmapped/lib';
 import { downloadCityPack, getCityPackRecord } from '@/lib/cityPack';
-import { computeTouristPressureIndex } from '@/lib/intel/touristPressure';
-import {
-  isOnline,
-  onConnectionChange,
-  openGoogleMaps,
-  vibrateDevice,
-  VIBRATION_PATTERNS,
-} from '@/lib/deviceAPI';
-import TouristPressureGauge from '@/components/ux/TouristPressureGauge';
-import { formatHHMM } from '@/lib/ux/time';
-import { c } from '@/lib/ux/copy';
+import { isOnline, onConnectionChange, vibrateDevice, VIBRATION_PATTERNS } from '@/lib/deviceAPI';
 
-const CITIES = {
+// HUD Components
+import {
+  SatelliteLock,
+  BlackBoxActuator,
+  IntelGrid,
+  LiveWire,
+  CheatSheetPreview,
+  OfflineOverlay,
+  StickyHeader,
+  HUDFrame,
+  CityAccent,
+  IntelEvent,
+  CheatSheetItem,
+} from '@/components/hud';
+
+// City Data Registry
+const CITY_REGISTRY: Record<
+  string,
+  {
+    name: string;
+    code: string;
+    country: string;
+    accent: CityAccent;
+    coordinates: { lat: number; lon: number };
+    threat: { level: 'LOW' | 'MODERATE' | 'HIGH' | 'CRITICAL'; index: number; primaryRisk: string };
+    economics: { localPrice: number; touristPrice: number; currency: string; item: string };
+    connectivity: { avgWifiMbps: number; esimProviders: string[] };
+    emergency: {
+      police: string;
+      ambulance: string;
+      embassy: string;
+      hospitalAddress?: string;
+      phrases?: { help: string; emergency: string; hospital: string };
+    };
+    cheatSheetPreview: CheatSheetItem[];
+  }
+> = {
   bangkok: {
     name: 'Bangkok',
     code: 'BKK',
     country: 'Thailand',
-    zones: 12,
-    description: 'Dense commercial networks. High transit connectivity. Variable pricing zones.',
-    threat: 'MODERATE',
-    classification: 'TIER-1 METRO',
+    accent: 'bangkok',
+    coordinates: { lat: 13.7563, lon: 100.5018 },
+    threat: { level: 'MODERATE', index: 4, primaryRisk: 'AGGRESSIVE TOUTS — TOURIST ZONES' },
+    economics: { localPrice: 45, touristPrice: 120, currency: '฿', item: 'COFFEE' },
+    connectivity: { avgWifiMbps: 45, esimProviders: ['AIS', 'TRUEMOVE'] },
     emergency: {
       police: '191',
       ambulance: '1669',
       embassy: '+66-2-205-4000',
+      hospitalAddress: 'Bumrungrad Hospital, 33 Sukhumvit Soi 3',
+      phrases: { help: 'ช่วยด้วย', emergency: 'ฉุกเฉิน', hospital: 'โรงพยาบาล' },
     },
+    cheatSheetPreview: [
+      {
+        id: '1',
+        category: 'SCAM',
+        preview: 'AVOID: "GRAND PALACE IS CLOSED" CLAIM',
+        full: 'If a driver claims a "Monk Holiday," ignore it. The Palace is open daily until 15:30. Walk to the white gate.',
+      },
+      {
+        id: '2',
+        category: 'TIP',
+        preview: 'METERED TAXI PROTOCOL',
+        full: 'Insist on meter. If refused, exit immediately. Next taxi will comply. Standard flag: 35฿.',
+      },
+      {
+        id: '3',
+        category: 'PHRASE',
+        preview: 'PRICE CHECK: "TAO-RAI?"',
+        full: '"Tao-rai?" (How much?) — Use before any transaction. Locals expect negotiation.',
+      },
+    ],
   },
   tokyo: {
     name: 'Tokyo',
     code: 'TYO',
     country: 'Japan',
-    zones: 15,
-    description: 'Ultra-dense metro system. Precise anchor points. Structured zones.',
-    threat: 'LOW',
-    classification: 'TIER-1 METRO',
+    accent: 'tokyo',
+    coordinates: { lat: 35.6762, lon: 139.6503 },
+    threat: { level: 'LOW', index: 2, primaryRisk: 'LANGUAGE BARRIER — SERVICE COUNTERS' },
+    economics: { localPrice: 400, touristPrice: 650, currency: '¥', item: 'RAMEN' },
+    connectivity: { avgWifiMbps: 85, esimProviders: ['IIJmio', 'UBIGI'] },
     emergency: {
       police: '110',
       ambulance: '119',
       embassy: '+81-3-3224-5000',
+      hospitalAddress: "St. Luke's International Hospital, 9-1 Akashicho, Chuo City",
+      phrases: { help: '助けて', emergency: '緊急', hospital: '病院' },
     },
+    cheatSheetPreview: [
+      {
+        id: '1',
+        category: 'TIP',
+        preview: 'SUBWAY IC CARD ESSENTIAL',
+        full: 'Get Suica or Pasmo at any station. Works on all transit + convenience stores. Refundable deposit.',
+      },
+      {
+        id: '2',
+        category: 'SCAM',
+        preview: 'AVOID: KABUKICHO "FREE" BARS',
+        full: 'Touts offering "free" drinks lead to ¥50,000+ tabs. Legitimate bars never use street touts.',
+      },
+      {
+        id: '3',
+        category: 'PHRASE',
+        preview: 'RECEIPT REQUEST: "RYŌSHŪSHO"',
+        full: '"Ryōshūsho kudasai" — Always request receipt. Prevents "foreigner pricing."',
+      },
+    ],
   },
   singapore: {
     name: 'Singapore',
     code: 'SIN',
     country: 'Singapore',
-    zones: 0,
-    description: 'High-compliance city grid. Strong transit reliability. Dense operational hubs.',
-    threat: 'LOW',
-    classification: 'TIER-1 METRO',
+    accent: 'singapore',
+    coordinates: { lat: 1.3521, lon: 103.8198 },
+    threat: { level: 'LOW', index: 1, primaryRisk: 'FINES — REGULATORY VIOLATIONS' },
+    economics: { localPrice: 4, touristPrice: 7, currency: 'S$', item: 'KOPI' },
+    connectivity: { avgWifiMbps: 120, esimProviders: ['SINGTEL', 'STARHUB'] },
     emergency: {
       police: '999',
       ambulance: '995',
       embassy: '+65-6476-9100',
+      hospitalAddress: 'Singapore General Hospital, Outram Road',
+      phrases: { help: 'Help!', emergency: 'Emergency', hospital: 'Hospital' },
     },
+    cheatSheetPreview: [
+      {
+        id: '1',
+        category: 'TIP',
+        preview: 'HAWKER CENTER PROTOCOL',
+        full: 'Queue at stalls, not tables. Use tissue packet or card to "chope" (reserve) table. Standard practice.',
+      },
+      {
+        id: '2',
+        category: 'SCAM',
+        preview: 'TAXI: ALWAYS USE METER',
+        full: 'All taxis must use meter by law. Report violations to LTA: 1800-225-5582.',
+      },
+      {
+        id: '3',
+        category: 'TIP',
+        preview: 'MRT IS KING',
+        full: 'Cleanest, most efficient transit. Use EZ-Link card. No food/drink on trains — S$500 fine.',
+      },
+    ],
   },
   hongkong: {
     name: 'Hong Kong',
     code: 'HKG',
     country: 'Hong Kong',
-    zones: 0,
-    description: 'Vertical density. Fast interchanges. High-signal commercial corridors.',
-    threat: 'MODERATE',
-    classification: 'TIER-1 METRO',
+    accent: 'hongkong',
+    coordinates: { lat: 22.3193, lon: 114.1694 },
+    threat: { level: 'MODERATE', index: 3, primaryRisk: 'CROWD DENSITY — PEAK HOURS' },
+    economics: { localPrice: 25, touristPrice: 65, currency: 'HK$', item: 'MILK TEA' },
+    connectivity: { avgWifiMbps: 95, esimProviders: ['CSL', '3HK'] },
     emergency: {
       police: '999',
       ambulance: '999',
       embassy: '+852-2523-9011',
+      phrases: { help: '救命', emergency: '緊急', hospital: '醫院' },
     },
+    cheatSheetPreview: [
+      {
+        id: '1',
+        category: 'TIP',
+        preview: 'OCTOPUS CARD ESSENTIAL',
+        full: 'Works everywhere — transit, 7-Eleven, restaurants. HK$50 deposit. Load at any MTR station.',
+      },
+      {
+        id: '2',
+        category: 'TIP',
+        preview: 'DING DING TRAMS',
+        full: 'Cheapest transport. HK$3 flat fare. Pay on exit. Best for Central exploration.',
+      },
+      {
+        id: '3',
+        category: 'PHRASE',
+        preview: 'BILL REQUEST: "MAAI-DAAN"',
+        full: '"Mh-goi, maai-daan" — Excuse me, bill please. Essential at cha chaan tengs.',
+      },
+    ],
   },
   seoul: {
     name: 'Seoul',
     code: 'SEL',
     country: 'South Korea',
-    zones: 0,
-    description: 'High-bandwidth nightlife districts. Strong subway coverage. Rapid zone shifts.',
-    threat: 'LOW',
-    classification: 'TIER-1 METRO',
+    accent: 'seoul',
+    coordinates: { lat: 37.5665, lon: 126.978 },
+    threat: { level: 'LOW', index: 2, primaryRisk: 'LANGUAGE BARRIER — OLDER ESTABLISHMENTS' },
+    economics: { localPrice: 4000, touristPrice: 8000, currency: '₩', item: 'BIBIMBAP' },
+    connectivity: { avgWifiMbps: 150, esimProviders: ['KT', 'SKT'] },
     emergency: {
       police: '112',
       ambulance: '119',
       embassy: '+82-2-397-4114',
+      phrases: { help: '도와주세요', emergency: '긴급', hospital: '병원' },
     },
+    cheatSheetPreview: [
+      {
+        id: '1',
+        category: 'TIP',
+        preview: 'T-MONEY CARD ESSENTIAL',
+        full: 'Buy at convenience stores. Works on all transit. 10% discount vs cash. Refundable.',
+      },
+      {
+        id: '2',
+        category: 'TIP',
+        preview: 'POJANGMACHA PRICING',
+        full: 'Street tent bars. Always ask price before ordering — no menus. Anju (snacks) often mandatory.',
+      },
+      {
+        id: '3',
+        category: 'PHRASE',
+        preview: 'PRICE CHECK: "EOLMAYEYO?"',
+        full: '"Eolmayeyo?" (How much?) — Essential before any transaction in markets.',
+      },
+    ],
   },
   bali: {
     name: 'Bali',
     code: 'DPS',
     country: 'Indonesia',
-    zones: 0,
-    description: 'Tourist density pockets. Transport dependence. Variable price gradients.',
-    threat: 'MODERATE',
-    classification: 'TIER-2 REGION',
+    accent: 'bali',
+    coordinates: { lat: -8.3405, lon: 115.092 },
+    threat: { level: 'MODERATE', index: 5, primaryRisk: 'AGGRESSIVE TOUTS — TOURIST AREAS' },
+    economics: { localPrice: 15000, touristPrice: 45000, currency: 'Rp', item: 'NASI GORENG' },
+    connectivity: { avgWifiMbps: 25, esimProviders: ['TELKOMSEL', 'XL'] },
     emergency: {
       police: '110',
       ambulance: '118',
       embassy: '+62-361-233-605',
+      phrases: { help: 'Tolong!', emergency: 'Darurat', hospital: 'Rumah sakit' },
     },
+    cheatSheetPreview: [
+      {
+        id: '1',
+        category: 'SCAM',
+        preview: 'AVOID: "BROKEN METER" TAXIS',
+        full: 'Use Blue Bird taxis only (light blue). App: MyBlueBird. Gojek/Grab for motorbike taxi.',
+      },
+      {
+        id: '2',
+        category: 'TIP',
+        preview: 'MONEY CHANGER PROTOCOL',
+        full: 'Use bank-affiliated changers only. Count slowly. Watch for "calculator tricks."',
+      },
+      {
+        id: '3',
+        category: 'PHRASE',
+        preview: 'POLITE DECLINE: "TIDAK"',
+        full: '"Tidak, terima kasih" — No, thank you. Firm but polite. Don\'t engage further.',
+      },
+    ],
   },
   kualalumpur: {
     name: 'Kuala Lumpur',
     code: 'KUL',
     country: 'Malaysia',
-    zones: 0,
-    description: 'Transit-linked business core. Market spillover zones. Mixed-density corridors.',
-    threat: 'LOW',
-    classification: 'TIER-1 METRO',
+    accent: 'kualalumpur',
+    coordinates: { lat: 3.139, lon: 101.6869 },
+    threat: { level: 'LOW', index: 2, primaryRisk: 'PETTY THEFT — CROWDED AREAS' },
+    economics: { localPrice: 8, touristPrice: 18, currency: 'RM', item: 'TEH TARIK' },
+    connectivity: { avgWifiMbps: 55, esimProviders: ['MAXIS', 'CELCOM'] },
     emergency: {
       police: '999',
       ambulance: '999',
       embassy: '+60-3-2168-5000',
+      phrases: { help: 'Tolong!', emergency: 'Kecemasan', hospital: 'Hospital' },
     },
+    cheatSheetPreview: [
+      {
+        id: '1',
+        category: 'TIP',
+        preview: 'GRAB IS DOMINANT',
+        full: 'Use Grab app for everything — taxis, food, payments. GrabPay widely accepted.',
+      },
+      {
+        id: '2',
+        category: 'TIP',
+        preview: 'MAMAK CULTURE',
+        full: '24-hour Indian-Muslim eateries. Order teh tarik + roti canai. RM5 fills you up.',
+      },
+      {
+        id: '3',
+        category: 'PHRASE',
+        preview: 'THANK YOU: "TERIMA KASIH"',
+        full: 'Universal politeness. "Terima kasih" works everywhere. Add "banyak" for emphasis.',
+      },
+    ],
   },
   hanoi: {
     name: 'Hanoi',
     code: 'HAN',
     country: 'Vietnam',
-    zones: 0,
-    description: 'Old-quarter maze. Lake-centric flow. Strong street-level vitality bands.',
-    threat: 'MODERATE',
-    classification: 'TIER-2 METRO',
+    accent: 'hanoi',
+    coordinates: { lat: 21.0285, lon: 105.8542 },
+    threat: { level: 'MODERATE', index: 4, primaryRisk: 'TRAFFIC CHAOS — ROAD CROSSINGS' },
+    economics: { localPrice: 25000, touristPrice: 75000, currency: '₫', item: 'PHO' },
+    connectivity: { avgWifiMbps: 35, esimProviders: ['VIETTEL', 'MOBIFONE'] },
     emergency: {
       police: '113',
       ambulance: '115',
       embassy: '+84-24-3850-5000',
+      phrases: { help: 'Cứu tôi!', emergency: 'Khẩn cấp', hospital: 'Bệnh viện' },
     },
+    cheatSheetPreview: [
+      {
+        id: '1',
+        category: 'TIP',
+        preview: 'ROAD CROSSING TECHNIQUE',
+        full: 'Walk slowly, steadily. Traffic flows around you. Never run or stop suddenly.',
+      },
+      {
+        id: '2',
+        category: 'SCAM',
+        preview: 'AVOID: XE OM "FRIEND" RIDES',
+        full: 'Use Grab only. Random motorbike taxis quote 10x prices. Pre-agreed fare or Grab.',
+      },
+      {
+        id: '3',
+        category: 'PHRASE',
+        preview: 'PRICE CHECK: "BAO NHIÊU?"',
+        full: '"Bao nhiêu tiền?" — How much? Essential before any transaction. Negotiate from there.',
+      },
+    ],
   },
   hochiminh: {
     name: 'Ho Chi Minh City',
     code: 'SGN',
     country: 'Vietnam',
-    zones: 0,
-    description: 'High-mobility street network. Late-night commerce. High signal volatility.',
-    threat: 'MODERATE',
-    classification: 'TIER-2 METRO',
+    accent: 'hochiminh',
+    coordinates: { lat: 10.8231, lon: 106.6297 },
+    threat: { level: 'MODERATE', index: 5, primaryRisk: 'BAG SNATCHING — MOTORBIKE THIEVES' },
+    economics: { localPrice: 20000, touristPrice: 60000, currency: '₫', item: 'BANH MI' },
+    connectivity: { avgWifiMbps: 40, esimProviders: ['VIETTEL', 'VINAPHONE'] },
     emergency: {
       police: '113',
       ambulance: '115',
       embassy: '+84-28-3520-4200',
+      phrases: { help: 'Cứu tôi!', emergency: 'Khẩn cấp', hospital: 'Bệnh viện' },
     },
+    cheatSheetPreview: [
+      {
+        id: '1',
+        category: 'SCAM',
+        preview: 'BAG SECURITY PROTOCOL',
+        full: 'Wear bag cross-body, facing building side. Motorbike snatch-and-grab common on sidewalks.',
+      },
+      {
+        id: '2',
+        category: 'TIP',
+        preview: 'DISTRICT 1 PREMIUM',
+        full: 'Everything 2-3x more expensive in D1. Walk 10min to D3/D4 for local prices.',
+      },
+      {
+        id: '3',
+        category: 'PHRASE',
+        preview: 'TOO EXPENSIVE: "ĐẮT QUÁ"',
+        full: '"Đắt quá!" — Too expensive! Walk away slowly. Price often drops 50%.',
+      },
+    ],
   },
   taipei: {
     name: 'Taipei',
     code: 'TPE',
     country: 'Taiwan',
-    zones: 0,
-    description: 'Night market density. MRT-connected districts. Fast elevation escapes.',
-    threat: 'LOW',
-    classification: 'TIER-1 METRO',
+    accent: 'taipei',
+    coordinates: { lat: 25.033, lon: 121.5654 },
+    threat: { level: 'LOW', index: 1, primaryRisk: 'TYPHOON SEASON — JUNE-SEPTEMBER' },
+    economics: { localPrice: 50, touristPrice: 100, currency: 'NT$', item: 'BUBBLE TEA' },
+    connectivity: { avgWifiMbps: 80, esimProviders: ['CHUNGHWA', 'TAIWAN MOBILE'] },
     emergency: {
       police: '110',
       ambulance: '119',
       embassy: '+886-2-2162-2000',
+      phrases: { help: '救命', emergency: '緊急', hospital: '醫院' },
     },
+    cheatSheetPreview: [
+      {
+        id: '1',
+        category: 'TIP',
+        preview: 'EASYCARD ESSENTIAL',
+        full: 'Get at any MRT station or convenience store. Works on all transit + YouBike + 7-Eleven.',
+      },
+      {
+        id: '2',
+        category: 'TIP',
+        preview: 'NIGHT MARKET PROTOCOL',
+        full: 'Walk the full loop first, then buy. Same items vary 2x in price between stalls.',
+      },
+      {
+        id: '3',
+        category: 'PHRASE',
+        preview: 'THANK YOU: "XIÈ XIÈ"',
+        full: 'Universal politeness. "Xièxiè" (shyeh-shyeh) works everywhere.',
+      },
+    ],
   },
 };
 
-export default function CityDossier() {
+// Default fallback for unknown cities
+const DEFAULT_CITY_DATA = {
+  name: 'Unknown',
+  code: 'XXX',
+  country: 'LIVE THEATER',
+  accent: 'default' as CityAccent,
+  coordinates: { lat: 0, lon: 0 },
+  threat: { level: 'MODERATE' as const, index: 5, primaryRisk: 'UNKNOWN TERRITORY' },
+  economics: { localPrice: 100, touristPrice: 200, currency: '$', item: 'COFFEE' },
+  connectivity: { avgWifiMbps: 30, esimProviders: ['LOCAL SIM'] },
+  emergency: { police: '112', ambulance: '112', embassy: '112' },
+  cheatSheetPreview: [],
+};
+
+export default function CityDossierV2() {
   const router = useRouter();
   const { city } = router.query;
+
+  // State
   const [pack, setPack] = useState<CityPack | null>(null);
   const [packDownloadedAt, setPackDownloadedAt] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState(false);
-  const [downloadStage, setDownloadStage] = useState<string | null>(null);
-  const [sync, setSync] = useState<'ONLINE' | 'OFFLINE' | 'BLACK_BOX'>('ONLINE');
-  const [refZone, setRefZone] = useState<Zone | null>(null);
-  const [weatherLine, setWeatherLine] = useState<string>('UNKNOWN');
+  const [connectionStatus, setConnectionStatus] = useState<'ONLINE' | 'OFFLINE'>('ONLINE');
+  const [atmospherics, setAtmospherics] = useState<{
+    tempC: number;
+    humidity: number;
+    condition: string;
+  } | null>(null);
+  const [liveEvents, setLiveEvents] = useState<IntelEvent[]>([]);
 
-  const rawCity = typeof city === 'string' ? city : null;
-  const cityKey = rawCity
-    ? rawCity
-        .trim()
-        .toLowerCase()
-        .replace(/\s+/g, '')
-        .replace(/[^a-z0-9]/g, '')
-    : null;
+  // Normalize city key
+  const cityKey = useMemo(() => {
+    if (typeof city !== 'string') return null;
+    return city
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/[^a-z0-9]/g, '');
+  }, [city]);
 
-  const knownCityData = cityKey ? (CITIES[cityKey as keyof typeof CITIES] ?? null) : null;
+  // Get city data
+  const cityData = useMemo(() => {
+    if (!cityKey) return null;
+    return (
+      CITY_REGISTRY[cityKey] || {
+        ...DEFAULT_CITY_DATA,
+        name: city?.toString().charAt(0).toUpperCase() + city?.toString().slice(1) || 'Unknown',
+        code: cityKey.slice(0, 3).toUpperCase(),
+      }
+    );
+  }, [cityKey, city]);
 
-  const displayName =
-    knownCityData?.name ||
-    (rawCity
-      ? rawCity
-          .trim()
-          .split(/\s+/)
-          .filter(Boolean)
-          .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
-          .join(' ')
-      : 'UNKNOWN');
-
-  const displayCode =
-    knownCityData?.code || (cityKey ? cityKey.slice(0, 3).toUpperCase().padEnd(3, 'X') : 'XXX');
-
-  const cityData =
-    knownCityData ||
-    (cityKey
-      ? {
-          name: displayName,
-          code: displayCode,
-          country: 'LIVE THEATER',
-          zones: 12,
-          description:
-            'LIVE MODE // City pack will be bootstrapped on-demand from public map data. Cache is stored locally for this device.',
-          threat: 'LOW',
-          classification: 'LIVE BOOTSTRAP',
-          emergency: {
-            police: '112',
-            ambulance: '112',
-            embassy: '112',
-          },
-        }
-      : null);
-
-  useEffect(() => {
-    if (city && typeof city !== 'string') {
-      router.push('/cities');
-    }
-  }, [city, router]);
-
+  // Connection status monitoring
   useEffect(() => {
     const cleanup = onConnectionChange((online) => {
-      if (online) {
-        setSync('ONLINE');
-      } else {
-        setSync(pack ? 'BLACK_BOX' : 'OFFLINE');
-      }
+      setConnectionStatus(online ? 'ONLINE' : 'OFFLINE');
     });
-    setSync(isOnline() ? 'ONLINE' : pack ? 'BLACK_BOX' : 'OFFLINE');
+    setConnectionStatus(isOnline() ? 'ONLINE' : 'OFFLINE');
     return cleanup;
-  }, [pack]);
+  }, []);
 
+  // Load cached pack
   useEffect(() => {
-    const run = async () => {
+    const loadPack = async () => {
       if (!cityKey) return;
       setLoading(true);
-      const cached = await getCityPackRecord(cityKey);
-      if (cached?.pack) setPack(cached.pack);
-      setPackDownloadedAt(cached?.downloadedAt ?? null);
+      try {
+        const cached = await getCityPackRecord(cityKey);
+        if (cached?.pack) {
+          setPack(cached.pack);
+          setPackDownloadedAt(cached.downloadedAt ?? null);
+        }
+      } catch (error) {
+        console.error('Failed to load cached pack:', error);
+      }
       setLoading(false);
     };
-
-    run();
+    loadPack();
   }, [cityKey]);
 
+  // Fetch weather/atmospherics
   useEffect(() => {
-    const resolveRef = async () => {
-      if (!pack) {
-        setRefZone(null);
-        return;
-      }
-
-      // Prefer the nearest zone to the user's current position for personal relevance.
-      if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition(
-          (pos) => {
-            const lat = pos.coords.latitude;
-            const lon = pos.coords.longitude;
-            let best: { z: Zone; d: number } | null = null;
-
-            for (const z of pack.zones) {
-              const d = (z.centroid.lat - lat) ** 2 + (z.centroid.lon - lon) ** 2;
-              if (!best || d < best.d) best = { z, d };
-            }
-
-            setRefZone(best?.z ?? pack.zones[0] ?? null);
-          },
-          () => {
-            setRefZone(pack.zones[0] ?? null);
-          },
-          { enableHighAccuracy: false, maximumAge: 15000, timeout: 8000 }
-        );
-        return;
-      }
-
-      setRefZone(pack.zones[0] ?? null);
-    };
-
-    resolveRef();
-  }, [pack]);
-
-  useEffect(() => {
-    const run = async () => {
-      if (!pack || !refZone) return;
+    const fetchWeather = async () => {
+      if (!cityData || !pack) return;
       try {
-        const url = `/api/weather?lat=${encodeURIComponent(refZone.centroid.lat)}&lon=${encodeURIComponent(
-          refZone.centroid.lon
-        )}`;
-        const resp = await fetch(url);
-        if (!resp.ok) {
-          setWeatherLine('UNKNOWN');
-          return;
+        const zone = pack.zones[0];
+        if (!zone) return;
+        const resp = await fetch(`/api/weather?lat=${zone.centroid.lat}&lon=${zone.centroid.lon}`);
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data.weather) {
+            setAtmospherics({
+              tempC: Math.round(data.weather.temperature),
+              humidity: Math.round(data.weather.humidity || 70),
+              condition: data.weather.description || 'Unknown',
+            });
+          }
         }
-        const data = await resp.json();
-        const temp =
-          typeof data?.weather?.temperature === 'number'
-            ? Math.round(data.weather.temperature)
-            : null;
-        const desc =
-          typeof data?.weather?.description === 'string' ? data.weather.description : null;
-        if (temp === null || !desc) {
-          setWeatherLine('UNKNOWN');
-          return;
-        }
-        setWeatherLine(`${temp}°C // ${String(desc).toUpperCase()}`);
       } catch {
-        setWeatherLine('UNKNOWN');
+        /* weather API unavailable */
       }
     };
+    fetchWeather();
+  }, [cityData, pack]);
 
-    run();
-  }, [pack, refZone]);
+  // Generate mock live events for demo
+  useEffect(() => {
+    if (!cityData) return;
+    const events: IntelEvent[] = [
+      {
+        id: '1',
+        type: 'PRICE_VERIFIED',
+        message: `OPERATIVE_${Math.floor(Math.random() * 100)} VERIFIED PRICE — ZONE ${Math.floor(Math.random() * 10)}`,
+        timestamp: Date.now(),
+      },
+      {
+        id: '2',
+        type: 'INTEL_UPDATED',
+        message: 'INTEL CONFIDENCE UPDATED — CENTRAL DISTRICT',
+        timestamp: Date.now() - 60000,
+      },
+      {
+        id: '3',
+        type: 'OPERATIVE_ACTIVE',
+        message: `FIELD OPERATIVE ACTIVE — ${cityData.name.toUpperCase()}`,
+        timestamp: Date.now() - 120000,
+      },
+      {
+        id: '4',
+        type: 'HAZARD_REPORTED',
+        message: 'MINOR HAZARD CLEARED — TRANSIT HUB',
+        timestamp: Date.now() - 180000,
+      },
+      {
+        id: '5',
+        type: 'PRICE_VERIFIED',
+        message: 'LOCAL RATE CONFIRMED — FOOD DISTRICT',
+        timestamp: Date.now() - 240000,
+      },
+    ];
+    setLiveEvents(events);
+  }, [cityData]);
 
-  const tpi = useMemo(() => {
-    if (!pack || !refZone) return null;
-    return computeTouristPressureIndex(refZone, pack.zones);
-  }, [pack, refZone]);
-
-  const startHere = useMemo(() => {
-    if (!pack) return null;
-
-    let best: {
-      zone: Zone;
-      score: number;
-      tpi: ReturnType<typeof computeTouristPressureIndex>;
-    } | null = null;
-    for (const z of pack.zones) {
-      if (!z.selected_anchor) continue;
-      if (z.status !== 'ACTIVE') continue;
-
-      const zi = computeTouristPressureIndex(z, pack.zones);
-      const scoreBase = zi.status === 'CLEAR' ? 3 : zi.status === 'WATCH' ? 1 : -2;
-      const local = zi.local_activity === 'HIGH' ? 2 : zi.local_activity === 'MEDIUM' ? 1 : 0;
-      const tourist = zi.tourist_density === 'LOW' ? 2 : zi.tourist_density === 'MEDIUM' ? 1 : 0;
-      const price =
-        zi.price_delta_pct === null
-          ? 0
-          : zi.price_delta_pct <= 5
-            ? 2
-            : zi.price_delta_pct <= 15
-              ? 1
-              : -1;
-
-      const s = scoreBase + local + tourist + price;
-      if (!best || s > best.score) best = { zone: z, score: s, tpi: zi };
-    }
-
-    if (!best) return null;
-    const whyParts: string[] = [];
-    if (best.tpi.price_delta_pct !== null && best.tpi.price_delta_pct <= 5)
-      whyParts.push('FAIR PRICES');
-    else whyParts.push('STABLE PRICES');
-    if (best.tpi.local_activity !== 'LOW') whyParts.push('LOCAL FOOT TRAFFIC');
-    return { zone: best.zone, why: whyParts.join(' • ') };
-  }, [pack]);
-
+  // Download handler
   const handleDownload = useCallback(async () => {
-    if (!cityKey) return;
-
+    if (!cityKey || downloading) return;
     setDownloading(true);
-    setDownloadStage('INITIALIZING...');
-
     try {
-      const steps = ['REQUESTING PACK...', 'CACHING LOCALLY...', 'VERIFICATION COMPLETE'];
-      for (const step of steps) {
-        setDownloadStage(step);
-        await new Promise((resolve) => setTimeout(resolve, 380));
-      }
-
       await downloadCityPack(cityKey);
       const refreshed = await getCityPackRecord(cityKey);
       setPack(refreshed?.pack ?? null);
       setPackDownloadedAt(refreshed?.downloadedAt ?? null);
-      setDownloading(false);
-      setDownloadStage(null);
       vibrateDevice(VIBRATION_PATTERNS.CONFIRM);
     } catch (error) {
       console.error('Pack download failed:', error);
-      alert('LOCAL INTELLIGENCE ACQUISITION FAILED.');
-      setDownloading(false);
-      setDownloadStage(null);
+      vibrateDevice(VIBRATION_PATTERNS.ERROR);
     }
-  }, [cityKey]);
+    setDownloading(false);
+  }, [cityKey, downloading]);
 
-  useEffect(() => {
+  // Enter field handler
+  const handleEnterField = useCallback(() => {
     if (!cityKey) return;
-    if (loading) return;
-    if (pack) return;
-    if (downloading) return;
-    if (!isOnline()) return;
+    vibrateDevice(VIBRATION_PATTERNS.TAP);
+    router.push(`/map/${encodeURIComponent(cityKey)}`);
+  }, [cityKey, router]);
 
-    // Auto-acquire a pack on first entry when online.
-    handleDownload();
-  }, [cityKey, downloading, handleDownload, loading, pack]);
+  // Compute zone stats
+  const zoneStats = useMemo(() => {
+    if (!pack) return null;
+    const activeZones = pack.zones.filter((z) => z.status === 'ACTIVE').length;
+    const totalAnchors = pack.zones.reduce((sum, z) => sum + (z.selected_anchor ? 1 : 0), 0);
+    return {
+      zoneCount: pack.zones.length,
+      anchorCount: totalAnchors,
+      activeZones,
+    };
+  }, [pack]);
 
-  if (!cityData || !cityKey) return null;
+  // Loading state
+  if (!cityData || !cityKey) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="font-mono text-ops-neon-green animate-pulse">RESOLVING TARGET...</div>
+      </div>
+    );
+  }
 
-  const now = new Date();
-  const statusLine =
-    sync === 'ONLINE' ? 'OPERATIONAL' : sync === 'BLACK_BOX' ? 'OPERATIONAL (OFFLINE)' : 'OFFLINE';
+  const isOffline = connectionStatus === 'OFFLINE';
+  const hasLocalCache = pack !== null;
 
   return (
     <>
       <Head>
-        <title>{cityData.code} ORIENTATION - UNMAPPED OS</title>
+        <title>{cityData.code} DOSSIER — UNMAPPED OS</title>
+        <meta
+          name="description"
+          content={`Pre-deployment briefing for ${cityData.name}. Tactical intel, threat assessment, and field resources.`}
+        />
       </Head>
 
-      {/* HUD Overlay */}
-      <div className="hud-overlay" />
+      {/* Sticky Header */}
+      <StickyHeader
+        cityName={cityData.name}
+        cityCode={cityData.code}
+        cityAccent={cityData.accent}
+        isActive={hasLocalCache}
+        isOffline={isOffline}
+      />
 
-      <main className="min-h-screen p-4 md:p-8">
-        <div className="max-w-3xl mx-auto space-y-6 animate-boot">
-          <div className="flex items-center justify-between">
+      <main className="min-h-screen bg-black">
+        {/* SECTION A: Satellite Lock Hero */}
+        <SatelliteLock
+          cityName={cityData.name}
+          cityCode={cityData.code}
+          coordinates={cityData.coordinates}
+          cityAccent={cityData.accent}
+          className="min-h-[50vh] md:min-h-[60vh]"
+        />
+
+        {/* Main content container */}
+        <div className="max-w-4xl mx-auto px-4 pb-12 space-y-8 -mt-8 relative z-10">
+          {/* SECTION B: Black Box Actuator */}
+          <section className="pt-4">
+            <BlackBoxActuator
+              cityName={cityData.name}
+              cityAccent={cityData.accent}
+              packDownloaded={hasLocalCache}
+              packSizeMB={45}
+              onDownload={handleDownload}
+              onEnterField={handleEnterField}
+              disabled={isOffline && !hasLocalCache}
+            />
+          </section>
+
+          {/* Offline Overlay */}
+          {isOffline && (
+            <OfflineOverlay
+              isOffline={true}
+              hasLocalCache={hasLocalCache}
+              emergency={cityData.emergency}
+              cityAccent={cityData.accent}
+              onOpenOfflineMap={handleEnterField}
+            />
+          )}
+
+          {/* SECTION C: Intel Grid */}
+          <section>
+            <IntelGrid
+              cityAccent={cityData.accent}
+              threat={cityData.threat}
+              economics={cityData.economics}
+              connectivity={cityData.connectivity}
+              atmospherics={
+                atmospherics
+                  ? {
+                      ...atmospherics,
+                      note:
+                        atmospherics.humidity > 80
+                          ? 'HYDRATION CRITICAL'
+                          : atmospherics.tempC > 35
+                            ? 'HEAT ADVISORY'
+                            : undefined,
+                    }
+                  : undefined
+              }
+              zones={zoneStats || undefined}
+            />
+          </section>
+
+          {/* SECTION D: Live Wire */}
+          <section>
+            <LiveWire events={liveEvents} cityAccent={cityData.accent} speed="slow" />
+          </section>
+
+          {/* Cheat Sheet Preview */}
+          <section>
+            <CheatSheetPreview
+              items={cityData.cheatSheetPreview}
+              totalItems={15}
+              cityAccent={cityData.accent}
+              packDownloaded={hasLocalCache}
+              onDownloadPack={handleDownload}
+            />
+          </section>
+
+          {/* Pack Status */}
+          {hasLocalCache && pack && (
+            <HUDFrame cityAccent={cityData.accent} className="p-4">
+              <div className="font-mono text-xs space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-ops-night-muted">PACK VERSION</span>
+                  <span className="text-ops-night-text">v{pack.version}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-ops-night-muted">GENERATED</span>
+                  <span className="text-ops-night-text">{pack.generated_at}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-ops-night-muted">CACHED</span>
+                  <span className="text-ops-night-text">{packDownloadedAt || 'UNKNOWN'}</span>
+                </div>
+              </div>
+            </HUDFrame>
+          )}
+
+          {/* Footer navigation */}
+          <nav className="flex items-center justify-between pt-8 border-t border-ops-night-border">
             <Link href="/cities">
-              <button className="btn-tactical-ghost text-tactical-sm">← ALL CITIES</button>
+              <button className="font-mono text-xs tracking-wider text-ops-night-muted hover:text-ops-neon-green transition-colors">
+                ← ALL DOSSIERS
+              </button>
             </Link>
-            <div className="font-tactical text-tactical-sm text-ops-neon-cyan uppercase tracking-widest">
-              ORIENTATION
+            <div className="font-mono text-[10px] text-ops-night-muted/50">
+              NO MAP. NO BUSINESSES. INTEL FIRST.
             </div>
-            <Link href="/map/" aria-disabled>
-              <div className="w-24" />
-            </Link>
-          </div>
-
-          <div className="hud-card neon-border-top">
-            <div className="space-y-3 font-mono text-tactical-sm">
-              <div className="flex justify-between gap-4">
-                <span className="text-ops-night-muted">{c('city.header.city')}:</span>
-                <span className="text-ops-night-text">{displayName.toUpperCase()}</span>
-              </div>
-              <div className="flex justify-between gap-4">
-                <span className="text-ops-night-muted">{c('city.header.localTime')}:</span>
-                <span className="text-ops-night-text">{formatHHMM(now)}</span>
-              </div>
-              <div className="flex justify-between gap-4">
-                <span className="text-ops-night-muted">{c('city.header.weather')}:</span>
-                <span className="text-ops-night-text">{weatherLine}</span>
-              </div>
-              <div className="flex justify-between gap-4">
-                <span className="text-ops-night-muted">{c('city.header.status')}:</span>
-                <span className="text-ops-night-text">{statusLine}</span>
-              </div>
-
-              {pack && (
-                <>
-                  <div className="flex justify-between gap-4">
-                    <span className="text-ops-night-muted">PACK ZONES:</span>
-                    <span className="text-ops-night-text">{pack.zones.length}</span>
-                  </div>
-                  <div className="flex justify-between gap-4">
-                    <span className="text-ops-night-muted">PACK VERSION:</span>
-                    <span className="text-ops-night-text">v{pack.version}</span>
-                  </div>
-                  <div className="flex justify-between gap-4">
-                    <span className="text-ops-night-muted">PACK GENERATED:</span>
-                    <span className="text-ops-night-text">{String(pack.generated_at)}</span>
-                  </div>
-                  <div className="flex justify-between gap-4">
-                    <span className="text-ops-night-muted">PACK CACHED:</span>
-                    <span className="text-ops-night-text">{packDownloadedAt ?? 'UNKNOWN'}</span>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-
-          {pack && tpi && !loading && <TouristPressureGauge tpi={tpi} />}
-
-          {!pack && (
-            <div className="hud-card">
-              <div className="hud-card-header">LOCAL INTELLIGENCE</div>
-              <div className="space-y-4">
-                <div className="font-mono text-tactical-base text-ops-night-text/90">
-                  ONE DOWNLOAD ENABLES OFFLINE OPERATIONS.
-                </div>
-                <button
-                  onClick={handleDownload}
-                  disabled={downloading || !isOnline()}
-                  className="btn-tactical-primary w-full py-4 text-tactical-base disabled:opacity-60"
-                >
-                  {downloading ? 'ACQUIRING...' : 'ACQUIRE LOCAL INTELLIGENCE'}
-                </button>
-                {!isOnline() && (
-                  <div className="font-mono text-tactical-xs text-ops-neon-amber/90">
-                    CONNECT ONCE TO ACQUIRE.
-                  </div>
-                )}
-                {downloadStage && (
-                  <div className="font-mono text-tactical-xs text-ops-neon-green terminal-flicker">
-                    &gt; {downloadStage}
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-
-          {pack && startHere && (
-            <div className="hud-card neon-border-top">
-              <div className="hud-card-header">{c('startHere.title')}</div>
-              <div className="space-y-3 font-mono text-tactical-sm">
-                <div className="flex justify-between gap-4">
-                  <span className="text-ops-night-muted">{c('startHere.zone')}:</span>
-                  <span className="text-ops-night-text">{startHere.zone.zone_id}</span>
-                </div>
-                <div className="flex justify-between gap-4">
-                  <span className="text-ops-night-muted">{c('startHere.anchor')}:</span>
-                  <span className="text-ops-night-text">
-                    {startHere.zone.selected_anchor.name.toUpperCase()}
-                  </span>
-                </div>
-                <div className="flex justify-between gap-4">
-                  <span className="text-ops-night-muted">{c('startHere.why')}:</span>
-                  <span className="text-ops-night-text">{startHere.why}</span>
-                </div>
-
-                <button
-                  onClick={() => {
-                    vibrateDevice(VIBRATION_PATTERNS.CONFIRM);
-                    openGoogleMaps(
-                      startHere.zone.selected_anchor.lat,
-                      startHere.zone.selected_anchor.lon
-                    );
-                  }}
-                  className="btn-tactical-primary w-full py-4 text-tactical-base"
-                >
-                  {c('startHere.navigate')}
-                </button>
-
-                <Link href={`/map/${encodeURIComponent(cityKey)}`}>
-                  <button className="btn-tactical-ghost w-full py-3 text-tactical-xs">
-                    OPEN TACTICAL MAP
-                  </button>
-                </Link>
-              </div>
-            </div>
-          )}
-
-          <div className="font-mono text-[10px] text-ops-night-muted">
-            NO MAP. NO BUSINESSES. INTEL FIRST.
-          </div>
+          </nav>
         </div>
       </main>
     </>
   );
 }
 
-// Force server-side rendering
+// Force server-side rendering for dynamic city routes
 export async function getServerSideProps() {
   return { props: {} };
 }

@@ -753,3 +753,341 @@
   0%, 100% { transform: scale(1); opacity: 0.3; }
   50% { transform: scale(1.5); opacity: 0.6; }
 }
+
+/* ============================================
+   HUD COMPONENT SYSTEM - CITY DOSSIER V2
+   ============================================ */
+
+/* Custom Scrollbar for Terminal */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 65, 0.4);
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 65, 0.6);
+}
+
+/* Satellite Lock Animations */
+@keyframes satellite-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes coordinate-lock {
+  0% { opacity: 0; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.02); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.satellite-lock-text {
+  animation: coordinate-lock 0.6s ease-out forwards;
+}
+
+/* Black Box Actuator */
+.actuator-hover-glow {
+  transition: box-shadow 0.3s ease;
+}
+
+.actuator-hover-glow:hover {
+  box-shadow: 
+    0 0 30px var(--accent-color, rgba(0, 255, 65, 0.5)),
+    inset 0 0 20px rgba(0, 255, 65, 0.1);
+}
+
+/* Terminal Cursor Blink */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.terminal-cursor {
+  animation: cursor-blink 1s step-end infinite;
+}
+
+/* Data Chip Texture */
+.data-chip-texture {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 255, 65, 0.05) 3px,
+    rgba(0, 255, 65, 0.05) 4px
+  );
+}
+
+/* Intel Grid Tiles */
+.intel-tile {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.intel-tile:hover {
+  transform: translateY(-2px);
+}
+
+.intel-tile::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.intel-tile:hover::after {
+  opacity: 0.5;
+}
+
+/* Live Wire Ticker */
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.ticker-content {
+  animation: ticker-scroll 30s linear infinite;
+}
+
+/* Cheat Sheet Card Effects */
+@keyframes reveal-card {
+  from { 
+    opacity: 0; 
+    max-height: 0;
+    transform: translateY(-10px);
+  }
+  to { 
+    opacity: 1; 
+    max-height: 200px;
+    transform: translateY(0);
+  }
+}
+
+.cheatsheet-reveal {
+  animation: reveal-card 0.3s ease-out forwards;
+}
+
+/* Holographic Shimmer */
+@keyframes holo-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.holo-shimmer {
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  animation: holo-shimmer 3s linear infinite;
+}
+
+/* Offline Stripe Pattern */
+.offline-stripes {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 176, 0, 0.1) 10px,
+    rgba(255, 176, 0, 0.1) 20px
+  );
+}
+
+/* Emergency Card Pulse */
+@keyframes emergency-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 rgba(255, 0, 64, 0.4);
+  }
+  50% { 
+    box-shadow: 0 0 0 10px rgba(255, 0, 64, 0);
+  }
+}
+
+.emergency-card {
+  animation: emergency-pulse 2s ease-in-out infinite;
+}
+
+/* Day Ops Mode Transition */
+@keyframes day-ops-glitch {
+  0% { 
+    transform: translate(0);
+    filter: none;
+  }
+  20% { 
+    transform: translate(-2px, 2px);
+    filter: hue-rotate(90deg);
+  }
+  40% { 
+    transform: translate(-2px, -2px);
+    filter: hue-rotate(180deg);
+  }
+  60% { 
+    transform: translate(2px, 2px);
+    filter: hue-rotate(270deg);
+  }
+  80% { 
+    transform: translate(2px, -2px);
+    filter: hue-rotate(360deg);
+  }
+  100% { 
+    transform: translate(0);
+    filter: none;
+  }
+}
+
+.day-ops-transition {
+  animation: day-ops-glitch 0.3s ease-out;
+}
+
+/* Chromatic Tear Effect */
+@keyframes chromatic-tear {
+  0% {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+  50% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+.chromatic-tear {
+  position: relative;
+}
+
+.chromatic-tear::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 245, 255, 0.3),
+    transparent 20%,
+    transparent 80%,
+    rgba(255, 16, 240, 0.3)
+  );
+  animation: chromatic-tear 0.3s ease-out;
+  pointer-events: none;
+}
+
+/* Sticky Header Blur */
+.sticky-header-blur {
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+}
+
+/* Corner Bracket Animation */
+@keyframes bracket-lock {
+  0% { 
+    transform: scale(1.5);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(0.95);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.corner-bracket {
+  animation: bracket-lock 0.5s ease-out forwards;
+}
+
+/* Progress Line Glow */
+.progress-line-glow {
+  position: relative;
+}
+
+.progress-line-glow::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 200%;
+  background: currentColor;
+  filter: blur(4px);
+  opacity: 0.8;
+}
+
+/* Scan Line Vertical */
+@keyframes scan-vertical {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+.scan-line-vertical {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 255, 65, 0.1),
+    transparent
+  );
+  animation: scan-vertical 8s linear infinite;
+  pointer-events: none;
+}
+
+/* City Accent CSS Variables */
+.city-tokyo { --accent-color: #FF10F0; --accent-glow: rgba(255, 16, 240, 0.5); }
+.city-bangkok { --accent-color: #FFB000; --accent-glow: rgba(255, 176, 0, 0.5); }
+.city-singapore { --accent-color: #00F5FF; --accent-glow: rgba(0, 245, 255, 0.5); }
+.city-hongkong { --accent-color: #FF0040; --accent-glow: rgba(255, 0, 64, 0.5); }
+.city-seoul { --accent-color: #9D00FF; --accent-glow: rgba(157, 0, 255, 0.5); }
+.city-bali { --accent-color: #00FFB0; --accent-glow: rgba(0, 255, 176, 0.5); }
+.city-kualalumpur { --accent-color: #FF6600; --accent-glow: rgba(255, 102, 0, 0.5); }
+.city-hanoi { --accent-color: #FFFF00; --accent-glow: rgba(255, 255, 0, 0.5); }
+.city-hochiminh { --accent-color: #AAFF00; --accent-glow: rgba(170, 255, 0, 0.5); }
+.city-taipei { --accent-color: #0080FF; --accent-glow: rgba(0, 128, 255, 0.5); }
+.city-default { --accent-color: #00FF41; --accent-glow: rgba(0, 255, 65, 0.5); }
+
+/* Responsive Adjustments for HUD */
+@media (max-width: 640px) {
+  .intel-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .satellite-lock-title {
+    font-size: 2rem;
+  }
+  
+  .actuator-button {
+    padding: 1rem;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .scan-line,
+  .terminal-flicker,
+  .animate-pulse-neon,
+  .ticker-content,
+  .holo-shimmer {
+    animation: none !important;
+  }
+  
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
