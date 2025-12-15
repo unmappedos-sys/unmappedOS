@@ -110,11 +110,11 @@ export function getMapProviderDecision(): MapProviderDecision {
   const isWarning = usagePercent >= WARNING_THRESHOLD;
   const isCritical = usagePercent >= SAFETY_THRESHOLD;
 
-  // Manual override takes precedence
-  if (stats.manualOverride) {
+  // Environment variable takes HIGHEST precedence - admin config
+  if (configuredProvider === 'maplibre') {
     return {
-      provider: stats.manualOverride,
-      reason: `Manual override: ${stats.manualOverride}`,
+      provider: 'maplibre',
+      reason: 'Configured provider: maplibre',
       usagePercent,
       remainingLoads,
       isWarning,
@@ -122,12 +122,11 @@ export function getMapProviderDecision(): MapProviderDecision {
     };
   }
 
-  // Configured provider takes precedence over everything else.
-  // This avoids surprising Mapbox loads when a token is present.
-  if (configuredProvider === 'maplibre') {
+  // Manual override takes precedence (only if no env var forces maplibre)
+  if (stats.manualOverride) {
     return {
-      provider: 'maplibre',
-      reason: 'Configured provider: maplibre',
+      provider: stats.manualOverride,
+      reason: `Manual override: ${stats.manualOverride}`,
       usagePercent,
       remainingLoads,
       isWarning,
