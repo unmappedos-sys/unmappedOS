@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import '@/styles/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import BootSequence from '@/components/ux/BootSequence';
 
 // Dynamically import OpsProvider with no SSR to avoid build issues
 const OpsProvider = dynamic(() => import('@/contexts/OpsContext').then((mod) => mod.OpsProvider), {
@@ -34,6 +35,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
 
   return (
     <OpsProvider>
+      <BootSequence />
       <Component {...pageProps} />
     </OpsProvider>
   );

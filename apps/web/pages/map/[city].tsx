@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
@@ -6,18 +6,32 @@ import { downloadCityPack, getCityPack } from '@/lib/cityPack';
 import {
   vibrateDevice,
   openGoogleMaps,
-  copyToClipboard,
   VIBRATION_PATTERNS,
   isOnline,
   onConnectionChange,
 } from '@/lib/deviceAPI';
 import { computeTouristPressureIndex } from '@/lib/intel/touristPressure';
-import { getWeatherIcon, type WeatherCategory } from '@/lib/intel/weatherService';
 import { useOps } from '@/contexts/OpsContext';
 import { useTranslation } from '@/lib/i18n/useTranslation';
+import { useOperativeMemory } from '@/hooks/useOperativeMemory';
 import StatusPanel from '@/components/StatusPanel';
 import TerminalLoader from '@/components/TerminalLoader';
 import LanguageSelector from '@/components/LanguageSelector';
+import OfflineBanner from '@/components/ux/OfflineBanner';
+import TouristPressureGauge from '@/components/ux/TouristPressureGauge';
+import MissionCompleteOverlay from '@/components/ux/MissionCompleteOverlay';
+import DailySummaryOverlay from '@/components/ux/DailySummaryOverlay';
+import PriceValidationOverlay from '@/components/ux/PriceValidationOverlay';
+import { formatLastVerified, hoursSince } from '@/lib/ux/time';
+import {
+  bumpAnchorsReached,
+  bumpOverpaymentsAvoided,
+  bumpZonesExplored,
+  loadDailyStats,
+} from '@/lib/ux/dailyStats';
+import { c } from '@/lib/ux/copy';
+import { getBatteryState } from '@/lib/ux/battery';
+import { getSessionFlag, setSessionFlag } from '@/lib/ux/sessionFlags';
 import type { Zone, CityPack } from '@unmapped/lib';
 
 // Dynamic import to avoid SSR issues with map library
@@ -26,34 +40,12 @@ const MapComponent = dynamic(() => import('@/components/MapComponent'), { ssr: f
 type GPSStatus = 'DISABLED' | 'SNAPSHOT' | 'ACTIVE';
 type SyncStatus = 'ONLINE' | 'OFFLINE' | 'BLACK_BOX';
 
-type WeatherSignal = {
-  weather: {
-    temperature: number;
-    apparent_temperature: number;
-    humidity: number;
-    precipitation: number;
-    wind_speed: number;
-    wind_gusts: number;
-    weather_code: number;
-    category: WeatherCategory;
-    is_day: boolean;
-    timestamp: string;
-    description: string;
-    icon: string;
-  };
-  modifiers: {
-    walkability_modifier: number;
-    safety_modifier: number;
-    warning: string | null;
-    recommendation: string | null;
-  };
-};
-
 export default function TacticalDisplay() {
   const router = useRouter();
   const { city } = router.query;
   const { ghostMode, toggleGhostMode, hudCollapsed, toggleHudCollapsed } = useOps();
-  const { t, language } = useTranslation();
+  const { t } = useTranslation();
+  const { recordZoneVisit, completeMission } = useOperativeMemory();
   const [pack, setPack] = useState<CityPack | null>(null);
   const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
   const [loading, setLoading] = useState(true);
@@ -61,23 +53,21 @@ export default function TacticalDisplay() {
   const [syncStatus, setSyncStatus] = useState<SyncStatus>('ONLINE');
   const [showControls, setShowControls] = useState(true);
   const [toast, setToast] = useState<{ title: string; body?: string } | null>(null);
-  const [weatherSignal, setWeatherSignal] = useState<WeatherSignal | null>(null);
-  const [weatherLoading, setWeatherLoading] = useState(false);
+  const [lastEntryZoneId, setLastEntryZoneId] = useState<string | null>(null);
+  const [anchorReachedZoneId, setAnchorReachedZoneId] = useState<string | null>(null);
 
-  // Helper function to get translated anchor name
-  const getAnchorName = (anchor: Zone['selected_anchor']): string => {
-    if (!anchor.tags) return anchor.name;
+  const [edgeGlow, setEdgeGlow] = useState<'green' | 'amber' | 'red' | null>(null);
+  const [missionOpen, setMissionOpen] = useState(false);
+  const [missionLines, setMissionLines] = useState<string[]>([]);
 
-    // Try user's selected language first
-    const langKey = `name:${language}`;
-    if (anchor.tags[langKey]) return anchor.tags[langKey];
+  const [dailyOpen, setDailyOpen] = useState(false);
+  const [daily, setDaily] = useState<ReturnType<typeof loadDailyStats> | null>(null);
 
-    // Fall back to English
-    if (anchor.tags['name:en']) return anchor.tags['name:en'];
-
-    // Fall back to original name
-    return anchor.name;
-  };
+  const [priceCheckOpen, setPriceCheckOpen] = useState(false);
+  const [paidCoffee, setPaidCoffee] = useState('');
+  const [priceOverlay, setPriceOverlay] = useState<
+    { open: false } | { open: true; mode: 'CONFIRMED' | 'OVER'; deltaText?: string }
+  >({ open: false });
 
   useEffect(() => {
     if (city && typeof city === 'string') {
@@ -116,6 +106,106 @@ export default function TacticalDisplay() {
     };
   }, [pack]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    let cancelled = false;
+
+    const runBattery = async () => {
+      if (getSessionFlag('battery_low_prompt')) return;
+      const b = await getBatteryState();
+      if (cancelled) return;
+      if (b.level !== null && b.level < 0.2) {
+        setSessionFlag('battery_low_prompt', true);
+        setToast({
+          title: 'BATTERY LOW',
+          body: 'CRISIS MODE AVAILABLE // ENABLE GHOST MODE IF NEEDED.',
+        });
+      }
+    };
+
+    const runNightfall = () => {
+      if (getSessionFlag('nightfall_prompt')) return;
+      const h = new Date().getHours();
+      if (h >= 20 || h < 5) {
+        setSessionFlag('nightfall_prompt', true);
+        setToast({ title: 'NIGHTFALL', body: 'INTEL DEGRADES FASTER. VERIFY BEFORE COMMITTING.' });
+      }
+    };
+
+    runBattery();
+    runNightfall();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!('geolocation' in navigator)) return;
+    if (getSessionFlag('no_movement_prompt')) return;
+
+    let last = { lat: 0, lon: 0, t: Date.now() };
+    let hasLast = false;
+
+    const toRad = (deg: number) => (deg * Math.PI) / 180;
+    const distanceMeters = (a: { lat: number; lon: number }, b: { lat: number; lon: number }) => {
+      const R = 6371000;
+      const dLat = toRad(b.lat - a.lat);
+      const dLon = toRad(b.lon - a.lon);
+      const lat1 = toRad(a.lat);
+      const lat2 = toRad(b.lat);
+      const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+      return 2 * R * Math.asin(Math.min(1, Math.sqrt(h)));
+    };
+
+    const watchId = navigator.geolocation.watchPosition(
+      (pos) => {
+        const now = Date.now();
+        const here = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+        if (!hasLast) {
+          last = { ...here, t: now };
+          hasLast = true;
+          return;
+        }
+
+        const d = distanceMeters(here, last);
+        if (d >= 60) {
+          last = { ...here, t: now };
+          return;
+        }
+
+        const minutesStill = (now - last.t) / (1000 * 60);
+        if (minutesStill >= 20 && !getSessionFlag('no_movement_prompt')) {
+          setSessionFlag('no_movement_prompt', true);
+          setToast({
+            title: 'NO MOVEMENT DETECTED',
+            body: 'NEARBY ANCHOR AVAILABLE. OPEN A ZONE AND NAVIGATE.',
+          });
+        }
+      },
+      () => {
+        // ignore
+      },
+      { enableHighAccuracy: false, maximumAge: 60000, timeout: 20000 }
+    );
+
+    return () => navigator.geolocation.clearWatch(watchId);
+  }, []);
+
+  useEffect(() => {
+    if (!selectedZone) return;
+    if (getSessionFlag('arrival_intel_prompt')) return;
+    if (selectedZone.texture_type === 'TRANSIT_HUB') {
+      setSessionFlag('arrival_intel_prompt', true);
+      setToast({
+        title: 'ARRIVAL INTEL',
+        body: 'TRANSIT HUBS OFTEN RUN HIGH PRESSURE. CHECK BEFORE SPENDING.',
+      });
+    }
+  }, [selectedZone?.zone_id, selectedZone?.texture_type]);
+
   const loadPack = async (cityName: string) => {
     setLoading(true);
     const cityPack = await getCityPack(cityName);
@@ -141,17 +231,58 @@ export default function TacticalDisplay() {
     if (!cityPack && !isOnline()) {
       alert(
         isOnline()
-          ? 'City pack not found. Download it first from the mission dossier.'
-          : 'Offline and no cached city pack found. Connect once to download the pack.'
+          ? 'City pack not found. Open the city once to cache local intelligence.'
+          : 'Offline and no local intelligence cached. Connect once to acquire it.'
       );
       router.push(`/city/${cityName}`);
     }
     setLoading(false);
   };
 
+  useEffect(() => {
+    if (!pack) return;
+    if (typeof window === 'undefined') return;
+    setDaily(loadDailyStats(pack.city));
+  }, [pack]);
+
+  useEffect(() => {
+    if (!pack || !daily) return;
+    if (typeof window === 'undefined') return;
+
+    const now = new Date();
+    if (now.getHours() < 21) return;
+
+    const key = `unmappedos_daily_shown_${daily.dateKey}`;
+    if (localStorage.getItem(key) === '1') return;
+    localStorage.setItem(key, '1');
+    setDailyOpen(true);
+  }, [daily, pack]);
+
   const handleZoneClick = (zone: Zone) => {
+    if (pack && lastEntryZoneId !== zone.zone_id) {
+      setLastEntryZoneId(zone.zone_id);
+      bumpZonesExplored(pack.city);
+      recordZoneVisit(zone.zone_id, pack.city, false);
+    }
+
     setSelectedZone(zone);
     vibrateDevice(VIBRATION_PATTERNS.ZONE_ENTRY);
+
+    if (pack) {
+      const zi = computeTouristPressureIndex(zone, pack.zones);
+      if (zi.status === 'CLEAR') {
+        setToast({ title: c('zone.lowPressure'), body: c('zone.proceedNormally') });
+        setEdgeGlow('green');
+      } else if (zi.status === 'WATCH') {
+        setToast({ title: c('zone.watch'), body: c('zone.stayAware') });
+        setEdgeGlow('amber');
+      } else {
+        setToast({ title: c('zone.highPressure'), body: c('zone.considerExtract') });
+        setEdgeGlow('red');
+      }
+
+      window.setTimeout(() => setEdgeGlow(null), 900);
+    }
   };
 
   const handleGhostModeToggle = () => {
@@ -164,42 +295,61 @@ export default function TacticalDisplay() {
     vibrateDevice(VIBRATION_PATTERNS.HUD_TOGGLE);
   };
 
-  const handleAnchorReached = (anchor: Zone['selected_anchor']) => {
-    vibrateDevice(VIBRATION_PATTERNS.ANCHOR_LOCK);
-    setToast({ title: 'ANCHOR LOCKED', body: `POINT REACHED: ${anchor.name.toUpperCase()}` });
-  };
+  const handleAnchorReached = useCallback(
+    (anchor: Zone['selected_anchor']) => {
+      vibrateDevice(VIBRATION_PATTERNS.ANCHOR_LOCK);
+
+      if (pack) {
+        bumpAnchorsReached(pack.city);
+        completeMission();
+        if (selectedZone) {
+          recordZoneVisit(selectedZone.zone_id, pack.city, true);
+        }
+      }
+
+      setMissionLines([`ANCHOR REACHED: ${anchor.name.toUpperCase()}`]);
+      setMissionOpen(true);
+    },
+    [completeMission, pack, recordZoneVisit, selectedZone]
+  );
 
   useEffect(() => {
-    const run = async () => {
-      if (!pack) return;
+    if (!pack || !selectedZone) return;
+    if (!('geolocation' in navigator)) return;
+    if (anchorReachedZoneId === selectedZone.zone_id) return;
 
-      const ref = selectedZone?.centroid || pack.zones[0]?.centroid;
-      if (!ref) return;
-
-      setWeatherLoading(true);
-      try {
-        const url = `/api/weather?lat=${encodeURIComponent(ref.lat)}&lon=${encodeURIComponent(ref.lon)}`;
-        const resp = await fetch(url);
-        if (!resp.ok) {
-          setWeatherSignal(null);
-          return;
-        }
-
-        const data = (await resp.json()) as WeatherSignal;
-        // Defensive: ensure icon exists even if API changes.
-        if (!data.weather.icon) {
-          data.weather.icon = getWeatherIcon(data.weather.category);
-        }
-        setWeatherSignal(data);
-      } catch {
-        setWeatherSignal(null);
-      } finally {
-        setWeatherLoading(false);
-      }
+    const anchor = selectedZone.selected_anchor;
+    const toRad = (deg: number) => (deg * Math.PI) / 180;
+    const distanceMeters = (a: { lat: number; lon: number }, b: { lat: number; lon: number }) => {
+      const R = 6371000;
+      const dLat = toRad(b.lat - a.lat);
+      const dLon = toRad(b.lon - a.lon);
+      const lat1 = toRad(a.lat);
+      const lat2 = toRad(b.lat);
+      const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+      return 2 * R * Math.asin(Math.min(1, Math.sqrt(h)));
     };
 
-    run();
-  }, [pack, selectedZone?.zone_id]);
+    const watchId = navigator.geolocation.watchPosition(
+      (pos) => {
+        const here = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+        const d = distanceMeters(here, { lat: anchor.lat, lon: anchor.lon });
+        if (d <= 80) {
+          setAnchorReachedZoneId(selectedZone.zone_id);
+          navigator.geolocation.clearWatch(watchId);
+          handleAnchorReached(anchor);
+        }
+      },
+      () => {
+        // Silent fail.
+      },
+      { enableHighAccuracy: false, maximumAge: 15000, timeout: 20000 }
+    );
+
+    return () => navigator.geolocation.clearWatch(watchId);
+  }, [anchorReachedZoneId, handleAnchorReached, pack, selectedZone]);
+
+  // Weather fetching intentionally omitted from the primary zone HUD.
 
   useEffect(() => {
     if (!toast) return;
@@ -253,43 +403,48 @@ export default function TacticalDisplay() {
         : null;
 
     if (tpi.status === 'COMPROMISED') {
-      setToast({
-        title: 'MISSION COMPLETE',
-        body:
-          `YOU AVOIDED A HIGH-PRESSURE ZONE` +
-          (savings && savings > 0
-            ? ` // SAVINGS ESTIMATED: ${formatMoney(currencyToken, savings)}`
-            : ''),
-      });
+      bumpOverpaymentsAvoided(pack.city);
+      completeMission();
+      setMissionLines([
+        'TOURIST ZONE AVOIDED',
+        savings && savings > 0
+          ? `SAVINGS ESTIMATED: ${formatMoney(currencyToken, savings)}`
+          : 'INTEL UPDATED',
+      ]);
+      setMissionOpen(true);
     } else {
       setToast({ title: 'EXTRACT ROUTE SET', body: tpi.recommendation.message });
     }
   };
 
-  const handleExportToMaps = () => {
+  const handleVerifyPrice = () => {
     if (!selectedZone) return;
+    const baseline = selectedZone.price_medians?.coffee;
+    const paid = Number(paidCoffee);
+    if (!Number.isFinite(paid) || paid <= 0) {
+      setToast({ title: 'INPUT REQUIRED', body: 'ENTER A PRICE TO VERIFY.' });
+      return;
+    }
+    if (typeof baseline !== 'number' || !Number.isFinite(baseline) || baseline <= 0) {
+      setToast({ title: 'INTEL DEGRADED', body: 'NO LOCAL BASELINE AVAILABLE FOR THIS ITEM.' });
+      return;
+    }
 
-    const anchor = selectedZone.selected_anchor;
-    openGoogleMaps(anchor.lat, anchor.lon);
+    const currencyToken = parseCoffeeCurrency(selectedZone.cheat_sheet.price_estimates);
+    const delta = paid - baseline;
+    const over = delta > Math.max(0.5, baseline * 0.12);
 
-    // Copy cheat sheet to clipboard
-    const cheatSheet = `
-UNMAPPED OS - ${selectedZone.zone_id}
-Anchor: ${anchor.name}
-Location: ${anchor.lat.toFixed(6)}, ${anchor.lon.toFixed(6)}
+    vibrateDevice(VIBRATION_PATTERNS.CONFIRM);
+    setPriceCheckOpen(false);
+    setPaidCoffee('');
 
-CHEAT SHEET:
-${selectedZone.cheat_sheet.taxi_phrase}
-${selectedZone.cheat_sheet.price_estimates}
+    if (!over) {
+      setPriceOverlay({ open: true, mode: 'CONFIRMED' });
+      return;
+    }
 
-EMERGENCY:
-Police: ${selectedZone.cheat_sheet.emergency_numbers.police}
-Ambulance: ${selectedZone.cheat_sheet.emergency_numbers.ambulance}
-Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
-    `.trim();
-
-    copyToClipboard(cheatSheet);
-    alert('Cheat sheet copied to clipboard!');
+    const deltaText = `YOU PAID ~${formatMoney(currencyToken, delta)} MORE THAN AVERAGE`;
+    setPriceOverlay({ open: true, mode: 'OVER', deltaText });
   };
 
   if (loading) {
@@ -349,6 +504,47 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
 
       {/* Scan Line Effect */}
       <div className="scan-line" />
+
+      <OfflineBanner
+        visible={syncStatus !== 'ONLINE'}
+        mode={syncStatus === 'BLACK_BOX' ? 'BLACK_BOX' : 'OFFLINE'}
+      />
+
+      <MissionCompleteOverlay
+        open={missionOpen}
+        onClose={() => setMissionOpen(false)}
+        lines={missionLines}
+      />
+
+      <PriceValidationOverlay
+        open={priceOverlay.open}
+        onClose={() => setPriceOverlay({ open: false })}
+        mode={priceOverlay.open ? priceOverlay.mode : 'CONFIRMED'}
+        deltaText={priceOverlay.open ? priceOverlay.deltaText : undefined}
+      />
+
+      <DailySummaryOverlay
+        open={dailyOpen}
+        onClose={() => setDailyOpen(false)}
+        city={pack.city}
+        zonesExplored={daily?.zonesExplored ?? 0}
+        anchorsReached={daily?.anchorsReached ?? 0}
+        overpaymentsAvoided={daily?.overpaymentsAvoided ?? 0}
+      />
+
+      {edgeGlow && (
+        <div className="fixed inset-0 pointer-events-none z-[65]">
+          <div
+            className={`absolute inset-4 border-2 ${
+              edgeGlow === 'green'
+                ? 'border-ops-neon-green/25'
+                : edgeGlow === 'amber'
+                  ? 'border-ops-neon-amber/25'
+                  : 'border-ops-neon-red/25'
+            }`}
+          />
+        </div>
+      )}
 
       {/* HUD Toast */}
       {toast && (
@@ -510,280 +706,105 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
               </div>
               <button
                 onClick={() => setSelectedZone(null)}
-                className="font-tactical text-tactical-lg text-ops-night-muted hover:text-ops-neon-green transition-colors"
+                className="btn-tactical-ghost px-3 py-2 text-tactical-xs"
               >
-                ✕
+                CLOSE
               </button>
             </div>
 
             <div className="space-y-4">
-              {/* Tourist Pressure Index (internal) */}
-              {tpi && (
-                <div
-                  className={`bg-ops-night-surface/50 border p-4 ${
-                    tpi.status === 'COMPROMISED'
-                      ? 'border-ops-neon-red/30'
-                      : tpi.status === 'WATCH'
-                        ? 'border-ops-neon-amber/30'
-                        : 'border-ops-neon-green/20'
-                  }`}
+              <div className="bg-ops-night-surface/50 border border-ops-neon-green/20 p-4 font-mono text-tactical-xs">
+                <div className="flex justify-between">
+                  <span className="text-ops-night-muted">CONFIDENCE:</span>
+                  <span className="text-ops-night-text">
+                    {(() => {
+                      const h = hoursSince(selectedZone.texture_modifiers?.updated_at || null);
+                      if (h === null) return 'UNKNOWN';
+                      if (h <= 6) return 'HIGH';
+                      if (h <= 24) return 'MEDIUM';
+                      return 'DEGRADED';
+                    })()}
+                  </span>
+                </div>
+                <div className="flex justify-between mt-1">
+                  <span className="text-ops-night-muted">LAST VERIFIED:</span>
+                  <span className="text-ops-night-text">
+                    {formatLastVerified(
+                      hoursSince(selectedZone.texture_modifiers?.updated_at || null)
+                    )}
+                  </span>
+                </div>
+              </div>
+
+              {tpi && <TouristPressureGauge tpi={tpi} />}
+
+              <div className="space-y-3">
+                {tpi?.status === 'COMPROMISED' && tpi.recommendation ? (
+                  <button
+                    onClick={handleExtractToNormalPrices}
+                    className="btn-tactical-primary w-full py-3 text-tactical-xs"
+                  >
+                    EXTRACT TO NORMAL PRICES
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      vibrateDevice(VIBRATION_PATTERNS.CONFIRM);
+                      openGoogleMaps(
+                        selectedZone.selected_anchor.lat,
+                        selectedZone.selected_anchor.lon
+                      );
+                    }}
+                    className="btn-tactical-primary w-full py-3 text-tactical-xs"
+                  >
+                    {c('startHere.navigate')}
+                  </button>
+                )}
+
+                <button
+                  onClick={() => setPriceCheckOpen((v) => !v)}
+                  className="btn-tactical-ghost w-full py-2 text-[10px]"
                 >
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-tactical text-tactical-sm text-ops-neon-cyan uppercase tracking-wider">
-                      ZONE SIGNAL
-                    </h3>
-                    <div className="font-mono text-[10px] text-ops-night-muted">
-                      TOURIST PRESSURE INDEX
-                    </div>
-                  </div>
+                  {priceCheckOpen ? 'HIDE PRICE CHECK' : 'VERIFY A PRICE'}
+                </button>
 
-                  <div className="space-y-1 font-mono text-tactical-xs">
-                    <div className="flex justify-between">
-                      <span className="text-ops-night-muted">ZONE STATUS:</span>
-                      <span
-                        className={
-                          tpi.status === 'COMPROMISED'
-                            ? 'text-ops-neon-red'
-                            : tpi.status === 'WATCH'
-                              ? 'text-ops-neon-amber'
-                              : 'text-ops-neon-green'
-                        }
+                {priceCheckOpen && (
+                  <div className="bg-ops-night-surface/50 border border-ops-neon-cyan/20 p-4">
+                    <div className="font-tactical text-tactical-xs text-ops-neon-cyan uppercase tracking-widest">
+                      PRICE VALIDATION
+                    </div>
+                    <div className="mt-3 space-y-2">
+                      <input
+                        value={paidCoffee}
+                        onChange={(e) => setPaidCoffee(e.target.value)}
+                        inputMode="decimal"
+                        placeholder="COFFEE PRICE (NUMBER)"
+                        className="input-tactical"
+                      />
+                      <button
+                        onClick={handleVerifyPrice}
+                        className="btn-tactical-primary w-full py-3 text-tactical-xs"
                       >
-                        {tpi.status}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-ops-night-muted">TOURIST DENSITY:</span>
-                      <span className="text-ops-night-text">{tpi.tourist_density}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-ops-night-muted">LOCAL ACTIVITY:</span>
-                      <span className="text-ops-night-text">{tpi.local_activity}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-ops-night-muted">REASON:</span>
-                      <span className="text-ops-night-text">{tpi.reason}</span>
-                    </div>
-                  </div>
-
-                  {tpi.recommendation && (
-                    <div className="mt-3">
-                      <div className="font-mono text-tactical-base text-ops-neon-amber/90">
-                        {tpi.recommendation.message}
-                      </div>
-                      <div className="mt-2 flex gap-3">
-                        <button
-                          onClick={handleExtractToNormalPrices}
-                          className="btn-tactical-primary flex-1 py-2 text-tactical-xs"
-                        >
-                          EXTRACT
-                        </button>
-                        <button
-                          onClick={() =>
-                            router.push(
-                              `/proof?city=${encodeURIComponent(pack.city)}&zone=${encodeURIComponent(selectedZone.zone_id)}`
-                            )
-                          }
-                          className="btn-tactical flex-1 py-2 text-tactical-xs"
-                        >
-                          PROOF
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Weather Signal (dynamic, privacy-safe via server proxy) */}
-              {!weatherLoading && weatherSignal && (
-                <div className="bg-ops-night-surface/50 border border-ops-neon-cyan/20 p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-tactical text-tactical-sm text-ops-neon-cyan uppercase tracking-wider">
-                      WEATHER SIGNAL
-                    </h3>
-                    <div className="font-mono text-[10px] text-ops-night-muted">
-                      LIVE • OPEN-METEO
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="text-2xl">{weatherSignal.weather.icon}</div>
-                      <div>
-                        <div className="font-mono text-tactical-base text-ops-night-text">
-                          {Math.round(weatherSignal.weather.temperature)}°C
-                          <span className="text-ops-night-muted"> / feels </span>
-                          {Math.round(weatherSignal.weather.apparent_temperature)}°C
-                        </div>
-                        <div className="font-mono text-tactical-xs text-ops-night-muted">
-                          {weatherSignal.weather.description}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="text-right font-mono text-tactical-xs">
-                      <div>
-                        <span className="text-ops-night-muted">WALK:</span>{' '}
-                        <span className="text-ops-night-text">
-                          {weatherSignal.modifiers.walkability_modifier >= 0 ? '+' : ''}
-                          {weatherSignal.modifiers.walkability_modifier}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-ops-night-muted">SAFE:</span>{' '}
-                        <span className="text-ops-night-text">
-                          {weatherSignal.modifiers.safety_modifier >= 0 ? '+' : ''}
-                          {weatherSignal.modifiers.safety_modifier}
-                        </span>
+                        VERIFY
+                      </button>
+                      <div className="font-mono text-[10px] text-ops-night-muted">
+                        BASELINE USES LOCAL MEDIAN WHEN AVAILABLE.
                       </div>
                     </div>
                   </div>
-
-                  {(weatherSignal.modifiers.warning || weatherSignal.modifiers.recommendation) && (
-                    <div className="mt-3 font-mono text-tactical-xs text-ops-neon-amber/90">
-                      {weatherSignal.modifiers.warning || weatherSignal.modifiers.recommendation}
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Anchor Point */}
-              <div className="bg-ops-night-surface/50 border border-ops-neon-green/20 p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-3 h-3 border-2 border-ops-neon-green rounded-full animate-lock" />
-                  <h3 className="font-tactical text-tactical-sm text-ops-neon-cyan uppercase tracking-wider">
-                    {t.anchorPoint.toUpperCase()}
-                  </h3>
-                </div>
-                <p className="font-mono text-tactical-base text-ops-night-text">
-                  {getAnchorName(selectedZone.selected_anchor)}
-                </p>
-                {language !== 'en' &&
-                  selectedZone.selected_anchor.tags?.['name:en'] &&
-                  getAnchorName(selectedZone.selected_anchor) !==
-                    selectedZone.selected_anchor.tags['name:en'] && (
-                    <p className="font-mono text-tactical-xs text-ops-neon-cyan/60 mt-1">
-                      {selectedZone.selected_anchor.tags['name:en']}
-                    </p>
-                  )}
-                {language === 'en' &&
-                  selectedZone.selected_anchor.name !==
-                    selectedZone.selected_anchor.tags?.['name:en'] && (
-                    <p className="font-mono text-tactical-xs text-ops-night-muted/50 mt-1">
-                      {selectedZone.selected_anchor.name}
-                    </p>
-                  )}
-                <p className="font-mono text-tactical-xs text-ops-night-muted mt-1">
-                  {selectedZone.selected_anchor.lat.toFixed(6)},{' '}
-                  {selectedZone.selected_anchor.lon.toFixed(6)}
-                </p>
+                )}
               </div>
 
-              {/* Price Intel */}
-              <div className="bg-ops-night-surface/50 border border-ops-neon-cyan/20 p-4">
-                <h3 className="font-tactical text-tactical-sm text-ops-neon-cyan uppercase tracking-wider mb-2">
-                  {t.priceIntel.toUpperCase()}
-                </h3>
-                <p className="font-mono text-tactical-xs text-ops-night-muted mb-2">
-                  {language === 'en'
-                    ? 'Typical prices in this zone:'
-                    : language === 'es'
-                      ? 'Precios típicos en esta zona:'
-                      : language === 'fr'
-                        ? 'Prix typiques dans cette zone:'
-                        : language === 'de'
-                          ? 'Typische Preise in dieser Zone:'
-                          : language === 'pt'
-                            ? 'Preços típicos nesta zona:'
-                            : language === 'ru'
-                              ? 'Типичные цены в этой зоне:'
-                              : language === 'zh'
-                                ? '该地区的典型价格:'
-                                : language === 'ja'
-                                  ? 'このゾーンの一般的な価格:'
-                                  : language === 'ko'
-                                    ? '이 구역의 일반적인 가격:'
-                                    : language === 'th'
-                                      ? 'ราคาโดยทั่วไปในโซนนี้:'
-                                      : language === 'ar'
-                                        ? 'الأسعار النموذجية في هذه المنطقة:'
-                                        : language === 'hi'
-                                          ? 'इस क्षेत्र में सामान्य कीमतें:'
-                                          : language === 'it'
-                                            ? 'Prezzi tipici in questa zona:'
-                                            : language === 'nl'
-                                              ? 'Typische prijzen in deze zone:'
-                                              : language === 'tr'
-                                                ? 'Bu bölgedeki tipik fiyatlar:'
-                                                : language === 'vi'
-                                                  ? 'Giá thông thường trong khu vực này:'
-                                                  : language === 'id'
-                                                    ? 'Harga umum di zona ini:'
-                                                    : language === 'pl'
-                                                      ? 'Typowe ceny w tej strefie:'
-                                                      : 'Typical prices in this zone:'}
-                </p>
-                <p className="font-mono text-tactical-base text-ops-neon-cyan/90 leading-relaxed">
-                  {selectedZone.cheat_sheet.price_estimates}
-                </p>
-              </div>
-
-              {/* Taxi Phrase */}
-              <div className="bg-ops-night-surface/50 border border-ops-neon-green/20 p-4">
-                <h3 className="font-tactical text-tactical-sm text-ops-neon-cyan uppercase tracking-wider mb-2">
-                  {t.localComms.toUpperCase()}
-                </h3>
-                <p className="font-mono text-tactical-xs text-ops-night-muted mb-2">
-                  {language === 'en'
-                    ? 'Show this to taxi drivers:'
-                    : language === 'es'
-                      ? 'Muestra esto a los taxistas:'
-                      : language === 'fr'
-                        ? 'Montrez ceci aux chauffeurs de taxi:'
-                        : language === 'de'
-                          ? 'Zeigen Sie dies Taxifahrern:'
-                          : language === 'pt'
-                            ? 'Mostre isso aos taxistas:'
-                            : language === 'ru'
-                              ? 'Покажите это таксистам:'
-                              : language === 'zh'
-                                ? '给出租车司机看这个:'
-                                : language === 'ja'
-                                  ? 'タクシー運転手にこれを見せて:'
-                                  : language === 'ko'
-                                    ? '택시 기사에게 이것을 보여주세요:'
-                                    : language === 'th'
-                                      ? 'แสดงนี้ให้คนขับแท็กซี่:'
-                                      : language === 'ar'
-                                        ? 'أظهر هذا لسائقي التاكسي:'
-                                        : language === 'hi'
-                                          ? 'यह टैक्सी ड्राइवरों को दिखाएं:'
-                                          : language === 'it'
-                                            ? 'Mostra questo ai tassisti:'
-                                            : language === 'nl'
-                                              ? 'Toon dit aan taxichauffeurs:'
-                                              : language === 'tr'
-                                                ? 'Bunu taksi şoförlerine gösterin:'
-                                                : language === 'vi'
-                                                  ? 'Cho tài xế taxi xem điều này:'
-                                                  : language === 'id'
-                                                    ? 'Tunjukkan ini kepada pengemudi taksi:'
-                                                    : language === 'pl'
-                                                      ? 'Pokaż to taksówkarzom:'
-                                                      : 'Show this to taxi drivers:'}
-                </p>
-                <p className="font-mono text-tactical-base text-ops-neon-green/90 leading-relaxed bg-ops-night-bg/50 p-3 rounded border border-ops-neon-green/30">
-                  {selectedZone.cheat_sheet.taxi_phrase}
-                </p>
-              </div>
-
-              {/* Actions */}
               <div className="flex gap-3">
                 <button
-                  onClick={handleExportToMaps}
-                  className="btn-tactical-primary flex-1 py-3 text-tactical-xs"
+                  onClick={() =>
+                    router.push(
+                      `/proof?city=${encodeURIComponent(pack.city)}&zone=${encodeURIComponent(selectedZone.zone_id)}`
+                    )
+                  }
+                  className="btn-tactical flex-1 py-3 text-tactical-xs"
                 >
-                  {t.exportToMaps.toUpperCase()}
+                  PROOF
                 </button>
                 <button
                   onClick={() =>
@@ -791,7 +812,7 @@ Embassy: ${selectedZone.cheat_sheet.emergency_numbers.embassy}
                   }
                   className="btn-tactical flex-1 py-3 text-tactical-xs"
                 >
-                  {t.reportHazard.toUpperCase()}
+                  REPORT
                 </button>
               </div>
             </div>

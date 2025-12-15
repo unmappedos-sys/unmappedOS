@@ -14,8 +14,6 @@ interface MapComponentProps {
 }
 
 type MapInstance = maplibregl.Map | mapboxgl.Map;
-type MarkerClass = typeof maplibregl.Marker | typeof mapboxgl.Marker;
-type PopupClass = typeof maplibregl.Popup | typeof mapboxgl.Popup;
 type MapProvider = 'mapbox' | 'maplibre';
 
 export default function MapComponent({
@@ -57,8 +55,6 @@ export default function MapComponent({
       zones.length > 0 ? [zones[0].centroid.lon, zones[0].centroid.lat] : [100.5, 13.75]; // Bangkok default
 
     let mapInstance: MapInstance;
-    let MarkerImpl: MarkerClass;
-    let PopupImpl: PopupClass;
 
     if (decision.provider === 'mapbox') {
       // Use Mapbox GL
@@ -73,9 +69,6 @@ export default function MapComponent({
         center,
         zoom: 13,
       });
-
-      MarkerImpl = mapboxgl.Marker;
-      PopupImpl = mapboxgl.Popup;
 
       // Record the load
       recordMapLoad('mapbox');
@@ -94,9 +87,6 @@ export default function MapComponent({
         center,
         zoom: 13,
       });
-
-      MarkerImpl = maplibregl.Marker;
-      PopupImpl = maplibregl.Popup;
 
       // Record the load
       recordMapLoad('maplibre');
@@ -154,40 +144,6 @@ export default function MapComponent({
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (map.current as any).on('click', layerId, () => {
             onZoneClick?.(zone);
-          });
-        }
-      });
-
-      // Add anchors as markers
-      zones.forEach((zone) => {
-        if (map.current && zone.selected_anchor) {
-          const anchor = zone.selected_anchor;
-          const el = document.createElement('div');
-          el.className = 'anchor-marker';
-          el.style.width = '30px';
-          el.style.height = '30px';
-          el.style.borderRadius = '50%';
-          el.style.border = `3px solid ${zone.neon_color}`;
-          el.style.backgroundColor = 'rgba(0,0,0,0.7)';
-          el.style.cursor = 'pointer';
-
-          const popup = new PopupImpl({ offset: 25 }).setHTML(
-            `<div class="ops-card p-3">
-              <h3 class="font-mono font-bold text-sm">${anchor.name}</h3>
-              <p class="text-xs text-gray-500">${zone.zone_id}</p>
-            </div>`
-          );
-
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          new MarkerImpl({ element: el })
-            .setLngLat([anchor.lon, anchor.lat])
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            .setPopup(popup as any)
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            .addTo(map.current as any);
-
-          el.addEventListener('click', () => {
-            onAnchorReached?.(anchor);
           });
         }
       });
@@ -289,10 +245,10 @@ export default function MapComponent({
       <div className="absolute top-4 right-4 space-y-2">
         <button
           onClick={locateUser}
-          className="ops-button text-xs px-3 py-2 bg-black bg-opacity-70"
+          className="btn-tactical-ghost px-3 py-2 text-[10px]"
           title="Calibrate Position"
         >
-          📍 LOCATE
+          CALIBRATE
         </button>
       </div>
 

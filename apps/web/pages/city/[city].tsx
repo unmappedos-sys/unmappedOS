@@ -1,8 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
-import { downloadCityPack } from '@/lib/cityPack';
+import type { CityPack, Zone } from '@unmapped/lib';
+import { downloadCityPack, getCityPack } from '@/lib/cityPack';
+import { computeTouristPressureIndex } from '@/lib/intel/touristPressure';
+import {
+  isOnline,
+  onConnectionChange,
+  openGoogleMaps,
+  vibrateDevice,
+  VIBRATION_PATTERNS,
+} from '@/lib/deviceAPI';
+import TouristPressureGauge from '@/components/ux/TouristPressureGauge';
+import { formatHHMM } from '@/lib/ux/time';
+import { c } from '@/lib/ux/copy';
 
 const CITIES = {
   bangkok: {
@@ -150,10 +162,13 @@ const CITIES = {
 export default function CityDossier() {
   const router = useRouter();
   const { city } = router.query;
+  const [pack, setPack] = useState<CityPack | null>(null);
+  const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [downloadComplete, setDownloadComplete] = useState(false);
-  const [downloadStage, setDownloadStage] = useState('');
+  const [downloadStage, setDownloadStage] = useState<string | null>(null);
+  const [sync, setSync] = useState<'ONLINE' | 'OFFLINE' | 'BLACK_BOX'>('ONLINE');
+  const [refZone, setRefZone] = useState<Zone | null>(null);
+  const [weatherLine, setWeatherLine] = useState<string>('UNKNOWN');
 
   const rawCity = typeof city === 'string' ? city : null;
   const cityKey = rawCity
@@ -206,252 +221,293 @@ export default function CityDossier() {
     }
   }, [city, router]);
 
+  useEffect(() => {
+    const cleanup = onConnectionChange((online) => {
+      if (online) {
+        setSync('ONLINE');
+      } else {
+        setSync(pack ? 'BLACK_BOX' : 'OFFLINE');
+      }
+    });
+    setSync(isOnline() ? 'ONLINE' : pack ? 'BLACK_BOX' : 'OFFLINE');
+    return cleanup;
+  }, [pack]);
+
+  useEffect(() => {
+    const run = async () => {
+      if (!cityKey) return;
+      setLoading(true);
+      const cached = await getCityPack(cityKey);
+      if (cached) {
+        setPack(cached);
+      }
+      setLoading(false);
+    };
+
+    run();
+  }, [cityKey]);
+
+  useEffect(() => {
+    const resolveRef = async () => {
+      if (!pack) {
+        setRefZone(null);
+        return;
+      }
+
+      // Prefer the nearest zone to the user's current position for personal relevance.
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            let best: { z: Zone; d: number } | null = null;
+
+            for (const z of pack.zones) {
+              const d = (z.centroid.lat - lat) ** 2 + (z.centroid.lon - lon) ** 2;
+              if (!best || d < best.d) best = { z, d };
+            }
+
+            setRefZone(best?.z ?? pack.zones[0] ?? null);
+          },
+          () => {
+            setRefZone(pack.zones[0] ?? null);
+          },
+          { enableHighAccuracy: false, maximumAge: 15000, timeout: 8000 }
+        );
+        return;
+      }
+
+      setRefZone(pack.zones[0] ?? null);
+    };
+
+    resolveRef();
+  }, [pack]);
+
+  useEffect(() => {
+    const run = async () => {
+      if (!pack || !refZone) return;
+      try {
+        const url = `/api/weather?lat=${encodeURIComponent(refZone.centroid.lat)}&lon=${encodeURIComponent(
+          refZone.centroid.lon
+        )}`;
+        const resp = await fetch(url);
+        if (!resp.ok) {
+          setWeatherLine('UNKNOWN');
+          return;
+        }
+        const data = await resp.json();
+        const temp =
+          typeof data?.weather?.temperature === 'number'
+            ? Math.round(data.weather.temperature)
+            : null;
+        const desc =
+          typeof data?.weather?.description === 'string' ? data.weather.description : null;
+        if (temp === null || !desc) {
+          setWeatherLine('UNKNOWN');
+          return;
+        }
+        setWeatherLine(`${temp}°C // ${String(desc).toUpperCase()}`);
+      } catch {
+        setWeatherLine('UNKNOWN');
+      }
+    };
+
+    run();
+  }, [pack, refZone]);
+
+  const tpi = useMemo(() => {
+    if (!pack || !refZone) return null;
+    return computeTouristPressureIndex(refZone, pack.zones);
+  }, [pack, refZone]);
+
+  const startHere = useMemo(() => {
+    if (!pack) return null;
+
+    let best: {
+      zone: Zone;
+      score: number;
+      tpi: ReturnType<typeof computeTouristPressureIndex>;
+    } | null = null;
+    for (const z of pack.zones) {
+      if (!z.selected_anchor) continue;
+      if (z.status !== 'ACTIVE') continue;
+
+      const zi = computeTouristPressureIndex(z, pack.zones);
+      const scoreBase = zi.status === 'CLEAR' ? 3 : zi.status === 'WATCH' ? 1 : -2;
+      const local = zi.local_activity === 'HIGH' ? 2 : zi.local_activity === 'MEDIUM' ? 1 : 0;
+      const tourist = zi.tourist_density === 'LOW' ? 2 : zi.tourist_density === 'MEDIUM' ? 1 : 0;
+      const price =
+        zi.price_delta_pct === null
+          ? 0
+          : zi.price_delta_pct <= 5
+            ? 2
+            : zi.price_delta_pct <= 15
+              ? 1
+              : -1;
+
+      const s = scoreBase + local + tourist + price;
+      if (!best || s > best.score) best = { zone: z, score: s, tpi: zi };
+    }
+
+    if (!best) return null;
+    const whyParts: string[] = [];
+    if (best.tpi.price_delta_pct !== null && best.tpi.price_delta_pct <= 5)
+      whyParts.push('FAIR PRICES');
+    else whyParts.push('STABLE PRICES');
+    if (best.tpi.local_activity !== 'LOW') whyParts.push('LOCAL FOOT TRAFFIC');
+    return { zone: best.zone, why: whyParts.join(' • ') };
+  }, [pack]);
+
   const handleDownload = async () => {
     if (!cityKey) return;
 
     setDownloading(true);
-    setProgress(0);
+    setDownloadStage('INITIALIZING...');
 
     try {
-      const steps = [
-        { msg: 'ESTABLISHING SECURE LINK...', duration: 400 },
-        { msg: 'REQUESTING BLACK BOX DATA...', duration: 500 },
-        { msg: 'DOWNLOADING ZONE GEOMETRIES...', duration: 600 },
-        { msg: 'PARSING ANCHOR COORDINATES...', duration: 500 },
-        { msg: 'CACHING PRICE INTEL...', duration: 400 },
-        { msg: 'LOADING TACTICAL CHEAT SHEETS...', duration: 400 },
-        { msg: 'ENCRYPTING PAYLOAD...', duration: 500 },
-        { msg: 'WRITING TO SECURE STORAGE...', duration: 600 },
-        { msg: 'VERIFICATION COMPLETE', duration: 300 },
-      ];
-
-      for (let i = 0; i < steps.length; i++) {
-        setDownloadStage(steps[i].msg);
-        await new Promise((resolve) => setTimeout(resolve, steps[i].duration));
-        setProgress(((i + 1) / steps.length) * 100);
+      const steps = ['REQUESTING PACK...', 'CACHING LOCALLY...', 'VERIFICATION COMPLETE'];
+      for (const step of steps) {
+        setDownloadStage(step);
+        await new Promise((resolve) => setTimeout(resolve, 380));
       }
 
       await downloadCityPack(cityKey);
-      setDownloadComplete(true);
-
-      setTimeout(() => {
-        router.push(`/map/${cityKey}`);
-      }, 1200);
+      const refreshed = await getCityPack(cityKey);
+      setPack(refreshed);
+      setDownloading(false);
+      setDownloadStage(null);
+      vibrateDevice(VIBRATION_PATTERNS.CONFIRM);
     } catch (error) {
       console.error('Pack download failed:', error);
-      alert('BLACK BOX ACQUISITION FAILED. Check console for details.');
+      alert('LOCAL INTELLIGENCE ACQUISITION FAILED.');
       setDownloading(false);
+      setDownloadStage(null);
     }
   };
 
   if (!cityData || !cityKey) return null;
 
+  const now = new Date();
+  const statusLine =
+    sync === 'ONLINE' ? 'OPERATIONAL' : sync === 'BLACK_BOX' ? 'OPERATIONAL (OFFLINE)' : 'OFFLINE';
+
   return (
     <>
       <Head>
-        <title>{cityData.code} MISSION BRIEFING - UNMAPPED OS</title>
+        <title>{cityData.code} ORIENTATION - UNMAPPED OS</title>
       </Head>
 
       {/* HUD Overlay */}
       <div className="hud-overlay" />
 
-      {/* Diagnostic Panel */}
-      <div className="diagnostic-panel top-4 right-4">
-        <div className="space-y-1">
-          <div
-            className={`status-indicator ${downloadComplete ? 'active' : downloading ? 'warning' : 'ghost'}`}
-          >
-            BLACK BOX
-          </div>
-          <div className="status-indicator active">NETWORK</div>
-          <div className="font-mono text-tactical-xs text-ops-night-muted mt-2">
-            {cityData.code} THEATER
-          </div>
-        </div>
-      </div>
-
       <main className="min-h-screen p-4 md:p-8">
-        <div className="max-w-4xl mx-auto space-y-8 animate-boot">
-          {/* Header Navigation */}
+        <div className="max-w-3xl mx-auto space-y-6 animate-boot">
           <div className="flex items-center justify-between">
             <Link href="/cities">
               <button className="btn-tactical-ghost text-tactical-sm">← ALL CITIES</button>
             </Link>
-            <h1 className="font-tactical text-tactical-lg text-ops-neon-cyan uppercase tracking-widest">
-              MISSION BRIEFING
-            </h1>
-            <Link href="/operative">
-              <button className="btn-tactical-ghost text-tactical-sm">OPERATIVE</button>
+            <div className="font-tactical text-tactical-sm text-ops-neon-cyan uppercase tracking-widest">
+              ORIENTATION
+            </div>
+            <Link href="/map/" aria-disabled>
+              <div className="w-24" />
             </Link>
           </div>
 
-          {/* City Intel Card */}
-          <div className="hud-card neon-border-top animate-slide-in">
-            <div className="space-y-6">
-              <div className="flex items-start justify-between">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-4">
-                    <h2 className="font-tactical text-5xl text-ops-neon-green uppercase tracking-widest">
-                      {cityData.name}
-                    </h2>
-                    <span className="font-tactical text-tactical-2xl text-ops-neon-cyan">
-                      {cityData.code}
-                    </span>
-                  </div>
-                  <p className="font-mono text-tactical-base text-ops-night-muted uppercase">
-                    {cityData.country}
-                  </p>
-                </div>
-                <div
-                  className={`px-4 py-2 border ${
-                    cityData.threat === 'LOW'
-                      ? 'border-ops-active/50 text-ops-active'
-                      : cityData.threat === 'MODERATE'
-                        ? 'border-ops-warning/50 text-ops-warning'
-                        : 'border-ops-critical/50 text-ops-critical'
-                  } font-tactical text-tactical-xs uppercase tracking-wider`}
-                >
-                  THREAT: {cityData.threat}
-                </div>
+          <div className="hud-card neon-border-top">
+            <div className="space-y-3 font-mono text-tactical-sm">
+              <div className="flex justify-between gap-4">
+                <span className="text-ops-night-muted">{c('city.header.city')}:</span>
+                <span className="text-ops-night-text">{displayName.toUpperCase()}</span>
               </div>
-
-              <div className="border-t border-ops-neon-green/20 pt-4">
-                <p className="font-mono text-tactical-base text-ops-night-text/90 leading-relaxed">
-                  {cityData.description}
-                </p>
-                <p className="font-tactical text-tactical-xs text-ops-night-muted mt-2 uppercase tracking-wider">
-                  Classification: {cityData.classification}
-                </p>
+              <div className="flex justify-between gap-4">
+                <span className="text-ops-night-muted">{c('city.header.localTime')}:</span>
+                <span className="text-ops-night-text">{formatHHMM(now)}</span>
               </div>
-
-              {/* Stats Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <div className="bg-ops-night-surface/50 border border-ops-neon-green/20 p-4">
-                  <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">
-                    Zones
-                  </p>
-                  <p className="font-tactical text-3xl text-ops-neon-green mt-1">
-                    {cityData.zones}
-                  </p>
-                </div>
-                <div className="bg-ops-night-surface/50 border border-ops-neon-cyan/20 p-4">
-                  <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">
-                    Status
-                  </p>
-                  <p className="font-tactical text-tactical-sm text-ops-neon-cyan mt-2 uppercase">
-                    ACTIVE
-                  </p>
-                </div>
-                <div className="bg-ops-night-surface/50 border border-ops-neon-green/20 p-4">
-                  <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">
-                    Pack Size
-                  </p>
-                  <p className="font-mono text-tactical-base text-ops-night-text mt-2">2.4 MB</p>
-                </div>
-                <div className="bg-ops-night-surface/50 border border-ops-neon-green/20 p-4">
-                  <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">
-                    Updated
-                  </p>
-                  <p className="font-mono text-tactical-base text-ops-night-text mt-2">Dec 12</p>
-                </div>
+              <div className="flex justify-between gap-4">
+                <span className="text-ops-night-muted">{c('city.header.weather')}:</span>
+                <span className="text-ops-night-text">{weatherLine}</span>
+              </div>
+              <div className="flex justify-between gap-4">
+                <span className="text-ops-night-muted">{c('city.header.status')}:</span>
+                <span className="text-ops-night-text">{statusLine}</span>
               </div>
             </div>
           </div>
 
-          {/* Emergency Protocols */}
-          <div className="hud-card animate-slide-in">
-            <div className="hud-card-header">EMERGENCY PROTOCOLS</div>
-            <div className="grid grid-cols-3 gap-6">
-              <div>
-                <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">
-                  Police
-                </p>
-                <p className="font-mono text-tactical-lg text-ops-neon-cyan mt-2">
-                  {cityData.emergency.police}
-                </p>
-              </div>
-              <div>
-                <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">
-                  Ambulance
-                </p>
-                <p className="font-mono text-tactical-lg text-ops-neon-cyan mt-2">
-                  {cityData.emergency.ambulance}
-                </p>
-              </div>
-              <div>
-                <p className="font-tactical text-tactical-xs text-ops-night-muted uppercase tracking-wider">
-                  Embassy
-                </p>
-                <p className="font-mono text-tactical-sm text-ops-neon-cyan mt-2">
-                  {cityData.emergency.embassy}
-                </p>
-              </div>
-            </div>
-          </div>
+          {pack && tpi && !loading && <TouristPressureGauge tpi={tpi} />}
 
-          {/* Download Black Box Section */}
-          <div className="hud-card neon-border-top animate-fade-in">
-            {!downloading && !downloadComplete && (
-              <>
-                <div className="hud-card-header">ACQUIRE BLACK BOX INTEL</div>
-                <div className="space-y-6">
-                  <div className="space-y-3">
-                    <p className="font-mono text-tactical-base text-ops-night-text/90 leading-relaxed">
-                      Encrypted intelligence bundle contains zone geometries, anchor coordinates,
-                      price data, and tactical cheat sheets. Enables full ghost-mode operations
-                      without network connectivity.
-                    </p>
-                    <div className="flex items-center gap-4 font-mono text-tactical-xs text-ops-night-muted">
-                      <span>• OFFLINE CAPABLE</span>
-                      <span>• ENCRYPTED</span>
-                      <span>• AUTO-SYNC</span>
-                    </div>
-                  </div>
-                  <button
-                    onClick={handleDownload}
-                    className="btn-tactical-primary w-full py-4 text-tactical-base"
-                  >
-                    INITIATE BLACK BOX DOWNLOAD
-                  </button>
-                </div>
-              </>
-            )}
-
-            {downloading && (
-              <div className="space-y-6">
-                <div className="hud-card-header terminal-flicker">DOWNLOADING BLACK BOX</div>
-                <div className="font-mono text-tactical-sm text-ops-neon-green space-y-2">
-                  <p className="boot-text">&gt; {downloadStage}</p>
-                  <p className="boot-text">&gt; PROGRESS: {progress.toFixed(0)}%</p>
-                </div>
-                <div className="w-full bg-ops-night-surface border border-ops-neon-green/30 h-3 relative overflow-hidden">
-                  <div
-                    className="bg-ops-neon-green h-full transition-all duration-300 shadow-neon"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-              </div>
-            )}
-
-            {downloadComplete && (
+          {!pack && (
+            <div className="hud-card">
+              <div className="hud-card-header">LOCAL INTELLIGENCE</div>
               <div className="space-y-4">
-                <div className="font-tactical text-center space-y-3">
-                  <p className="text-4xl text-ops-active animate-pulse-neon">
-                    ✓ BLACK BOX ACQUIRED
-                  </p>
-                  <p className="font-mono text-tactical-sm text-ops-neon-cyan terminal-flicker">
-                    &gt; LOADING TACTICAL DISPLAY...
-                  </p>
+                <div className="font-mono text-tactical-base text-ops-night-text/90">
+                  ONE DOWNLOAD ENABLES OFFLINE OPERATIONS.
                 </div>
+                <button
+                  onClick={handleDownload}
+                  disabled={downloading || !isOnline()}
+                  className="btn-tactical-primary w-full py-4 text-tactical-base disabled:opacity-60"
+                >
+                  {downloading ? 'ACQUIRING...' : 'ACQUIRE LOCAL INTELLIGENCE'}
+                </button>
+                {!isOnline() && (
+                  <div className="font-mono text-tactical-xs text-ops-neon-amber/90">
+                    CONNECT ONCE TO ACQUIRE.
+                  </div>
+                )}
+                {downloadStage && (
+                  <div className="font-mono text-tactical-xs text-ops-neon-green terminal-flicker">
+                    &gt; {downloadStage}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
-          {/* Intel Footer */}
-          <div className="font-mono text-tactical-xs text-ops-night-muted space-y-2 animate-fade-in">
-            <p>• BLACK BOXES UPDATED WEEKLY VIA AUTOMATED PIPELINE</p>
-            <p>• INTEL SOURCES: OpenStreetMap, OpenTripMap, Wikidata</p>
-            <p>• GHOST MODE: Full functionality without connectivity</p>
+          {pack && startHere && (
+            <div className="hud-card neon-border-top">
+              <div className="hud-card-header">{c('startHere.title')}</div>
+              <div className="space-y-3 font-mono text-tactical-sm">
+                <div className="flex justify-between gap-4">
+                  <span className="text-ops-night-muted">{c('startHere.zone')}:</span>
+                  <span className="text-ops-night-text">{startHere.zone.zone_id}</span>
+                </div>
+                <div className="flex justify-between gap-4">
+                  <span className="text-ops-night-muted">{c('startHere.anchor')}:</span>
+                  <span className="text-ops-night-text">
+                    {startHere.zone.selected_anchor.name.toUpperCase()}
+                  </span>
+                </div>
+                <div className="flex justify-between gap-4">
+                  <span className="text-ops-night-muted">{c('startHere.why')}:</span>
+                  <span className="text-ops-night-text">{startHere.why}</span>
+                </div>
+
+                <button
+                  onClick={() => {
+                    vibrateDevice(VIBRATION_PATTERNS.CONFIRM);
+                    openGoogleMaps(
+                      startHere.zone.selected_anchor.lat,
+                      startHere.zone.selected_anchor.lon
+                    );
+                  }}
+                  className="btn-tactical-primary w-full py-4 text-tactical-base"
+                >
+                  {c('startHere.navigate')}
+                </button>
+
+                <Link href={`/map/${encodeURIComponent(cityKey)}`}>
+                  <button className="btn-tactical-ghost w-full py-3 text-tactical-xs">
+                    OPEN TACTICAL MAP
+                  </button>
+                </Link>
+              </div>
+            </div>
+          )}
+
+          <div className="font-mono text-[10px] text-ops-night-muted">
+            NO MAP. NO BUSINESSES. INTEL FIRST.
           </div>
         </div>
       </main>

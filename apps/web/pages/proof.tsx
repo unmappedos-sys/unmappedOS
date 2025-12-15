@@ -5,6 +5,7 @@ import type { CityPack, Zone } from '@unmapped/lib';
 import { downloadCityPack, getCityPack } from '@/lib/cityPack';
 import { copyToClipboard, isOnline, vibrateDevice, VIBRATION_PATTERNS } from '@/lib/deviceAPI';
 import { computeTouristPressureIndex } from '@/lib/intel/touristPressure';
+import { c } from '@/lib/ux/copy';
 
 export default function ProofScreen() {
   const router = useRouter();
@@ -69,6 +70,7 @@ export default function ProofScreen() {
   }, [pack, zone]);
 
   const now = useMemo(() => new Date(), [zoneId, city]);
+  const dateStamp = useMemo(() => now.toISOString().slice(0, 10), [now]);
 
   const handleCopy = async () => {
     if (!pack || !zone || !tpi) return;
@@ -76,10 +78,10 @@ export default function ProofScreen() {
     const lines = [
       `UNMAPPED OS // PROOF SCREEN`,
       `${pack.city.toUpperCase()} // ${zone.zone_id}`,
-      `LOCAL PRICE VERIFIED`,
+      c('share.localPriceVerified'),
       `TOURIST PRESSURE: ${tpi.status}`,
       `REASON: ${tpi.reason}`,
-      `TIME: ${now.toISOString()}`,
+      `${c('share.date')}: ${dateStamp}`,
     ];
 
     await copyToClipboard(lines.join('\n'));
@@ -121,7 +123,7 @@ export default function ProofScreen() {
 
                 <div className="bg-ops-night-surface/50 border border-ops-neon-green/20 p-4">
                   <div className="font-tactical text-tactical-base text-ops-neon-green uppercase tracking-wider">
-                    LOCAL PRICE VERIFIED
+                    {c('share.localPriceVerified')}
                   </div>
                   <div className="mt-2 space-y-1 font-mono text-tactical-xs">
                     <div className="flex justify-between">
@@ -143,8 +145,8 @@ export default function ProofScreen() {
                       <span className="text-ops-night-text">{tpi.reason}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-ops-night-muted">STAMP:</span>
-                      <span className="text-ops-night-text">{now.toISOString()}</span>
+                      <span className="text-ops-night-muted">{c('share.date')}:</span>
+                      <span className="text-ops-night-text">{dateStamp}</span>
                     </div>
                   </div>
                 </div>
