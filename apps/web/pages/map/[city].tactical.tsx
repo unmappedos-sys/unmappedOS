@@ -55,7 +55,7 @@ import {
 import type { TouristPressureAlert as TouristPressureAlertData } from '@/components/tactical/types';
 
 import type { Zone, CityPack } from '@unmapped/lib';
-import '../../../components/tactical/tactical.css';
+import '@/components/tactical/tactical.css';
 
 // Dynamic import for map canvas (avoid SSR issues)
 const TacticalMapCanvas = dynamic(() => import('@/components/tactical/TacticalMapCanvas'), {
