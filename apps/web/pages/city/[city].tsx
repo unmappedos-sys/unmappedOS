@@ -466,10 +466,11 @@ export default function CityDossierV2() {
   // Get city data
   const cityData = useMemo(() => {
     if (!cityKey) return null;
+    const cityStr = typeof city === 'string' ? city : 'Unknown';
     return (
       CITY_REGISTRY[cityKey] || {
         ...DEFAULT_CITY_DATA,
-        name: city?.toString().charAt(0).toUpperCase() + city?.toString().slice(1) || 'Unknown',
+        name: cityStr.charAt(0).toUpperCase() + cityStr.slice(1),
         code: cityKey.slice(0, 3).toUpperCase(),
       }
     );
