@@ -41,9 +41,11 @@ CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_activity_type_created
   ON activity_logs(action_type, created_at DESC);
 
 -- Zone activity aggregation
-CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_activity_zone_created 
-  ON activity_logs(zone_id, created_at DESC) 
-  WHERE zone_id IS NOT NULL;
+-- NOTE: Some deployments do not have activity_logs.zone_id.
+-- If you add that column, create this index manually:
+--   CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_activity_zone_created
+--     ON activity_logs(zone_id, created_at DESC)
+--     WHERE zone_id IS NOT NULL;
 
 -- ============================================
 -- PRICE INDEXES
@@ -79,15 +81,9 @@ CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_reports_pending
 -- This migration only adds additional quest-related indexes
 
 -- Active quests (requires migration 004_strategy_6_enhancements.sql)
--- Skip if quests table doesn't exist yet
-DO $$
-BEGIN
-  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'quests') THEN
-    CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_quests_active 
-      ON quests(active, quest_type) 
-      WHERE active = true;
-  END IF;
-END $$;
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_quests_active 
+  ON quests(active, quest_type) 
+  WHERE active = true;
 
 -- User badges
 CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_user_badges_user 
@@ -125,11 +121,6 @@ CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_zones_city_status
 -- ============================================
 -- PARTIAL INDEXES FOR COMMON FILTERS
 -- ============================================
--- Active users only
-CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_users_active 
-  ON users(last_active DESC) 
-  WHERE last_active > NOW() - INTERVAL '30 days';
-
 -- High karma users (for featured operatives)
 CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_users_high_karma 
   ON users(karma DESC) 
@@ -140,15 +131,9 @@ CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_users_high_karma
 -- ============================================
 -- Whisper engine query optimization (requires migration 004)
 -- Note: Column is valid_until, not expires_at
--- Skip if whisper_cache table doesn't exist yet
-DO $$
-BEGIN
-  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'whisper_cache') THEN
-    CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_whisper_cache_zone_valid 
-      ON whisper_cache(zone_id, valid_until DESC) 
-      WHERE valid_until > NOW();
-  END IF;
-END $$;
+-- NOTE: Avoid partial predicates like "valid_until > NOW()" (NOW() is not immutable).
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_whisper_cache_zone_valid 
+  ON whisper_cache(zone_id, valid_until DESC);
 
 -- ============================================
 -- ANALYZE TABLES
