@@ -194,10 +194,20 @@ export function generateRecommendation(
   // Convert zones to analyzable data
   const zones = pack.zones.map((z) => convertZoneToData(z, userPos));
 
+  // If no zones, return fallback
+  if (zones.length === 0) {
+    return generateNoDataRecommendation(pack.city, isOffline);
+  }
+
   // Gather heuristics
   const factors = gatherHeuristics(zones, userPos);
 
-  // Generate recommendation based on priority
+  // WITHOUT GPS: Provide useful recommendations based on time and zone data
+  if (!userPos) {
+    return generateNoGpsRecommendation(zones, factors, pack.city, isOffline);
+  }
+
+  // WITH GPS: Full location-aware recommendations
   // Priority: Safety > Price > Crowd > General
 
   // 1. Safety check
@@ -222,6 +232,178 @@ export function generateRecommendation(
 
   // 5. General recommendation
   return generateGeneralRecommendation(zones, factors, userPos, isOffline);
+}
+
+// ============================================================================
+// NO GPS RECOMMENDATIONS
+// ============================================================================
+
+function generateNoGpsRecommendation(
+  zones: ZoneData[],
+  factors: HeuristicFactors,
+  cityName: string,
+  isOffline: boolean
+): Recommendation {
+  const hour = factors.currentHour;
+
+  // Find zones with price data
+  const budgetZones = zones.filter((z) => z.priceLevel === 'budget' || z.priceLevel === 'normal');
+  const touristZones = zones.filter(
+    (z) => z.priceLevel === 'tourist' || z.priceLevel === 'premium'
+  );
+
+  // Pick a good zone to recommend
+  const recommendedZone =
+    budgetZones.length > 0 ? budgetZones[Math.floor(Math.random() * budgetZones.length)] : zones[0];
+
+  // Morning (6-11)
+  if (hour >= 6 && hour < 11) {
+    if (recommendedZone && recommendedZone.averagePrice) {
+      return {
+        id: `nogps-morning-${Date.now()}`,
+        action: `Head to ${recommendedZone.name} for breakfast.`,
+        context: `Coffee ~${recommendedZone.averagePrice}฿. Less crowded in mornings.`,
+        reason: `${recommendedZone.name} has local prices. Tourist areas charge 2-3x more for the same food.`,
+        destination: {
+          lat: recommendedZone.center.lat,
+          lon: recommendedZone.center.lon,
+          name: recommendedZone.name,
+          distance: 0,
+          direction: 'north',
+        },
+        confidence: 0.7,
+        generatedAt: Date.now(),
+        trigger: 'time',
+      };
+    }
+    return {
+      id: `nogps-morning-${Date.now()}`,
+      action: `Good morning to explore ${cityName}.`,
+      context: `Cooler temperatures. Fewer crowds.`,
+      reason: `Mornings are ideal for walking around. Most tourist traps aren't fully active yet.`,
+      confidence: 0.6,
+      generatedAt: Date.now(),
+      trigger: 'time',
+    };
+  }
+
+  // Lunch rush (11-14)
+  if (hour >= 11 && hour < 14) {
+    if (budgetZones.length > 0) {
+      const lunchZone = budgetZones[0];
+      return {
+        id: `nogps-lunch-${Date.now()}`,
+        action: `${lunchZone.name} has local lunch prices.`,
+        context: `Avoid main tourist streets for food right now.`,
+        reason: `Lunch hour. Tourist areas jack up prices. Local spots like ${lunchZone.name} keep it real.`,
+        destination: {
+          lat: lunchZone.center.lat,
+          lon: lunchZone.center.lon,
+          name: lunchZone.name,
+          distance: 0,
+          direction: 'north',
+        },
+        confidence: 0.75,
+        generatedAt: Date.now(),
+        trigger: 'price',
+      };
+    }
+    return {
+      id: `nogps-lunch-${Date.now()}`,
+      action: `Avoid tourist streets for lunch.`,
+      context: `Prices spike during lunch hour on main roads.`,
+      reason: `Walk one block off the main strip. Same food, half the price.`,
+      confidence: 0.7,
+      generatedAt: Date.now(),
+      trigger: 'price',
+    };
+  }
+
+  // Afternoon (14-17)
+  if (hour >= 14 && hour < 17) {
+    return {
+      id: `nogps-afternoon-${Date.now()}`,
+      action: `Good time to explore. Prices are stable.`,
+      context: `Post-lunch lull. Crowds thinning.`,
+      reason: `Between peak hours. Most places aren't trying to rip you off right now.`,
+      confidence: 0.65,
+      generatedAt: Date.now(),
+      trigger: 'general',
+    };
+  }
+
+  // Evening (17-21)
+  if (hour >= 17 && hour < 21) {
+    if (touristZones.length > 0 && budgetZones.length > 0) {
+      const avoidZone = touristZones[0];
+      const goZone = budgetZones[0];
+      return {
+        id: `nogps-evening-${Date.now()}`,
+        action: `Skip ${avoidZone.name}. Try ${goZone.name} instead.`,
+        context: `Evening prices rise 30-50% in tourist zones.`,
+        reason: `After sunset, popular areas inflate prices. ${goZone.name} stays consistent.`,
+        destination: {
+          lat: goZone.center.lat,
+          lon: goZone.center.lon,
+          name: goZone.name,
+          distance: 0,
+          direction: 'north',
+        },
+        confidence: 0.8,
+        generatedAt: Date.now(),
+        trigger: 'price',
+      };
+    }
+    return {
+      id: `nogps-evening-${Date.now()}`,
+      action: `Prices rise after sunset. Be selective.`,
+      context: `Tourist areas charge more at night.`,
+      reason: `This is when scams peak. Stick to places with posted prices.`,
+      confidence: 0.75,
+      generatedAt: Date.now(),
+      trigger: 'price',
+    };
+  }
+
+  // Night (21+)
+  if (hour >= 21 || hour < 6) {
+    return {
+      id: `nogps-night-${Date.now()}`,
+      action: `Late night. Stay alert, prices vary wildly.`,
+      context: `Some places overcharge after midnight.`,
+      reason: `Night markets can be fun but watch for inflated tourist prices. Always ask before ordering.`,
+      confidence: 0.7,
+      generatedAt: Date.now(),
+      trigger: 'safety',
+    };
+  }
+
+  // Default fallback
+  return {
+    id: `nogps-default-${Date.now()}`,
+    action: isOffline
+      ? `Offline mode. Using cached data.`
+      : `Enable location for personalized tips.`,
+    context: isOffline ? `${cityName} data available.` : `Tap here to see the map.`,
+    reason: isOffline
+      ? `You're offline but can still browse areas.`
+      : `With your location, I can tell you exactly where to go for better prices.`,
+    confidence: 0.5,
+    generatedAt: Date.now(),
+    trigger: 'general',
+  };
+}
+
+function generateNoDataRecommendation(cityName: string, isOffline: boolean): Recommendation {
+  return {
+    id: `nodata-${Date.now()}`,
+    action: isOffline ? `Offline. No data for ${cityName}.` : `No local data yet.`,
+    context: isOffline ? `Connect to download.` : `Download the city pack first.`,
+    reason: `I need local data to give you recommendations. Download the ${cityName} pack to get started.`,
+    confidence: 0.3,
+    generatedAt: Date.now(),
+    trigger: 'general',
+  };
 }
 
 function generateSafetyRecommendation(
