@@ -489,7 +489,6 @@ export default function CityDossierV2() {
   useEffect(() => {
     const loadPack = async () => {
       if (!cityKey) return;
-      setLoading(true);
       try {
         const cached = await getCityPackRecord(cityKey);
         if (cached?.pack) {
@@ -499,7 +498,6 @@ export default function CityDossierV2() {
       } catch (error) {
         console.error('Failed to load cached pack:', error);
       }
-      setLoading(false);
     };
     loadPack();
   }, [cityKey]);
