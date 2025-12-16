@@ -310,7 +310,15 @@ export default function NextMovePage() {
         />
       </Head>
 
-      <div className="min-h-screen flex flex-col bg-white" style={{ backgroundColor: '#ffffff' }}>
+      {/* Override global dark theme for this page */}
+      <style jsx global>{`
+        body {
+          background: #ffffff !important;
+          background-image: none !important;
+        }
+      `}</style>
+
+      <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#ffffff' }}>
         {/* Header */}
         <header className="px-6 pt-6 pb-4">
           <div className="flex items-center justify-between">
