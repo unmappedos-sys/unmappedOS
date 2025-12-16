@@ -5,7 +5,6 @@
  * No charts. No scores. No jargon.
  */
 
-import { motion, AnimatePresence } from 'framer-motion';
 import type { Recommendation } from './types';
 
 interface WhyPanelProps {
@@ -15,55 +14,41 @@ interface WhyPanelProps {
 }
 
 export default function WhyPanel({ recommendation, visible, onClose }: WhyPanelProps) {
-  if (!recommendation) return null;
+  if (!recommendation || !visible) return null;
 
   return (
-    <AnimatePresence>
-      {visible && (
-        <>
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40"
-            style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
+    <>
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 z-40"
+        style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
+        onClick={onClose}
+      />
+
+      {/* Panel */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-3xl shadow-xl">
+        <div className="p-6 pb-8">
+          {/* Handle */}
+          <div className="w-10 h-1 bg-stone-200 rounded-full mx-auto mb-6" />
+
+          {/* Reason */}
+          <p className="text-lg text-stone-800 leading-relaxed mb-6">{recommendation.reason}</p>
+
+          {/* Trigger indicator (subtle) */}
+          <div className="flex items-center gap-2 mb-6">
+            <TriggerBadge trigger={recommendation.trigger} />
+          </div>
+
+          {/* Close */}
+          <button
             onClick={onClose}
-          />
-
-          {/* Panel */}
-          <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 100 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-3xl shadow-xl"
+            className="w-full py-4 bg-stone-100 text-stone-700 rounded-2xl font-medium active:scale-[0.98] transition-transform"
           >
-            <div className="p-6 pb-safe">
-              {/* Handle */}
-              <div className="w-10 h-1 bg-stone-200 rounded-full mx-auto mb-6" />
-
-              {/* Reason */}
-              <p className="text-lg text-stone-800 leading-relaxed mb-6">{recommendation.reason}</p>
-
-              {/* Trigger indicator (subtle) */}
-              <div className="flex items-center gap-2 mb-6">
-                <TriggerBadge trigger={recommendation.trigger} />
-              </div>
-
-              {/* Close */}
-              <button
-                onClick={onClose}
-                className="w-full py-4 bg-stone-100 text-stone-700 rounded-2xl font-medium active:scale-[0.98] transition-transform"
-              >
-                Got it
-              </button>
-            </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+            Got it
+          </button>
+        </div>
+      </div>
+    </>
   );
 }
 

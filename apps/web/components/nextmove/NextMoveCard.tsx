@@ -5,7 +5,6 @@
  * Shows ONE recommendation. Nothing else.
  */
 
-import { motion, AnimatePresence } from 'framer-motion';
 import type { Recommendation } from './types';
 
 interface NextMoveCardProps {
@@ -43,45 +42,36 @@ export default function NextMoveCard({
   }
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={recommendation.id}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="flex-1 flex flex-col justify-center px-6"
-      >
-        {/* Primary Recommendation */}
-        <div className="mb-8">
-          <p className="text-2xl sm:text-3xl font-medium text-stone-900 leading-snug">
-            {recommendation.action}
-          </p>
-        </div>
+    <div className="flex-1 flex flex-col justify-center px-6">
+      {/* Primary Recommendation */}
+      <div className="mb-8">
+        <p className="text-2xl sm:text-3xl font-medium text-stone-900 leading-snug">
+          {recommendation.action}
+        </p>
+      </div>
 
-        {/* Secondary Context */}
-        <div className="mb-12">
-          <p className="text-base text-stone-500">{recommendation.context}</p>
-        </div>
+      {/* Secondary Context */}
+      <div className="mb-12">
+        <p className="text-base text-stone-500">{recommendation.context}</p>
+      </div>
 
-        {/* Actions */}
-        <div className="flex gap-3">
-          {recommendation.destination && (
-            <button
-              onClick={onShowMe}
-              className="flex-1 py-4 px-6 bg-stone-900 text-white rounded-2xl font-medium text-base active:scale-[0.98] transition-transform"
-            >
-              Show Me
-            </button>
-          )}
+      {/* Actions */}
+      <div className="flex gap-3">
+        {recommendation.destination && (
           <button
-            onClick={onWhy}
-            className="flex-1 py-4 px-6 bg-stone-100 text-stone-700 rounded-2xl font-medium text-base active:scale-[0.98] transition-transform"
+            onClick={onShowMe}
+            className="flex-1 py-4 px-6 bg-stone-900 text-white rounded-2xl font-medium text-base active:scale-[0.98] transition-transform"
           >
-            Why?
+            Show Me
           </button>
-        </div>
-      </motion.div>
-    </AnimatePresence>
+        )}
+        <button
+          onClick={onWhy}
+          className="flex-1 py-4 px-6 bg-stone-100 text-stone-700 rounded-2xl font-medium text-base active:scale-[0.98] transition-transform"
+        >
+          Why?
+        </button>
+      </div>
+    </div>
   );
 }

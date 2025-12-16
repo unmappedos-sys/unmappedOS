@@ -106,9 +106,13 @@ export default function NextMovePage() {
         if (currentPack) {
           setPack(currentPack);
           // Generate recommendation immediately
-          const rec = generateRecommendation(currentPack, undefined, !isOnline());
-          setRecommendation(rec);
-          lastRecommendationId.current = rec.id;
+          try {
+            const rec = generateRecommendation(currentPack, undefined, !isOnline());
+            setRecommendation(rec);
+            lastRecommendationId.current = rec.id;
+          } catch (recError) {
+            console.error('Recommendation generation failed:', recError);
+          }
         }
 
         // If online, try to download/refresh
@@ -120,9 +124,13 @@ export default function NextMovePage() {
               setPack(refreshed);
               currentPack = refreshed;
               // Update recommendation with new data
-              const rec = generateRecommendation(refreshed, undefined, false);
-              setRecommendation(rec);
-              lastRecommendationId.current = rec.id;
+              try {
+                const rec = generateRecommendation(refreshed, undefined, false);
+                setRecommendation(rec);
+                lastRecommendationId.current = rec.id;
+              } catch (recError) {
+                console.error('Recommendation generation failed:', recError);
+              }
             }
           } catch (error) {
             console.error('Failed to download pack:', error);
