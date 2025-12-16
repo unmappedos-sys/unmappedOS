@@ -246,28 +246,39 @@ function generateNoGpsRecommendation(
 ): Recommendation {
   const hour = factors.currentHour;
 
-  // Find zones with price data
-  const budgetZones = zones.filter((z) => z.priceLevel === 'budget' || z.priceLevel === 'normal');
-  const touristZones = zones.filter(
-    (z) => z.priceLevel === 'tourist' || z.priceLevel === 'premium'
-  );
+  // Find zones - all zones are usable since price data may not be available
+  const allZones = zones.filter((z) => z.center.lat !== 0 && z.center.lon !== 0);
 
-  // Pick a good zone to recommend
+  // Pick a random zone to recommend (variety)
   const recommendedZone =
-    budgetZones.length > 0 ? budgetZones[Math.floor(Math.random() * budgetZones.length)] : zones[0];
+    allZones.length > 0 ? allZones[Math.floor(Math.random() * allZones.length)] : null;
+
+  // Format zone name nicely
+  const formatZoneName = (zone: ZoneData | null): string => {
+    if (!zone) return 'nearby';
+    // If zone name is generic like "ZONE 1", make it more human
+    if (zone.name.startsWith('ZONE ')) {
+      return `Area ${zone.name.replace('ZONE ', '')}`;
+    }
+    return zone.name;
+  };
 
   // Morning (6-11)
   if (hour >= 6 && hour < 11) {
-    if (recommendedZone && recommendedZone.averagePrice) {
+    if (recommendedZone) {
+      const zoneName = formatZoneName(recommendedZone);
+      const priceContext = recommendedZone.averagePrice
+        ? `Coffee ~${recommendedZone.averagePrice}฿.`
+        : `Local breakfast spots.`;
       return {
         id: `nogps-morning-${Date.now()}`,
-        action: `Head to ${recommendedZone.name} for breakfast.`,
-        context: `Coffee ~${recommendedZone.averagePrice}฿. Less crowded in mornings.`,
-        reason: `${recommendedZone.name} has local prices. Tourist areas charge 2-3x more for the same food.`,
+        action: `Head to ${zoneName} for breakfast.`,
+        context: `${priceContext} Less crowded in mornings.`,
+        reason: `Mornings are ideal for exploring. Tourist areas aren't fully active yet, so you'll get better service and fairer prices.`,
         destination: {
           lat: recommendedZone.center.lat,
           lon: recommendedZone.center.lon,
-          name: recommendedZone.name,
+          name: zoneName,
           distance: 0,
           direction: 'north',
         },
@@ -289,17 +300,17 @@ function generateNoGpsRecommendation(
 
   // Lunch rush (11-14)
   if (hour >= 11 && hour < 14) {
-    if (budgetZones.length > 0) {
-      const lunchZone = budgetZones[0];
+    if (recommendedZone) {
+      const zoneName = formatZoneName(recommendedZone);
       return {
         id: `nogps-lunch-${Date.now()}`,
-        action: `${lunchZone.name} has local lunch prices.`,
+        action: `Try ${zoneName} for lunch.`,
         context: `Avoid main tourist streets for food right now.`,
-        reason: `Lunch hour. Tourist areas jack up prices. Local spots like ${lunchZone.name} keep it real.`,
+        reason: `Lunch hour. Popular streets get crowded and expensive. Side streets often have better food for less.`,
         destination: {
-          lat: lunchZone.center.lat,
-          lon: lunchZone.center.lon,
-          name: lunchZone.name,
+          lat: recommendedZone.center.lat,
+          lon: recommendedZone.center.lon,
+          name: zoneName,
           distance: 0,
           direction: 'north',
         },
@@ -321,6 +332,25 @@ function generateNoGpsRecommendation(
 
   // Afternoon (14-17)
   if (hour >= 14 && hour < 17) {
+    if (recommendedZone) {
+      const zoneName = formatZoneName(recommendedZone);
+      return {
+        id: `nogps-afternoon-${Date.now()}`,
+        action: `Explore ${zoneName}. Good time to walk around.`,
+        context: `Post-lunch lull. Crowds thinning.`,
+        reason: `Between peak hours. Less pressure from touts, better prices, more breathing room.`,
+        destination: {
+          lat: recommendedZone.center.lat,
+          lon: recommendedZone.center.lon,
+          name: zoneName,
+          distance: 0,
+          direction: 'north',
+        },
+        confidence: 0.65,
+        generatedAt: Date.now(),
+        trigger: 'general',
+      };
+    }
     return {
       id: `nogps-afternoon-${Date.now()}`,
       action: `Good time to explore. Prices are stable.`,
@@ -334,22 +364,21 @@ function generateNoGpsRecommendation(
 
   // Evening (17-21)
   if (hour >= 17 && hour < 21) {
-    if (touristZones.length > 0 && budgetZones.length > 0) {
-      const avoidZone = touristZones[0];
-      const goZone = budgetZones[0];
+    if (recommendedZone) {
+      const zoneName = formatZoneName(recommendedZone);
       return {
         id: `nogps-evening-${Date.now()}`,
-        action: `Skip ${avoidZone.name}. Try ${goZone.name} instead.`,
-        context: `Evening prices rise 30-50% in tourist zones.`,
-        reason: `After sunset, popular areas inflate prices. ${goZone.name} stays consistent.`,
+        action: `Check out ${zoneName} for dinner.`,
+        context: `Evening prices rise on main streets.`,
+        reason: `After sunset, popular areas inflate prices. Less touristy spots stay consistent.`,
         destination: {
-          lat: goZone.center.lat,
-          lon: goZone.center.lon,
-          name: goZone.name,
+          lat: recommendedZone.center.lat,
+          lon: recommendedZone.center.lon,
+          name: zoneName,
           distance: 0,
           direction: 'north',
         },
-        confidence: 0.8,
+        confidence: 0.7,
         generatedAt: Date.now(),
         trigger: 'price',
       };
@@ -367,6 +396,25 @@ function generateNoGpsRecommendation(
 
   // Night (21+)
   if (hour >= 21 || hour < 6) {
+    if (recommendedZone) {
+      const zoneName = formatZoneName(recommendedZone);
+      return {
+        id: `nogps-night-${Date.now()}`,
+        action: `Late night in ${cityName}. Stay alert.`,
+        context: `Prices vary wildly after midnight.`,
+        reason: `Night markets can be fun but watch for inflated tourist prices. Always ask before ordering.`,
+        destination: {
+          lat: recommendedZone.center.lat,
+          lon: recommendedZone.center.lon,
+          name: zoneName,
+          distance: 0,
+          direction: 'north',
+        },
+        confidence: 0.65,
+        generatedAt: Date.now(),
+        trigger: 'safety',
+      };
+    }
     return {
       id: `nogps-night-${Date.now()}`,
       action: `Late night. Stay alert, prices vary wildly.`,
