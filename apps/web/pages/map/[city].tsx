@@ -54,6 +54,7 @@ export default function NextMovePage() {
   const [loading, setLoading] = useState(true);
   const [offline, setOffline] = useState(false);
   const [userPosition, setUserPosition] = useState<Position | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   // Recommendation state
   const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
@@ -98,6 +99,7 @@ export default function NextMovePage() {
 
     const loadPack = async () => {
       setLoading(true);
+      setError(null);
 
       try {
         // Try cached first
@@ -112,6 +114,7 @@ export default function NextMovePage() {
             lastRecommendationId.current = rec.id;
           } catch (recError) {
             console.error('Recommendation generation failed:', recError);
+            setError(`Recommendation error: ${recError}`);
           }
         }
 
@@ -130,10 +133,12 @@ export default function NextMovePage() {
                 lastRecommendationId.current = rec.id;
               } catch (recError) {
                 console.error('Recommendation generation failed:', recError);
+                setError(`Recommendation error: ${recError}`);
               }
             }
-          } catch (error) {
-            console.error('Failed to download pack:', error);
+          } catch (downloadError) {
+            console.error('Failed to download pack:', downloadError);
+            setError(`Download error: ${downloadError}`);
             // Continue with cached pack if available
           }
         }
@@ -143,8 +148,9 @@ export default function NextMovePage() {
           router.push(`/city/${cityKey}`);
           return;
         }
-      } catch (error) {
-        console.error('Pack loading error:', error);
+      } catch (loadError) {
+        console.error('Pack loading error:', loadError);
+        setError(`Load error: ${loadError}`);
       } finally {
         setLoading(false);
       }
@@ -255,6 +261,23 @@ export default function NextMovePage() {
         <div className="text-center">
           <div className="w-6 h-6 border-2 border-stone-200 border-t-stone-600 rounded-full animate-spin mx-auto mb-4" />
           <p className="text-stone-400 text-sm">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="text-center px-8">
+          <p className="text-red-600 mb-4 text-sm font-mono">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-6 py-3 bg-stone-900 text-white rounded-xl font-medium"
+          >
+            Reload
+          </button>
         </div>
       </div>
     );
