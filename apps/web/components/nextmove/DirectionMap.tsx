@@ -59,7 +59,8 @@ const DirectionMap = forwardRef<DirectionMapRef, DirectionMapProps>(function Dir
       mapRef.current = null;
     }
 
-    const maptilerKey = process.env.NEXT_PUBLIC_MAPTILER_KEY || 'get_your_own_OpIi9ZULNHzrESv6T2vL';
+    // MapTiler key - use env var or fallback to the key from .env.production
+    const maptilerKey = process.env.NEXT_PUBLIC_MAPTILER_KEY || 'GAFRKTaLQbD4RESx1qhp';
 
     // Calculate center
     const center: [number, number] = userPosition
@@ -68,23 +69,36 @@ const DirectionMap = forwardRef<DirectionMapRef, DirectionMapProps>(function Dir
         ? [destination.lon, destination.lat]
         : [100.5018, 13.7563]; // Bangkok default
 
-    const map = new maplibregl.Map({
-      container: containerRef.current,
-      style: `https://api.maptiler.com/maps/streets-v2-light/style.json?key=${maptilerKey}`,
-      center,
-      zoom: 15,
-      attributionControl: false,
-      pitchWithRotate: false,
-      dragRotate: false,
-    });
+    try {
+      const map = new maplibregl.Map({
+        container: containerRef.current,
+        style: `https://api.maptiler.com/maps/streets-v2-light/style.json?key=${maptilerKey}`,
+        center,
+        zoom: 15,
+        attributionControl: false,
+        pitchWithRotate: false,
+        dragRotate: false,
+      });
 
-    mapRef.current = map;
+      mapRef.current = map;
 
-    // Add attribution
-    map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left');
+      // Add attribution
+      map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left');
 
-    // Disable rotation
-    map.touchZoomRotate.disableRotation();
+      // Disable rotation
+      map.touchZoomRotate.disableRotation();
+
+      // Log for debugging
+      map.on('load', () => {
+        console.log('Map loaded successfully');
+      });
+
+      map.on('error', (e) => {
+        console.error('Map error:', e);
+      });
+    } catch (err) {
+      console.error('Map initialization error:', err);
+    }
 
     return () => {
       if (mapRef.current) {
@@ -237,9 +251,24 @@ const DirectionMap = forwardRef<DirectionMapRef, DirectionMapProps>(function Dir
   if (!visible) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-white">
-      {/* Map container */}
-      <div ref={containerRef} className="absolute inset-0" />
+    <div
+      className="fixed inset-0 z-50 bg-white"
+      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
+    >
+      {/* Map container - needs explicit dimensions for MapLibre */}
+      <div
+        ref={containerRef}
+        className="absolute inset-0"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: '100%',
+          height: '100%',
+        }}
+      />
 
       {/* Header */}
       <div className="absolute top-0 left-0 right-0 z-10 pt-safe">
