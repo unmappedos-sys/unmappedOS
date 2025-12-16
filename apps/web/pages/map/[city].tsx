@@ -279,9 +279,9 @@ export default function NextMovePage() {
         />
       </Head>
 
-      <div className="min-h-screen flex flex-col bg-white">
+      <div className="min-h-screen flex flex-col bg-white" style={{ backgroundColor: '#ffffff' }}>
         {/* Header */}
-        <header className="pt-safe px-6 pt-6 pb-4">
+        <header className="px-6 pt-6 pb-4">
           <div className="flex items-center justify-between">
             <h1 className="text-sm font-semibold text-stone-400 tracking-wider uppercase">
               Next Move

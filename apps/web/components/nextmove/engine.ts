@@ -703,8 +703,10 @@ function generateGeneralRecommendation(
     };
   }
 
-  // Fallback
-  return {
+  // Fallback - try to include a destination anyway
+  const anyZone = zones.find((z) => z.center.lat !== 0 && z.center.lon !== 0);
+
+  const fallback: Recommendation = {
     id: `general-${Date.now()}`,
     action: isOffline ? `Offline — using local memory.` : `Explore the area. Fair conditions.`,
     context: isOffline ? `Recommendations based on cached data.` : `No immediate concerns.`,
@@ -715,6 +717,23 @@ function generateGeneralRecommendation(
     generatedAt: Date.now(),
     trigger: 'general',
   };
+
+  // Add destination if we have any valid zone
+  if (anyZone) {
+    fallback.destination = {
+      lat: anyZone.center.lat,
+      lon: anyZone.center.lon,
+      name: anyZone.name.startsWith('ZONE ')
+        ? `Area ${anyZone.name.replace('ZONE ', '')}`
+        : anyZone.name,
+      distance: anyZone.distance ?? 0,
+      direction: userPos
+        ? getDirection(userPos.lat, userPos.lon, anyZone.center.lat, anyZone.center.lon)
+        : 'north',
+    };
+  }
+
+  return fallback;
 }
 
 // ============================================================================
